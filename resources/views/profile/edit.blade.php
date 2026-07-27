@@ -13,9 +13,13 @@
         <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
             @csrf @method('PUT')
             <div class="flex items-center gap-4 mb-6">
-                <div class="sidebar-user-avatar" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: 20px;">
-                    {{ strtoupper(substr($user->name, 0, 1)) }}
-                </div>
+                @if($user->avatar)
+                    <img src="{{ Storage::url($user->avatar) }}" alt="Avatar" class="object-cover" style="width: 64px; height: 64px; border-radius: 20px; border: 2px solid var(--accent-primary);">
+                @else
+                    <div class="sidebar-user-avatar" style="width: 64px; height: 64px; font-size: 1.5rem; border-radius: 20px;">
+                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                    </div>
+                @endif
                 <div>
                     <label class="btn-secondary cursor-pointer text-sm inline-flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>

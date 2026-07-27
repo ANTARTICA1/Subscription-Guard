@@ -181,12 +181,12 @@
                 </div>
             </div>
             @empty
-            <div class="empty-state">
+            <div class="empty-state py-6 flex flex-col items-center justify-center">
                 <span class="empty-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--success)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                 </span>
-                <p class="empty-title">Aman!</p>
-                <p class="empty-desc">Tidak ada tagihan dalam 7 hari ke depan.</p>
+                <p class="empty-title text-lg mt-2">Aman Terkendali!</p>
+                <p class="empty-desc text-sm">Tidak ada tagihan yang harus dibayar dalam 7 hari ke depan. Waktunya bersantai.</p>
             </div>
             @endforelse
         </div>
@@ -198,9 +198,20 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
             Distribusi Kategori
         </h3>
+        
+        @if($categoryData->isEmpty())
+        <div class="empty-state py-4 flex flex-col items-center justify-center" style="height: 250px;">
+            <span class="empty-icon text-2xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--text-muted)] mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /></svg>
+            </span>
+            <p class="empty-title text-base mt-2">Belum Ada Data</p>
+            <p class="empty-desc text-xs">Tambahkan subscription untuk melihat distribusi kategorinya di sini.</p>
+        </div>
+        @else
         <div style="position: relative; height: 250px;" class="flex items-center justify-center">
             <canvas id="categoryChart"></canvas>
         </div>
+        @endif
     </div>
 </div>
 
@@ -233,11 +244,12 @@
             </span>
         </div>
         @empty
-        <div class="empty-state py-6">
+        <div class="empty-state py-6 flex flex-col items-center justify-center">
             <span class="empty-icon text-2xl">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--text-muted)] mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
             </span>
-            <p class="empty-desc mt-2">Belum ada notifikasi.</p>
+            <p class="empty-title text-lg mt-2">Kotak Masuk Kosong</p>
+            <p class="empty-desc text-sm">Belum ada notifikasi baru untuk Anda hari ini.</p>
         </div>
         @endforelse
     </div>
