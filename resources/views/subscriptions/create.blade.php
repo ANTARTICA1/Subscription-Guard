@@ -6,24 +6,147 @@
 @section('content')
 <div class="max-w-3xl">
     
-    <div class="card mb-6" x-data="{
-        fillPreset(name, categoryId, amount, cycle, payDate) {
+    @php
+        $categoryMap = $categories->pluck('id', 'name')->toJson();
+        $templatesJson = json_encode($templates ?? []);
+    @endphp
+    
+    <div x-data="{
+        showModal: false,
+        templates: {{ $templatesJson }},
+        categoryMap: {{ $categoryMap }},
+        activeCategory: 'Film & Streaming',
+        selectedTemplate: null,
+        selectedPlanIndex: 0,
+        
+        openModal() { this.showModal = true; },
+        closeModal() { this.showModal = false; this.selectedTemplate = null; },
+        
+        selectTemplate(template) {
+            this.selectedTemplate = template;
+            this.selectedPlanIndex = 0;
+        },
+        
+        applyTemplate() {
+            if (!this.selectedTemplate) return;
+            
+            let plan = this.selectedTemplate.plans[this.selectedPlanIndex];
+            let name = this.selectedTemplate.plans.length > 1 && plan.name !== 'Standard' && plan.name !== 'Premium' && !plan.name.includes('Individual')
+                ? this.selectedTemplate.name + ' ' + plan.name 
+                : this.selectedTemplate.name;
+                
+            let categoryId = this.categoryMap[this.selectedTemplate.category] || '';
+            
             document.getElementById('input_name').value = name;
-            document.getElementById('select_category').value = categoryId;
-            document.getElementById('input_amount').value = amount;
-            document.getElementById('select_cycle').value = cycle;
-            document.getElementById('input_paydate').value = payDate;
+            
+            let catSelect = document.getElementById('select_category');
+            if(categoryId) {
+                catSelect.value = categoryId;
+            }
+            
+            document.getElementById('input_amount').value = plan.price;
+            document.getElementById('select_cycle').value = plan.cycle || 'monthly';
+            
+            this.closeModal();
         }
     }">
-        <h3 class="text-xs font-bold uppercase tracking-wider mb-3" style="color: var(--text-muted);"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> Preset Cepat</h3>
-        <div class="flex flex-wrap gap-2">
-            <button type="button" @click="fillPreset('Netflix', 1, 186000, 'monthly', 25)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg> Netflix</button>
-            <button type="button" @click="fillPreset('Spotify Premium', 1, 54990, 'monthly', 28)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg> Spotify</button>
-            <button type="button" @click="fillPreset('Disney+ Hotstar', 1, 159000, 'yearly', 15)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg> Disney+</button>
-            <button type="button" @click="fillPreset('ChatGPT Plus', 6, 315000, 'monthly', 1)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> ChatGPT</button>
-            <button type="button" @click="fillPreset('IndiHome Broadband', 2, 330000, 'monthly', 10)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg> IndiHome</button>
-            <button type="button" @click="fillPreset('YouTube Premium', 1, 59000, 'monthly', 20)" class="btn-secondary text-xs py-1.5 px-3">▶️ YouTube</button>
-            <button type="button" @click="fillPreset('iCloud 200GB', 6, 45000, 'monthly', 5)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>️ iCloud</button>
+        <div class="card mb-6 flex items-center justify-between">
+            <div>
+                <h3 class="font-bold flex items-center gap-2" style="color: var(--text-primary);">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    Pilih Template Cepat
+                </h3>
+                <p class="text-xs mt-1" style="color: var(--text-muted);">Isi otomatis nama dan harga dari layanan populer</p>
+            </div>
+            <button type="button" @click="openModal()" class="btn-primary py-2 px-4 text-sm whitespace-nowrap">
+                Telusuri Template
+            </button>
+        </div>
+
+        <div x-show="showModal" style="display: none;" class="fixed inset-0 z-50 overflow-y-auto">
+            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
+                <div x-show="showModal" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-75" @click="closeModal()"></div>
+                
+                <div x-show="showModal" x-transition.scale class="relative inline-block w-full max-w-4xl p-4 sm:p-6 overflow-hidden text-left align-middle transition-all transform bg-[var(--bg-secondary)] shadow-xl rounded-2xl border border-[var(--border-color)]">
+                    <div class="flex justify-between items-center mb-5 border-b border-[var(--border-color)] pb-3">
+                        <h3 class="text-lg font-bold text-[var(--text-primary)]">Template Subscription</h3>
+                        <button @click="closeModal()" class="text-2xl text-[var(--text-muted)] hover:text-white">&times;</button>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-4 sm:gap-6 h-[70vh] sm:h-[60vh]">
+                        <!-- Sidebar -->
+                        <div class="w-full md:w-1/4 overflow-y-auto border-b md:border-b-0 md:border-r border-[var(--border-color)] pb-4 md:pb-0 md:pr-4 flex md:flex-col flex-row gap-2" style="scrollbar-width: thin;">
+                            <template x-for="(items, categoryName) in templates" :key="categoryName">
+                                <button @click="activeCategory = categoryName; selectedTemplate = null;"
+                                        :class="activeCategory === categoryName ? 'bg-[var(--accent-primary)] text-white shadow-lg' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)]'"
+                                        class="flex-shrink-0 w-auto md:w-full text-left px-4 py-2.5 rounded-xl mb-1 text-sm font-semibold transition-all whitespace-nowrap md:whitespace-normal"
+                                        x-text="categoryName">
+                                </button>
+                            </template>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="w-full md:w-3/4 overflow-y-auto pb-4 pr-1">
+                            <div x-show="!selectedTemplate" class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                                <template x-for="item in templates[activeCategory]" :key="item.name">
+                                    <div @click="selectTemplate(item)" class="cursor-pointer border border-[var(--border-color)] bg-[var(--bg-elevated)] p-4 rounded-xl hover:border-[var(--accent-primary)] hover:shadow-lg transition-all text-center flex flex-col items-center justify-center gap-3">
+                                        <img :src="item.logo" :alt="item.name" class="w-12 h-12 object-contain bg-white rounded-lg p-1.5 shadow-sm" onerror="this.style.display='none'">
+                                        <h4 class="font-bold text-sm text-[var(--text-primary)]" x-text="item.name"></h4>
+                                    </div>
+                                </template>
+                            </div>
+                            
+                            <div x-show="selectedTemplate" style="display: none;" class="p-4 sm:p-5 border border-[var(--border-color)] bg-[var(--bg-elevated)] rounded-xl">
+                                <div class="flex items-center gap-4 mb-6">
+                                    <button @click="selectedTemplate = null" class="btn-secondary py-1.5 px-4 text-xs flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                                        Kembali
+                                    </button>
+                                </div>
+                                
+                                <div class="flex items-center gap-5 mb-6">
+                                    <img x-bind:src="selectedTemplate?.logo" class="w-16 h-16 object-contain bg-white rounded-xl p-2 shadow-sm" onerror="this.style.display='none'">
+                                    <div>
+                                        <h2 class="text-xl sm:text-2xl font-black text-[var(--text-primary)]" x-text="selectedTemplate?.name"></h2>
+                                        <p class="text-sm text-[var(--text-muted)] mt-1">
+                                            <span class="inline-block w-2 h-2 rounded-full bg-[var(--accent-primary)] mr-1"></span>
+                                            <span x-text="selectedTemplate?.category"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-[var(--bg-primary)] p-4 rounded-xl border border-[var(--border-color)] mb-6">
+                                    <h4 class="font-bold text-sm mb-3 text-[var(--text-secondary)] flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>
+                                        Pilih Paket Tersedia
+                                    </h4>
+                                    <div class="space-y-2 max-h-64 overflow-y-auto pr-1" style="scrollbar-width: thin;">
+                                        <template x-for="(plan, index) in selectedTemplate?.plans" :key="index">
+                                            <label class="flex flex-col sm:flex-row sm:items-center justify-between p-3 border rounded-xl cursor-pointer transition-all"
+                                                   :class="Number(selectedPlanIndex) === index ? 'border-[var(--accent-primary)] bg-[var(--bg-elevated)] ring-1 ring-[var(--accent-primary)]' : 'border-[var(--border-color)] hover:border-[var(--text-muted)]'">
+                                                <div class="flex items-center gap-3 mb-2 sm:mb-0">
+                                                    <input type="radio" name="plan_selection" :value="index" x-model="selectedPlanIndex" class="w-4 h-4" style="accent-color: var(--accent-primary);">
+                                                    <span class="font-bold text-[var(--text-primary)]" x-text="plan.name"></span>
+                                                </div>
+                                                <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto pl-7 sm:pl-0">
+                                                    <span class="text-xs text-[var(--text-muted)] mr-3" x-text="plan.cycle === 'yearly' ? 'Per Tahun' : 'Per Bulan'"></span>
+                                                    <span class="font-mono font-bold text-lg text-[var(--accent-primary)]" x-text="'Rp ' + new Intl.NumberFormat('id-ID').format(plan.price)"></span>
+                                                </div>
+                                            </label>
+                                        </template>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex justify-end border-t border-[var(--border-color)] pt-4">
+                                    <button @click="applyTemplate()" class="btn-primary w-full sm:w-auto py-3 px-6 shadow-lg shadow-blue-500/20">
+                                        Gunakan Template
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

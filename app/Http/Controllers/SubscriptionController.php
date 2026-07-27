@@ -33,10 +33,11 @@ class SubscriptionController extends Controller
         return view('subscriptions.index', compact('subscriptions', 'categories'));
     }
 
-    public function create()
+    public function create(\App\Services\SubscriptionTemplateService $templateService)
     {
         $categories = Category::all();
-        return view('subscriptions.create', compact('categories'));
+        $templates = $templateService->getTemplates();
+        return view('subscriptions.create', compact('categories', 'templates'));
     }
 
     public function store(SubscriptionRequest $request)
