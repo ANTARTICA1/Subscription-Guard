@@ -47,6 +47,11 @@
             document.getElementById('input_amount').value = plan.price;
             document.getElementById('select_cycle').value = plan.cycle || 'monthly';
             
+            let logoInput = document.getElementById('input_logo');
+            if (logoInput) {
+                logoInput.value = this.selectedTemplate.logo;
+            }
+            
             this.closeModal();
         }
     }">
@@ -164,6 +169,7 @@
 
         <form method="POST" action="{{ route('subscriptions.store') }}">
             @csrf
+            <input type="hidden" id="input_logo" name="logo" value="{{ old('logo') }}">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="md:col-span-2">
                     <label class="form-label">Nama Subscription *</label>
@@ -174,7 +180,7 @@
                     <select id="select_category" name="category_id" class="form-select" required>
                         <option value="">Pilih Kategori</option>
                         @foreach($categories as $cat)
-                        <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->icon }} {{ $cat->name }}</option>
+                        <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                         @endforeach
                     </select>
                 </div>

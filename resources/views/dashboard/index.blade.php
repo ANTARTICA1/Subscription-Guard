@@ -158,9 +158,15 @@
             @forelse($upcoming as $sub)
             <div class="item-row">
                 <div class="flex items-center gap-3">
+                    @if($sub->logo)
+                    <div class="w-10 h-10 flex-shrink-0 bg-white border border-[var(--border-color)] rounded-xl p-1.5 flex items-center justify-center">
+                        <img src="{{ $sub->logo }}" alt="{{ $sub->name }}" class="w-full h-full object-contain" onerror="this.style.display='none'">
+                    </div>
+                    @else
                     <div class="icon-box" style="background: {{ $sub->category->color }}15;">
                         {{ $sub->category->icon }}
                     </div>
+                    @endif
                     <div>
                         <p class="text-sm font-bold" style="color: var(--text-primary);">{{ $sub->name }}</p>
                         <p class="text-xs" style="color: var(--text-muted);">{{ $sub->next_payment_date->translatedFormat('d M Y') }}</p>

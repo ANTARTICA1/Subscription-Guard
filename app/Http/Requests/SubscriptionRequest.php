@@ -26,6 +26,7 @@ class SubscriptionRequest extends FormRequest
             'auto_renew' => 'boolean',
             'reminder_days' => 'required|integer|min:1|max:30',
             'status' => 'required|in:active,cancelled',
+            'logo' => 'nullable|string|max:2048',
         ];
     }
 

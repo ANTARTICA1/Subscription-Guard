@@ -19,6 +19,7 @@
         <form method="POST" action="{{ route('subscriptions.update', $subscription) }}">
             @csrf
             @method('PUT')
+            <input type="hidden" name="logo" value="{{ old('logo', $subscription->logo) }}">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="md:col-span-2">
                     <label class="form-label">Nama Subscription *</label>
@@ -29,7 +30,7 @@
                     <label class="form-label">Kategori *</label>
                     <select name="category_id" class="form-select" required>
                         @foreach($categories as $cat)
-                        <option value="{{ $cat->id }}" {{ old('category_id', $subscription->category_id) == $cat->id ? 'selected' : '' }}>{{ $cat->icon }} {{ $cat->name }}</option>
+                        <option value="{{ $cat->id }}" {{ old('category_id', $subscription->category_id) == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                         @endforeach
                     </select>
                 </div>

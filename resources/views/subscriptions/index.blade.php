@@ -27,7 +27,7 @@
             <select name="category" class="form-select">
                 <option value="">Semua Kategori</option>
                 @foreach($categories as $cat)
-                <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>{{ $cat->icon }} {{ $cat->name }}</option>
+                <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -54,9 +54,15 @@
         <div>
             <div class="flex items-start justify-between mb-3">
                 <div class="flex items-center gap-3 cursor-pointer" onclick="window.location='{{ route('subscriptions.show', $sub) }}'">
+                    @if($sub->logo)
+                    <div class="w-10 h-10 flex-shrink-0 bg-white border border-[var(--border-color)] rounded-xl p-1.5 flex items-center justify-center">
+                        <img src="{{ $sub->logo }}" alt="{{ $sub->name }}" class="w-full h-full object-contain" onerror="this.style.display='none'">
+                    </div>
+                    @else
                     <div class="icon-box" style="background: {{ $sub->category->color }}15;">
                         {{ $sub->category->icon }}
                     </div>
+                    @endif
                     <div>
                         <h3 class="font-bold text-sm hover:underline" style="color: var(--text-primary);">{{ $sub->name }}</h3>
                         <p class="text-xs" style="color: var(--text-muted);">{{ $sub->category->name }}</p>
