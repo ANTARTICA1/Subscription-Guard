@@ -99,7 +99,11 @@ class Subscription extends Model
         $day = $this->payment_date;
 
         if ($this->billing_cycle === 'yearly') {
-            $next = Carbon::createFromDate($now->year, 1, 1)->addDays($day - 1);
+            $month = $this->start_date ? $this->start_date->month : $now->month;
+            $next = Carbon::createFromDate($now->year, $month, 1);
+            $lastDay = $next->copy()->endOfMonth()->day;
+            $next->day(min($day, $lastDay));
+            
             if ($next->isPast()) {
                 $next = $next->addYear();
             }

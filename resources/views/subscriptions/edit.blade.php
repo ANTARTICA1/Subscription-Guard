@@ -60,7 +60,8 @@
 
                 <div>
                     <label class="form-label">Tanggal Pembayaran *</label>
-                    <input type="number" name="payment_date" value="{{ old('payment_date', $subscription->payment_date) }}" class="form-input" min="1" max="366" required>
+                    <input type="number" name="payment_date" value="{{ old('payment_date', $subscription->payment_date) }}" class="form-input" min="1" max="31" required>
+                    <p class="text-xs mt-1" style="color: var(--text-muted);">Tgl jatuh tempo tagihan (contoh: isi 25 jika ditagih tiap tgl 25)</p>
                 </div>
 
                 <div>
@@ -76,6 +77,7 @@
                 <div>
                     <label class="form-label">Ingatkan H-</label>
                     <input type="number" name="reminder_days" value="{{ old('reminder_days', $subscription->reminder_days) }}" class="form-input" min="1" max="30" required>
+                    <p class="text-xs mt-1" style="color: var(--text-muted);">Contoh: isi 3 untuk notifikasi 3 hari sebelum jatuh tempo</p>
                 </div>
 
                 <div>

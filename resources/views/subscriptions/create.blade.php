@@ -206,8 +206,8 @@
                 </div>
                 <div>
                     <label class="form-label">Tanggal Pembayaran *</label>
-                    <input type="number" id="input_paydate" name="payment_date" value="{{ old('payment_date', 1) }}" class="form-input" placeholder="1-31" min="1" max="366" required>
-                    <p class="text-xs mt-1" style="color: var(--text-muted);">Hari ke-berapa dalam siklus</p>
+                    <input type="number" id="input_paydate" name="payment_date" value="{{ old('payment_date', 1) }}" class="form-input" placeholder="1-31" min="1" max="31" required>
+                    <p class="text-xs mt-1" style="color: var(--text-muted);">Tgl jatuh tempo tagihan (contoh: isi 25 jika ditagih tiap tgl 25)</p>
                 </div>
                 <div>
                     <label class="form-label">Tanggal Mulai *</label>
@@ -221,6 +221,7 @@
                 <div>
                     <label class="form-label">Ingatkan H- Hari</label>
                     <input type="number" name="reminder_days" value="{{ old('reminder_days', 3) }}" class="form-input" min="1" max="30" required>
+                    <p class="text-xs mt-1" style="color: var(--text-muted);">Contoh: isi 3 untuk notifikasi 3 hari sebelum jatuh tempo</p>
                 </div>
                 <div>
                     <label class="form-label">Status</label>
