@@ -50,10 +50,10 @@
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 morph-stagger">
     @forelse($subscriptions as $sub)
-    <div class="card flex flex-col justify-between">
+    <div class="card flex flex-col justify-between cursor-pointer hover:shadow-lg transition-all group" onclick="window.location='{{ route('subscriptions.show', $sub) }}'">
         <div>
             <div class="flex items-start justify-between mb-3">
-                <div class="flex items-center gap-3 cursor-pointer" onclick="window.location='{{ route('subscriptions.show', $sub) }}'">
+                <div class="flex items-center gap-3">
                     @if($sub->logo)
                     <div class="w-10 h-10 flex-shrink-0 bg-white border border-[var(--border-color)] rounded-xl p-1.5 flex items-center justify-center">
                         <img src="{{ $sub->logo }}" alt="{{ $sub->name }}" class="w-full h-full object-contain" onerror="this.style.display='none'">
@@ -68,7 +68,10 @@
                         <p class="text-xs" style="color: var(--text-muted);">{{ $sub->category->name }}</p>
                     </div>
                 </div>
-                <span class="badge badge-{{ $sub->status }}">{{ strtoupper($sub->status) }}</span>
+                <div class="flex items-center gap-1.5">
+                    <span class="badge badge-{{ $sub->status }}">{{ strtoupper($sub->status) }}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                </div>
             </div>
 
             <div class="space-y-2 text-xs my-4 pt-3" style="border-top: 1px solid var(--border-color);">
@@ -104,7 +107,7 @@
             </div>
             @endif
 
-            <div class="flex items-center gap-2 pt-3" style="border-top: 1px solid var(--border-color);">
+            <div class="flex items-center gap-2 pt-3" style="border-top: 1px solid var(--border-color);" onclick="event.stopPropagation()">
                 <form method="POST" action="{{ route('subscriptions.mark-paid', $sub) }}" class="flex-1">
                     @csrf
                     <button type="submit" class="btn-secondary text-xs w-full py-1.5 justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> Lunas</button>
