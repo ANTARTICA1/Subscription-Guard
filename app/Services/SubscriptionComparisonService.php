@@ -14,6 +14,7 @@ class SubscriptionComparisonService
                 'items' => [
                     [
                         'name' => 'Netflix',
+                        'logo' => 'https://icon.horse/icon/netflix.com',
                         'price_monthly' => 'Rp186.000 (Premium 4K)',
                         'price_value' => 186000,
                         'features' => ['4K UHD + HDR', '4 Layar Bersamaan', 'Katalog Seribu Film & Drama'],
@@ -22,6 +23,7 @@ class SubscriptionComparisonService
                     ],
                     [
                         'name' => 'Disney+ Hotstar',
+                        'logo' => 'https://icon.horse/icon/hotstar.com',
                         'price_monthly' => 'Rp65.000 / bln (atau Rp799k/thn)',
                         'price_value' => 65000,
                         'features' => ['4K Ultra HD', 'Marvel & Disney Originals', 'Bioskop Indonesia'],
@@ -30,6 +32,7 @@ class SubscriptionComparisonService
                     ],
                     [
                         'name' => 'Prime Video',
+                        'logo' => 'https://icon.horse/icon/primevideo.com',
                         'price_monthly' => 'Rp59.000 / bulan',
                         'price_value' => 59000,
                         'features' => ['HD / 4K', 'Original Exclusive Series', 'Harga Paling Terjangkau'],
@@ -45,6 +48,7 @@ class SubscriptionComparisonService
                 'items' => [
                     [
                         'name' => 'Spotify Individual',
+                        'logo' => 'https://icon.horse/icon/spotify.com',
                         'price_monthly' => 'Rp54.990 / bulan',
                         'price_value' => 54990,
                         'features' => ['Lagu Bebas Iklan', 'Offline Downloads', 'Rekomendasi Algoritma Terbaik'],
@@ -53,6 +57,7 @@ class SubscriptionComparisonService
                     ],
                     [
                         'name' => 'Apple Music',
+                        'logo' => 'https://icon.horse/icon/music.apple.com',
                         'price_monthly' => 'Rp55.000 / bulan',
                         'price_value' => 55000,
                         'features' => ['Lossless Audio & Spatial Audio', 'Dolby Atmos', 'Lirik Real-Time'],
@@ -61,6 +66,7 @@ class SubscriptionComparisonService
                     ],
                     [
                         'name' => 'YouTube Music',
+                        'logo' => 'https://icon.horse/icon/music.youtube.com',
                         'price_monthly' => 'Rp49.000 / bulan',
                         'price_value' => 49000,
                         'features' => ['Termasuk Video Cover & Live Concerts', 'Integrasi YouTube', 'Background Play'],
@@ -76,6 +82,7 @@ class SubscriptionComparisonService
                 'items' => [
                     [
                         'name' => 'ChatGPT Plus (GPT-4o)',
+                        'logo' => 'https://icon.horse/icon/chatgpt.com',
                         'price_monthly' => 'Rp315.000 ($20 / bulan)',
                         'price_value' => 315000,
                         'features' => ['GPT-4o Access', 'DALL-E 3 Image Generator', 'Custom GPTs & Memory'],
@@ -84,6 +91,7 @@ class SubscriptionComparisonService
                     ],
                     [
                         'name' => 'Claude Pro (Anthropic)',
+                        'logo' => 'https://icon.horse/icon/claude.ai',
                         'price_monthly' => 'Rp315.000 ($20 / bulan)',
                         'price_value' => 315000,
                         'features' => ['Claude 3.5 Sonnet', '200k Context Window', 'Coding & Writing Unggul'],
@@ -92,6 +100,7 @@ class SubscriptionComparisonService
                     ],
                     [
                         'name' => 'Google Gemini Advanced',
+                        'logo' => 'https://icon.horse/icon/gemini.google.com',
                         'price_monthly' => 'Rp309.000 / bulan (Gratis 2TB Drive)',
                         'price_value' => 309000,
                         'features' => ['Gemini 1.5 Pro', '1 Juta Context Token', 'Bonus Google One 2TB'],
