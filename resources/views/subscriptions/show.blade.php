@@ -49,8 +49,8 @@
                 </div>
                 <div>
                     <p class="stat-label mb-1">Auto Renewal</p>
-                    <p class="text-sm font-semibold" style="color: {{ $subscription->auto_renew ? 'var(--warning)' : 'var(--success)' }};">
-                        {!! $subscription->auto_renew ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> Aktif' : '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> Manual' !!}
+                    <p class="text-sm font-semibold" style="color: {{ $subscription->status !== 'active' ? 'var(--text-muted)' : ($subscription->auto_renew ? 'var(--success)' : 'var(--text-muted)') }};">
+                        {!! $subscription->status !== 'active' ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Di-Pause' : ($subscription->auto_renew ? 'Aktif' : '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> Manual') !!}
                     </p>
                 </div>
             </div>
@@ -115,14 +115,14 @@
 
     
     <div class="space-y-6">
-        @if($subscription->auto_renew)
+        @if($subscription->auto_renew && $subscription->status === 'active')
         <div class="card" style="border-left: 3px solid var(--warning);">
             <div class="flex items-start gap-3">
                 <span class="text-xl"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg></span>
                 <div>
-                    <h4 class="font-bold text-xs uppercase" style="color: var(--warning);">Peringatan Auto-Renew</h4>
+                    <h4 class="font-bold text-xs uppercase" style="color: var(--warning);">Info Auto-Renew</h4>
                     <p class="text-xs mt-1" style="color: var(--text-secondary);">
-                        Layanan ini memperpanjang otomatis. Evaluasi berkala untuk mencegah kebocoran saldo.
+                        Layanan ini memperpanjang otomatis. Pastikan saldo Anda mencukupi untuk tagihan berikutnya.
                     </p>
                 </div>
             </div>

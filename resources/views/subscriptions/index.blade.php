@@ -97,7 +97,11 @@
         </div>
 
         <div>
-            @if($sub->auto_renew)
+            @if($sub->status !== 'active')
+            <div class="p-2.5 rounded-lg text-xs font-semibold flex items-center gap-2 mb-3" style="background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-color);">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Langganan Di-Pause
+            </div>
+            @elseif($sub->auto_renew)
             <div class="p-2.5 rounded-lg text-xs font-semibold flex items-center gap-2 mb-3" style="background: var(--warning-bg); color: var(--warning);">
                 Auto-Renewal Aktif
             </div>
@@ -107,16 +111,37 @@
             </div>
             @endif
 
-            <div class="flex items-center gap-2 pt-3" style="border-top: 1px solid var(--border-color);" onclick="event.stopPropagation()">
+            <div class="flex justify-center gap-1.5 pt-3" style="border-top: 1px solid var(--border-color);" onclick="event.stopPropagation()">
                 <form method="POST" action="{{ route('subscriptions.mark-paid', $sub) }}" class="flex-1">
                     @csrf
-                    <button type="submit" class="btn-secondary text-xs w-full py-1.5 justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> Lunas</button>
+                    <button type="submit" class="btn-secondary text-[10px] sm:text-xs w-full py-1.5 flex flex-col xl:flex-row items-center justify-center gap-1 shadow-sm hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors" title="Bayar">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> 
+                        <span>Bayar</span>
+                    </button>
                 </form>
-                <form method="POST" action="{{ route('subscriptions.toggle-status', $sub) }}">
+                <form method="POST" action="{{ route('subscriptions.toggle-status', $sub) }}" class="flex-1">
                     @csrf
-                    <button type="submit" class="btn-secondary text-xs py-1.5 px-2.5">{{ $sub->status === 'active' ? '⏸️' : '▶️' }}</button>
+                    <button type="submit" class="btn-secondary text-[10px] sm:text-xs w-full py-1.5 flex flex-col xl:flex-row items-center justify-center gap-1 shadow-sm" title="{{ $sub->status === 'active' ? 'Pause' : 'Resume' }}">
+                        @if($sub->status === 'active')
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span>Pause</span>
+                        @else
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span>Resume</span>
+                        @endif
+                    </button>
                 </form>
-                <a href="{{ route('subscriptions.edit', $sub) }}" class="btn-secondary text-xs py-1.5 px-2.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>️</a>
+                <a href="{{ route('subscriptions.edit', $sub) }}" class="btn-secondary text-[10px] sm:text-xs flex-1 py-1.5 flex flex-col xl:flex-row items-center justify-center gap-1 shadow-sm" title="Edit">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                    <span>Edit</span>
+                </a>
+                <form method="POST" action="{{ route('subscriptions.destroy', $sub) }}" onsubmit="return confirm('Hapus subscription ini?')" class="flex-1">
+                    @csrf @method('DELETE')
+                    <button type="submit" class="btn-secondary text-[10px] sm:text-xs w-full py-1.5 flex flex-col xl:flex-row items-center justify-center gap-1 shadow-sm hover:text-red-500 hover:border-red-500 transition-colors" title="Hapus">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                        <span>Hapus</span>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
