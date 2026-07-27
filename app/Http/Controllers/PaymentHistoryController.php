@@ -26,7 +26,7 @@ class PaymentHistoryController extends Controller
         $payments = $query->latest('payment_date')->paginate(15);
         $subscriptions = Subscription::where('user_id', Auth::id())->get();
 
-        // Chart data - last 6 months
+        
         $chartLabels = [];
         $chartData = [];
         for ($i = 5; $i >= 0; $i--) {

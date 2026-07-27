@@ -1,18 +1,18 @@
 @extends('layouts.app')
 @section('title', $subscription->name)
 @section('heading', $subscription->name)
-@section('subheading', ($subscription->category->icon ?? '📦') . ' ' . ($subscription->category->name ?? 'Kategori'))
+@section('subheading', ($subscription->category->icon ?? '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>') . ' ' . ($subscription->category->name ?? 'Kategori'))
 
 @section('actions')
 <div class="flex items-center gap-2">
     <form method="POST" action="{{ route('subscriptions.mark-paid', $subscription) }}">
         @csrf
-        <button type="submit" class="btn-primary text-xs">⚡ Bayar</button>
+        <button type="submit" class="btn-primary text-xs"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> Bayar</button>
     </form>
-    <a href="{{ route('subscriptions.edit', $subscription) }}" class="btn-secondary text-xs">✏️ Edit</a>
+    <a href="{{ route('subscriptions.edit', $subscription) }}" class="btn-secondary text-xs"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>️ Edit</a>
     <form method="POST" action="{{ route('subscriptions.destroy', $subscription) }}" onsubmit="return confirm('Hapus subscription ini?')">
         @csrf @method('DELETE')
-        <button type="submit" class="btn-danger text-xs">🗑️ Hapus</button>
+        <button type="submit" class="btn-danger text-xs"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>️ Hapus</button>
     </form>
 </div>
 @endsection
@@ -20,7 +20,7 @@
 @section('content')
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="lg:col-span-2 space-y-6">
-        {{-- Detail Card --}}
+        
         <div class="card">
             <h3 class="section-title mb-5">Detail Subscription</h3>
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-5">
@@ -50,7 +50,7 @@
                 <div>
                     <p class="stat-label mb-1">Auto Renewal</p>
                     <p class="text-sm font-semibold" style="color: {{ $subscription->auto_renew ? 'var(--warning)' : 'var(--success)' }};">
-                        {{ $subscription->auto_renew ? '⚠️ Aktif' : '✅ Manual' }}
+                        {{ $subscription->auto_renew ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg> Aktif' : '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> Manual' }}
                     </p>
                 </div>
             </div>
@@ -62,9 +62,9 @@
             @endif
         </div>
 
-        {{-- Payment History --}}
+        
         <div class="card">
-            <h3 class="section-title mb-2">📊 Riwayat Pembayaran</h3>
+            <h3 class="section-title mb-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg> Riwayat Pembayaran</h3>
             <p class="section-desc mb-5">Histori transaksi untuk {{ $subscription->name }}</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
@@ -113,12 +113,12 @@
         </div>
     </div>
 
-    {{-- Sidebar --}}
+    
     <div class="space-y-6">
         @if($subscription->auto_renew)
         <div class="card" style="border-left: 3px solid var(--warning);">
             <div class="flex items-start gap-3">
-                <span class="text-xl">⚠️</span>
+                <span class="text-xl"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg></span>
                 <div>
                     <h4 class="font-bold text-xs uppercase" style="color: var(--warning);">Peringatan Auto-Renew</h4>
                     <p class="text-xs mt-1" style="color: var(--text-secondary);">
@@ -130,7 +130,7 @@
         @endif
 
         <div class="card">
-            <h4 class="section-title mb-4">💰 Proyeksi Beban</h4>
+            <h4 class="section-title mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Proyeksi Beban</h4>
             <div class="space-y-3 text-xs">
                 <div class="flex justify-between pb-2" style="border-bottom: 1px solid var(--border-color);">
                     <span style="color: var(--text-muted);">Per Bulan:</span>
@@ -149,7 +149,7 @@
 
         <div class="card">
             <div class="flex items-center justify-between mb-4">
-                <h4 class="section-title">🤝 Patungan</h4>
+                <h4 class="section-title"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg> Patungan</h4>
                 <a href="{{ route('shares.index') }}" class="btn-ghost text-xs">Kelola →</a>
             </div>
             <div class="space-y-2">

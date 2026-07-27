@@ -7,7 +7,7 @@
 <div class="max-w-5xl space-y-6">
     <div class="flex items-center justify-between">
         <div>
-            <h3 class="section-title">🌍 Grup Publik Terbuka</h3>
+            <h3 class="section-title"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Grup Publik Terbuka</h3>
             <p class="section-desc">Bergabunglah dengan grup publik untuk berbagi biaya langganan.</p>
         </div>
         <a href="{{ route('shares.index') }}" class="btn-secondary text-xs">
@@ -33,7 +33,7 @@
             <div>
                 <div class="flex items-start justify-between mb-4">
                     <div class="w-12 h-12 rounded-xl flex items-center justify-center text-xl shadow-sm" style="background: {{ $sub->category->color ?? 'var(--bg-elevated)' }}20;">
-                        {{ $sub->logo ?? ($sub->category->icon ?? '📦') }}
+                        {{ $sub->logo ?? ($sub->category->icon ?? '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>') }}
                     </div>
                     <span class="badge badge-accent text-xs">Publik</span>
                 </div>

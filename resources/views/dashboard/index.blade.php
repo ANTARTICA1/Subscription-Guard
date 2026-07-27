@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-{{-- Welcome Banner --}}
+
 <div class="welcome-banner mb-8" x-data="{ greeting: '' }" x-init="
     const h = new Date().getHours();
     greeting = h < 11 ? 'Selamat Pagi' : h < 15 ? 'Selamat Siang' : h < 18 ? 'Selamat Sore' : 'Selamat Malam';
@@ -20,7 +20,7 @@
     <p>Berikut ringkasan subscription Anda hari ini. Tetap pantau dan kelola dengan bijak.</p>
 </div>
 
-{{-- Stats Grid --}}
+
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
     <div class="stat-card" x-data="{ count: 0 }" x-init="
         let target = {{ $activeCount }};
@@ -87,9 +87,9 @@
     </div>
 </div>
 
-{{-- Charts Row --}}
+
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-    {{-- Spending Chart --}}
+    
     <div class="card lg:col-span-2">
         <div class="flex items-center justify-between mb-5">
             <div>
@@ -103,7 +103,7 @@
         </div>
     </div>
 
-    {{-- Health Score --}}
+    
     <div class="card flex flex-col justify-between">
         <div>
             <h3 class="section-title mb-1">Subscription Health</h3>
@@ -142,9 +142,9 @@
     </div>
 </div>
 
-{{-- Upcoming Payments & Category Distribution --}}
+
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-    {{-- Upcoming --}}
+    
     <div class="card">
         <div class="flex items-center justify-between mb-5">
             <h3 class="section-title flex items-center gap-2">
@@ -192,7 +192,7 @@
         </div>
     </div>
 
-    {{-- Category Distribution --}}
+    
     <div class="card">
         <h3 class="section-title mb-5 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
@@ -204,7 +204,7 @@
     </div>
 </div>
 
-{{-- Recent Notifications --}}
+
 <div class="card">
     <h3 class="section-title mb-5 flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>

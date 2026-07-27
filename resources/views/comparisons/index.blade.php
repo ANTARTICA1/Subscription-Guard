@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="max-w-5xl space-y-8" x-data="customComparison()">
-    {{-- Custom Comparison Builder --}}
+    
     <div class="card">
         <h3 class="section-title mb-5">
             <div class="flex items-center gap-2">
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    {{-- Predefined Comparisons --}}
+    
     @foreach($comparisons as $group)
     <div class="card">
         <div class="flex items-center gap-3 mb-5">

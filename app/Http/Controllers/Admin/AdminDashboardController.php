@@ -19,16 +19,16 @@ class AdminDashboardController extends Controller
         $activeSubscriptions = Subscription::active()->count();
         $totalReminders = Notification::where('status', 'sent')->count();
 
-        // Popular categories
+        
         $popularCategories = Category::withCount('subscriptions')
             ->orderByDesc('subscriptions_count')
             ->take(5)
             ->get();
 
-        // Recent users
+        
         $recentUsers = User::latest()->take(10)->get();
 
-        // Monthly revenue chart
+        
         $chartLabels = [];
         $chartData = [];
         for ($i = 5; $i >= 0; $i--) {
@@ -39,7 +39,7 @@ class AdminDashboardController extends Controller
                 ->count();
         }
 
-        // Subscription status distribution
+        
         $statusData = [
             'active' => Subscription::active()->count(),
             'cancelled' => Subscription::cancelled()->count(),

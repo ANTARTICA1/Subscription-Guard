@@ -6,10 +6,10 @@ use App\Models\User;
 
 class FinancialAssistantService
 {
-    /**
-     * Rule-based "AI" financial assistant that analyzes subscription data
-     * and provides personalized recommendations without external API calls.
-     */
+    
+
+
+
     public function analyze(User $user): array
     {
         $subscriptions = $user->activeSubscriptions()->with('category')->get();
@@ -29,7 +29,7 @@ class FinancialAssistantService
             ];
         }
 
-        // Category analysis
+        
         $categoryBreakdown = $subscriptions->groupBy('category.name')->map(function ($items, $category) {
             $total = $items->sum(fn($s) => $s->monthly_amount);
             return [
@@ -41,53 +41,53 @@ class FinancialAssistantService
             ];
         })->sortByDesc('monthly_total')->values()->toArray();
 
-        // Generate insights
+        
         $insights = [];
 
-        // Insight 1: Most expensive category
+        
         if (!empty($categoryBreakdown)) {
             $topCategory = $categoryBreakdown[0];
             $percentage = $totalMonthly > 0 ? round(($topCategory['monthly_total'] / $totalMonthly) * 100) : 0;
             $insights[] = [
-                'icon' => '📊',
+                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>',
                 'title' => 'Kategori Terbesar',
                 'description' => "{$topCategory['category']} menghabiskan {$topCategory['formatted_total']}/bulan ({$percentage}% dari total).",
             ];
         }
 
-        // Insight 2: Most expensive subscription
+        
         $mostExpensive = $subscriptions->sortByDesc('monthly_amount')->first();
         if ($mostExpensive) {
             $insights[] = [
-                'icon' => '💎',
+                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>',
                 'title' => 'Subscription Termahal',
                 'description' => "{$mostExpensive->name} dengan biaya {$mostExpensive->formatted_amount}/{$mostExpensive->billing_cycle}.",
             ];
         }
 
-        // Insight 3: Auto-renew analysis
+        
         $autoRenewSubs = $subscriptions->where('auto_renew', true);
         $autoRenewTotal = $autoRenewSubs->sum(fn($s) => $s->monthly_amount);
         if ($autoRenewSubs->count() > 0) {
             $insights[] = [
-                'icon' => '🔄',
+                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>',
                 'title' => 'Auto-Renewal Aktif',
                 'description' => "{$autoRenewSubs->count()} subscription dengan auto-renewal. Total Rp" . number_format($autoRenewTotal, 0, ',', '.') . '/bulan akan terpotong otomatis.',
             ];
         }
 
-        // Insight 4: Yearly projection
+        
         $insights[] = [
-            'icon' => '📅',
+            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>',
             'title' => 'Proyeksi Tahunan',
             'description' => 'Estimasi pengeluaran subscription tahun ini: Rp' . number_format($totalYearly, 0, ',', '.') . '.',
         ];
 
-        // Generate recommendations
+        
         $recommendations = [];
         $potentialSavings = 0;
 
-        // Check for duplicate categories
+        
         $duplicateCategories = $subscriptions->groupBy('category_id')->filter(fn($items) => $items->count() > 1);
         foreach ($duplicateCategories as $items) {
             $names = $items->pluck('name')->join(', ');
@@ -99,23 +99,23 @@ class FinancialAssistantService
             }
         }
 
-        // Check expensive subscriptions
+        
         $expensiveSubs = $subscriptions->filter(fn($s) => $s->monthly_amount > 150000)->sortByDesc('monthly_amount');
         foreach ($expensiveSubs->take(2) as $sub) {
             $recommendations[] = "{$sub->name} ({$sub->formatted_amount}/{$sub->billing_cycle}) termasuk subscription premium. Evaluasi apakah fitur premium benar-benar diperlukan atau bisa downgrade ke paket lebih murah.";
-            $potentialSavings += $sub->monthly_amount * 0.3; // Assume 30% potential saving
+            $potentialSavings += $sub->monthly_amount * 0.3; 
         }
 
-        // Check total spending threshold
+        
         if ($totalMonthly > 1000000) {
             $recommendations[] = 'Total pengeluaran subscription Anda melebihi Rp1.000.000/bulan. Ini setara dengan ' . round($totalYearly / 1000000, 1) . ' juta/tahun. Pertimbangkan untuk mengurangi subscription yang jarang digunakan.';
         }
 
-        // Billing cycle optimization
+        
         $monthlySubs = $subscriptions->where('billing_cycle', 'monthly');
         $yearlySavings = 0;
         foreach ($monthlySubs as $sub) {
-            $yearlyEstimate = $sub->amount * 12 * 0.15; // Assume 15% discount for yearly
+            $yearlyEstimate = $sub->amount * 12 * 0.15; 
             $yearlySavings += $yearlyEstimate;
         }
         if ($yearlySavings > 50000) {

@@ -13,13 +13,13 @@ class SocialController extends Controller
     {
         $user = Auth::user();
 
-        // Pending friend requests received
+        
         $pendingRequests = Friendship::where('friend_id', $user->id)
             ->where('status', 'pending')
             ->with('user')
             ->get();
 
-        // Accepted friends list
+        
         $acceptedFriendships = Friendship::where(function ($query) use ($user) {
             $query->where('user_id', $user->id)->orWhere('friend_id', $user->id);
         })->where('status', 'accepted')->get();
@@ -63,7 +63,7 @@ class SocialController extends Controller
         Friendship::create([
             'user_id' => Auth::id(),
             'friend_id' => $friend->id,
-            'status' => 'accepted', // Auto accept for smooth demo / UX
+            'status' => 'accepted', 
         ]);
 
         return back()->with('success', "Berhasil menambahkan {$friend->name} ({$friend->user_tag}) sebagai teman!");
@@ -98,7 +98,7 @@ class SocialController extends Controller
         Friendship::create([
             'user_id' => Auth::id(),
             'friend_id' => $friend->id,
-            'status' => 'accepted', // Auto accept for smooth demo / UX
+            'status' => 'accepted', 
         ]);
 
         return redirect()->route('social.index')->with('success', "Berhasil menambahkan {$friend->name} ({$friend->user_tag}) sebagai teman dari QR Code!");

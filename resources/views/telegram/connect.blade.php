@@ -7,7 +7,7 @@
 <div class="max-w-3xl space-y-6">
     <div class="card">
         <div class="flex items-center gap-4 mb-6">
-            <div class="icon-box text-2xl" style="background: rgba(124, 58, 237, 0.12);">✈️</div>
+            <div class="icon-box text-2xl" style="background: rgba(124, 58, 237, 0.12);"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>️</div>
             <div>
                 <h3 class="section-title">Status Koneksi</h3>
                 <p class="section-desc">Integrasi notifikasi real-time via Telegram</p>
@@ -17,7 +17,7 @@
         @if($connection && $connection->isVerified())
         <div class="item-row mb-6" style="border-color: rgba(16, 185, 129, 0.3); background: var(--success-bg);">
             <div class="flex items-center gap-3">
-                <span class="text-xl">✅</span>
+                <span class="text-xl"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg></span>
                 <div>
                     <p class="font-bold text-sm" style="color: var(--success);">Terhubung!</p>
                     <p class="text-xs" style="color: var(--text-muted);">Chat ID: {{ $connection->chat_id }}</p>
@@ -28,7 +28,7 @@
         </div>
         <div class="flex flex-wrap gap-3">
             <form method="POST" action="{{ route('telegram.test-notification') }}">@csrf
-                <button type="submit" class="btn-primary text-xs">🚀 Uji Coba Notifikasi</button>
+                <button type="submit" class="btn-primary text-xs"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> Uji Coba Notifikasi</button>
             </form>
             <form method="POST" action="{{ route('telegram.disconnect') }}">@csrf @method('DELETE')
                 <button type="submit" class="btn-danger text-xs" onclick="return confirm('Putuskan koneksi?')">Putuskan</button>
@@ -65,14 +65,14 @@
             </div>
 
             <form method="POST" action="{{ route('telegram.regenerate') }}">@csrf
-                <button type="submit" class="btn-secondary text-xs w-full justify-center">🔄 Generate Kode Baru</button>
+                <button type="submit" class="btn-secondary text-xs w-full justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg> Generate Kode Baru</button>
             </form>
         </div>
         @endif
     </div>
 
     <div class="card">
-        <h3 class="section-title mb-5">📋 History Notifikasi</h3>
+        <h3 class="section-title mb-5"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg> History Notifikasi</h3>
         <div class="overflow-x-auto">
             <table class="modern-table">
                 <thead><tr><th>Subscription</th><th>Tipe</th><th>Status</th><th>Waktu</th></tr></thead>

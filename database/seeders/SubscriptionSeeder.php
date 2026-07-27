@@ -135,7 +135,7 @@ class SubscriptionSeeder extends Seeder
                 $subData
             );
 
-            // Seed historical payment records for past 6 months to sync Home & Payment History page
+            
             for ($i = 5; $i >= 0; $i--) {
                 $payDate = Carbon::now()->subMonths($i)->day(min($sub->payment_date, 28));
                 PaymentHistory::updateOrCreate(

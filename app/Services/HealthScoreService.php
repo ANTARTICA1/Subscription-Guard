@@ -25,21 +25,21 @@ class HealthScoreService
         $totalMonthly = $user->monthlyExpense();
         $subCount = $subscriptions->count();
 
-        // Factor 1: Number of subscriptions (0-25 points)
+        
         $countScore = 25;
         if ($subCount > 15) $countScore = 5;
         elseif ($subCount > 10) $countScore = 10;
         elseif ($subCount > 7) $countScore = 15;
         elseif ($subCount > 5) $countScore = 20;
 
-        // Factor 2: Total monthly cost relative to reasonable budget (0-25 points)
+        
         $costScore = 25;
         if ($totalMonthly > 2000000) $costScore = 5;
         elseif ($totalMonthly > 1500000) $costScore = 10;
         elseif ($totalMonthly > 1000000) $costScore = 15;
         elseif ($totalMonthly > 500000) $costScore = 20;
 
-        // Factor 3: Spending increase trend (0-25 points)
+        
         $trendScore = 25;
         $lastMonth = PaymentHistory::where('user_id', $user->id)
             ->where('payment_date', '>=', now()->subMonths(2)->startOfMonth())
@@ -57,7 +57,7 @@ class HealthScoreService
             elseif ($increase > 5) $trendScore = 20;
         }
 
-        // Factor 4: Expensive subscriptions ratio (0-25 points)
+        
         $expensiveScore = 25;
         $expensive = $subscriptions->filter(fn($s) => $s->monthly_amount > 100000)->count();
         $ratio = $subCount > 0 ? ($expensive / $subCount) * 100 : 0;
@@ -68,7 +68,7 @@ class HealthScoreService
 
         $totalScore = $countScore + $costScore + $trendScore + $expensiveScore;
 
-        // Generate recommendations
+        
         $recommendations = [];
         if ($subCount > 7) {
             $recommendations[] = "Anda memiliki {$subCount} subscription aktif. Pertimbangkan untuk mengevaluasi mana yang masih benar-benar diperlukan.";

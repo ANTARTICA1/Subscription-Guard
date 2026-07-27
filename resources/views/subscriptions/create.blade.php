@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="max-w-3xl">
-    {{-- Presets --}}
+    
     <div class="card mb-6" x-data="{
         fillPreset(name, categoryId, amount, cycle, payDate) {
             document.getElementById('input_name').value = name;
@@ -15,19 +15,19 @@
             document.getElementById('input_paydate').value = payDate;
         }
     }">
-        <h3 class="text-xs font-bold uppercase tracking-wider mb-3" style="color: var(--text-muted);">⚡ Preset Cepat</h3>
+        <h3 class="text-xs font-bold uppercase tracking-wider mb-3" style="color: var(--text-muted);"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> Preset Cepat</h3>
         <div class="flex flex-wrap gap-2">
-            <button type="button" @click="fillPreset('Netflix', 1, 186000, 'monthly', 25)" class="btn-secondary text-xs py-1.5 px-3">🎬 Netflix</button>
-            <button type="button" @click="fillPreset('Spotify Premium', 1, 54990, 'monthly', 28)" class="btn-secondary text-xs py-1.5 px-3">🎵 Spotify</button>
-            <button type="button" @click="fillPreset('Disney+ Hotstar', 1, 159000, 'yearly', 15)" class="btn-secondary text-xs py-1.5 px-3">🏰 Disney+</button>
-            <button type="button" @click="fillPreset('ChatGPT Plus', 6, 315000, 'monthly', 1)" class="btn-secondary text-xs py-1.5 px-3">🤖 ChatGPT</button>
-            <button type="button" @click="fillPreset('IndiHome Broadband', 2, 330000, 'monthly', 10)" class="btn-secondary text-xs py-1.5 px-3">🌐 IndiHome</button>
+            <button type="button" @click="fillPreset('Netflix', 1, 186000, 'monthly', 25)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg> Netflix</button>
+            <button type="button" @click="fillPreset('Spotify Premium', 1, 54990, 'monthly', 28)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg> Spotify</button>
+            <button type="button" @click="fillPreset('Disney+ Hotstar', 1, 159000, 'yearly', 15)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg> Disney+</button>
+            <button type="button" @click="fillPreset('ChatGPT Plus', 6, 315000, 'monthly', 1)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> ChatGPT</button>
+            <button type="button" @click="fillPreset('IndiHome Broadband', 2, 330000, 'monthly', 10)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg> IndiHome</button>
             <button type="button" @click="fillPreset('YouTube Premium', 1, 59000, 'monthly', 20)" class="btn-secondary text-xs py-1.5 px-3">▶️ YouTube</button>
-            <button type="button" @click="fillPreset('iCloud 200GB', 6, 45000, 'monthly', 5)" class="btn-secondary text-xs py-1.5 px-3">☁️ iCloud</button>
+            <button type="button" @click="fillPreset('iCloud 200GB', 6, 45000, 'monthly', 5)" class="btn-secondary text-xs py-1.5 px-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>️ iCloud</button>
         </div>
     </div>
 
-    {{-- Form --}}
+    
     <div class="card">
         @if($errors->any())
         <div class="mb-6 p-3 rounded-xl" style="background: var(--danger-bg); border: 1px solid var(--danger); color: var(--danger); font-size: 0.85rem;">
@@ -116,7 +116,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-3 mt-8 pt-4" style="border-top: 1px solid var(--border-color);">
-                <button type="submit" class="btn-primary">💾 Simpan</button>
+                <button type="submit" class="btn-primary"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg> Simpan</button>
                 <a href="{{ route('subscriptions.index') }}" class="btn-secondary">Batal</a>
             </div>
         </form>

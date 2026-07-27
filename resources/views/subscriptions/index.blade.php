@@ -17,7 +17,7 @@
 @endsection
 
 @section('content')
-{{-- Filter --}}
+
 <div class="card mb-6">
     <form method="GET" class="flex flex-col sm:flex-row flex-wrap items-center gap-3">
         <div class="flex-1 min-w-[220px] w-full">
@@ -47,7 +47,7 @@
     </form>
 </div>
 
-{{-- Cards Grid --}}
+
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 morph-stagger">
     @forelse($subscriptions as $sub)
     <div class="card flex flex-col justify-between">
@@ -101,20 +101,20 @@
             <div class="flex items-center gap-2 pt-3" style="border-top: 1px solid var(--border-color);">
                 <form method="POST" action="{{ route('subscriptions.mark-paid', $sub) }}" class="flex-1">
                     @csrf
-                    <button type="submit" class="btn-secondary text-xs w-full py-1.5 justify-center">⚡ Lunas</button>
+                    <button type="submit" class="btn-secondary text-xs w-full py-1.5 justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> Lunas</button>
                 </form>
                 <form method="POST" action="{{ route('subscriptions.toggle-status', $sub) }}">
                     @csrf
                     <button type="submit" class="btn-secondary text-xs py-1.5 px-2.5">{{ $sub->status === 'active' ? '⏸️' : '▶️' }}</button>
                 </form>
-                <a href="{{ route('subscriptions.edit', $sub) }}" class="btn-secondary text-xs py-1.5 px-2.5">✏️</a>
+                <a href="{{ route('subscriptions.edit', $sub) }}" class="btn-secondary text-xs py-1.5 px-2.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>️</a>
             </div>
         </div>
     </div>
     @empty
     <div class="col-span-full card">
         <div class="empty-state">
-            <span class="empty-icon">📦</span>
+            <span class="empty-icon"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg></span>
             <p class="empty-title">Belum ada subscription</p>
             <p class="empty-desc">Tambahkan subscription pertama Anda untuk mulai mencatat tagihan.</p>
             <a href="{{ route('subscriptions.create') }}" class="btn-primary">+ Tambah Subscription</a>

@@ -12,7 +12,7 @@ class DiscoverController extends Controller
     {
         $user = Auth::user();
 
-        // Cari langganan yang public, aktif, bukan milik user sendiri, dan user belum join.
+        
         $publicSubscriptions = Subscription::public()
             ->active()
             ->where('user_id', '!=', $user->id)

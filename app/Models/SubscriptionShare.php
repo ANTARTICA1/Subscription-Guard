@@ -45,9 +45,9 @@ class SubscriptionShare extends Model
         return 'Rp' . number_format($this->split_amount, 0, ',', '.');
     }
 
-    /**
-     * Generate dynamic QR Code URL for split payment
-     */
+    
+
+
     public function getPaymentQrUrlAttribute(): string
     {
         $payload = "PATUNGAN:" . ($this->subscription->name ?? 'SUBS')

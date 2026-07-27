@@ -4,7 +4,7 @@
 @section('subheading', 'Statistik platform Tatagih')
 
 @section('content')
-{{-- Platform Stats --}}
+
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
     <div class="stat-card indigo">
         <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-3" style="background: rgba(99,102,241,0.15);">
@@ -40,13 +40,13 @@
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-    {{-- User Growth --}}
+    
     <div class="card">
         <h3 class="text-lg font-bold mb-4" style="color: var(--text-primary);">Pertumbuhan User</h3>
         <canvas id="userChart" height="150"></canvas>
     </div>
 
-    {{-- Popular Categories --}}
+    
     <div class="card">
         <h3 class="text-lg font-bold mb-4" style="color: var(--text-primary);">Kategori Populer</h3>
         @foreach($popularCategories as $cat)
@@ -64,10 +64,10 @@
     </div>
 </div>
 
-{{-- Recent Users --}}
+
 <div class="card">
     <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-bold" style="color: var(--text-primary);">👥 User Terbaru</h3>
+        <h3 class="text-lg font-bold" style="color: var(--text-primary);"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg> User Terbaru</h3>
         <a href="{{ route('admin.users') }}" class="text-sm font-medium" style="color: var(--accent-primary);">Lihat Semua →</a>
     </div>
     <div class="overflow-x-auto">

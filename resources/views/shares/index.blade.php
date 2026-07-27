@@ -6,7 +6,7 @@
 @section('content')
 <div class="max-w-6xl space-y-8" x-data="shareFormComponent()">
     
-    {{-- Top Action Bar / Create Form --}}
+    
     <div class="bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-sm p-6 rounded-xl relative overflow-hidden">
         
         <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-[var(--text-primary)]">
@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            {{-- Auto Split Info Box --}}
+            
             <div x-show="subId !== ''" class="p-5 rounded-xl border border-[var(--border-color)] bg-[var(--bg-elevated)] mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <p class="text-sm font-bold text-[var(--text-primary)] mb-1 flex items-center gap-2">
@@ -69,7 +69,7 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {{-- My Shared Subscriptions (HOST) --}}
+        
         <div class="space-y-6">
             <h3 class="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2 border-b border-[var(--border-color)] pb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
@@ -79,7 +79,7 @@
             <div class="space-y-5">
                 @forelse($mySharedSubscriptions as $sub)
                 <div class="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl overflow-hidden shadow-sm" x-data="{ showQrModal: false }">
-                    <!-- Header Group -->
+                    
                     <div class="p-5 border-b border-[var(--border-color)] bg-[var(--bg-elevated)] flex items-center justify-between">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-light)] flex items-center justify-center text-xl shadow-sm">
@@ -108,7 +108,7 @@
                         </div>
                     </div>
 
-                    <!-- Members List -->
+                    
                     <div class="p-4 space-y-3">
                         @foreach($sub->shares as $share)
                         <div class="flex items-center justify-between p-3 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]" x-data="{ showBukti: false }">
@@ -152,11 +152,11 @@
                                 </form>
                             </div>
 
-                            <!-- Modal Bukti TF (Mockup Visual) -->
+                            
                             <div x-show="showBukti" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click.away="showBukti = false">
                                 <div class="bg-[var(--bg-secondary)] p-6 rounded-2xl max-w-sm w-full border border-[var(--border-color)] text-center relative shadow-xl">
                                     <h4 class="text-lg font-bold text-[var(--text-primary)] mb-4">Bukti Transfer</h4>
-                                    <!-- Fake Transfer Receipt -->
+                                    
                                     <div class="bg-white p-4 rounded-xl mb-6 shadow-sm border border-slate-200 text-left text-slate-800">
                                         <div class="border-b border-dashed border-slate-300 pb-3 mb-3 text-center">
                                             <p class="font-black text-xl text-emerald-600">BERHASIL</p>
@@ -186,7 +186,7 @@
                         @endif
                     </div>
 
-                    <!-- Modal QR Join Grup -->
+                    
                     <div x-show="showQrModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click.away="showQrModal = false">
                         <div class="bg-[var(--bg-secondary)] p-8 rounded-2xl max-w-sm w-full border border-[var(--border-color)] text-center shadow-xl">
                             <div class="w-16 h-16 mx-auto bg-[var(--bg-elevated)] border border-[var(--border-color)] text-[var(--text-primary)] rounded-xl flex items-center justify-center mb-4">
@@ -212,7 +212,7 @@
             </div>
         </div>
 
-        {{-- Shared With Me (MEMBER) --}}
+        
         <div class="space-y-6">
             <h3 class="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2 border-b border-[var(--border-color)] pb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" /></svg>
@@ -254,7 +254,7 @@
                     </div>
                     @endif
 
-                    <!-- Modal Upload Bukti TF -->
+                    
                     <div x-show="showUpload" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click.away="showUpload = false">
                         <div class="bg-[var(--bg-secondary)] p-8 rounded-2xl max-w-sm w-full border border-[var(--border-color)] text-center shadow-xl">
                             <h4 class="text-xl font-bold text-[var(--text-primary)] mb-2">Upload Bukti TF</h4>
@@ -273,7 +273,7 @@
                                 
                                 <form method="POST" action="{{ route('shares.mark-paid', $share->id) }}" class="flex-1">
                                     @csrf
-                                    <!-- In reality this would upload a file, but we mock the action by directly marking as paid -->
+                                    
                                     <button type="submit" class="w-full bg-[var(--accent-primary)] text-white font-bold py-3 rounded-xl hover:bg-[var(--accent-secondary)] transition-colors">Kirim Bukti</button>
                                 </form>
                             </div>

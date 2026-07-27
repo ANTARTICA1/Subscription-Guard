@@ -21,13 +21,13 @@ class DashboardController extends Controller
         $yearlyExpense = $user->yearlyExpense();
         $categoryCount = $user->activeSubscriptions->pluck('category_id')->unique()->count();
 
-        // Upcoming payments (next 7 days)
+        
         $upcoming = $user->activeSubscriptions
             ->filter(fn($s) => $s->days_until_payment >= 0 && $s->days_until_payment <= 7)
             ->sortBy('days_until_payment')
             ->take(5);
 
-        // Monthly spending chart data (last 6 months)
+        
         $chartLabels = [];
         $chartData = [];
         for ($i = 5; $i >= 0; $i--) {
@@ -39,15 +39,15 @@ class DashboardController extends Controller
                 ->sum('amount');
         }
 
-        // Category distribution
+        
         $categoryData = $user->activeSubscriptions->groupBy('category.name')->map(function ($items) {
             return $items->sum(fn($s) => $s->monthly_amount);
         });
 
-        // Health score
+        
         $healthScore = $healthScoreService->calculate($user);
 
-        // Recent notifications
+        
         $recentNotifications = Notification::where('user_id', $user->id)
             ->with('subscription')
             ->latest()

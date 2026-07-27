@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="max-w-4xl space-y-6">
-    {{-- My Tag --}}
+    
     <div class="bg-[var(--bg-secondary)] border border-[var(--border-color)] border-l-4 border-l-[var(--accent-primary)] shadow-sm rounded-xl p-5" x-data="{ copied: false, showQrModal: false }">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <!-- QR Code Modal -->
+        
         <div x-show="showQrModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" @click.away="showQrModal = false">
             <div class="bg-[var(--bg-secondary)] p-8 rounded-2xl max-w-sm w-full border border-[var(--border-color)] text-center shadow-xl">
                 <h4 class="text-xl font-bold text-[var(--text-primary)] mb-2">QR Code Saya</h4>
