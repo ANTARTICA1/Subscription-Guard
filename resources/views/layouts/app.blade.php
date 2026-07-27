@@ -220,11 +220,7 @@
             </div>
 
             <div class="flex items-center gap-4">
-                <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-color)]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" /></svg>
-                    <span class="text-xs font-bold text-[var(--text-secondary)]">{{ auth()->user()->user_tag }}</span>
-                </div>
-                
+
                 
                 <button @click="theme = theme === 'dark' ? 'light' : 'dark'" class="p-2 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors" title="Toggle Theme">
                     <template x-if="theme === 'dark'">
