@@ -113,14 +113,14 @@ class TelegramController extends Controller
                 return response()->json([
                     'method' => 'sendMessage',
                     'chat_id' => $chatId,
-                    'text' => "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5 inline-block text-green-500\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M5 13l4 4L19 7\" /></svg> Akun Tatagih berhasil terhubung!\n\nAnda akan menerima reminder tagihan subscription di sini.",
+                    'text' => "✅ Akun Tatagih berhasil terhubung!\n\nAnda akan menerima reminder tagihan subscription di sini.",
                 ]);
             }
 
             return response()->json([
                 'method' => 'sendMessage',
                 'chat_id' => $chatId,
-                'text' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg> Kode verifikasi tidak valid atau sudah digunakan.',
+                'text' => '❌ Kode verifikasi tidak valid atau sudah digunakan.',
             ]);
         }
 
@@ -129,7 +129,7 @@ class TelegramController extends Controller
             return response()->json([
                 'method' => 'sendMessage',
                 'chat_id' => $chatId,
-                'text' => "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5 inline-block text-yellow-500\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11\" /></svg> Selamat datang di Tatagih Bot!\n\nGunakan perintah:\n/connect KODE_VERIFIKASI\n\nDapatkan kode verifikasi di dashboard Tatagih.",
+                'text' => "🤖 Selamat datang di Tatagih Bot!\n\nGunakan perintah:\n/connect KODE_VERIFIKASI\n\nDapatkan kode verifikasi di dashboard Tatagih.",
             ]);
         }
 
