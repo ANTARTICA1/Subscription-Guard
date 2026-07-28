@@ -43,7 +43,26 @@ class PaymentHistoryController extends Controller
             ->where('status', 'paid')
             ->sum('amount');
 
-        return view('payments.index', compact('payments', 'subscriptions', 'chartLabels', 'chartData', 'totalPaid'));
+        // Fetch Split Bill Validations
+        $pendingVerifications = \App\Models\SubscriptionShare::where('owner_id', Auth::id())
+            ->whereNotNull('payment_proof_path')
+            ->where('payment_status', 'pending')
+            ->with(['subscription.category', 'friendUser'])
+            ->latest('updated_at')
+            ->get();
+
+        $historyValidations = \App\Models\SubscriptionShare::where('owner_id', Auth::id())
+            ->whereNotNull('payment_proof_path')
+            ->where('payment_status', 'paid')
+            ->with(['subscription.category', 'friendUser'])
+            ->latest('updated_at')
+            ->take(15)
+            ->get();
+
+        return view('payments.index', compact(
+            'payments', 'subscriptions', 'chartLabels', 'chartData', 'totalPaid', 
+            'pendingVerifications', 'historyValidations'
+        ));
     }
 
     public function store(PaymentHistoryRequest $request)

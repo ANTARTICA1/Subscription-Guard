@@ -154,6 +154,19 @@
                 Subscriptions
             </a>
 
+            @php
+                $pendingValidationsCount = \App\Models\SubscriptionShare::where('owner_id', Auth::id())->whereNotNull('payment_proof_path')->where('payment_status', 'pending')->count();
+            @endphp
+            <a href="{{ route('payments.index') }}" class="nav-link flex justify-between items-center {{ request()->routeIs('payments.*') ? 'active' : '' }}">
+                <div class="flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                    Pusat Pembayaran
+                </div>
+                @if($pendingValidationsCount > 0)
+                    <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{{ $pendingValidationsCount }}</span>
+                @endif
+            </a>
+
             <a href="{{ route('calendar') }}" class="nav-link {{ request()->routeIs('calendar') ? 'active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                 Kalender
