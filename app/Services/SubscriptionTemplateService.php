@@ -20,6 +20,16 @@ class SubscriptionTemplateService
                     ],
                 ],
                 [
+                    'name' => 'YouTube Premium',
+                    'logo' => 'https://icon.horse/icon/youtube.com',
+                    'category' => 'Entertainment',
+                    'plans' => [
+                        ['name' => 'Student', 'price' => 41500],
+                        ['name' => 'Individual', 'price' => 69000],
+                        ['name' => 'Family', 'price' => 139000],
+                    ],
+                ],
+                [
                     'name' => 'Disney+ Hotstar',
                     'logo' => 'https://icon.horse/icon/hotstar.com',
                     'category' => 'Entertainment',
@@ -154,7 +164,9 @@ class SubscriptionTemplateService
                     'logo' => 'https://icon.horse/icon/gemini.google.com',
                     'category' => 'Software',
                     'plans' => [
-                        ['name' => 'Advanced', 'price' => 319000],
+                        ['name' => 'Plus', 'price' => 75000],
+                        ['name' => 'Pro', 'price' => 309000],
+                        ['name' => 'Ultra', 'price' => 1579000],
                     ],
                 ],
                 [
