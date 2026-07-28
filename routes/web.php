@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/shares', [SharedSubscriptionController::class, 'store'])->name('shares.store');
     Route::get('/shares/join/{code}', [SharedSubscriptionController::class, 'joinGroup'])->name('shares.join');
     Route::post('/shares/join/{code}', [SharedSubscriptionController::class, 'confirmJoinGroup'])->name('shares.confirm-join');
+    Route::post('/shares/{id}/upload-proof', [SharedSubscriptionController::class, 'uploadProof'])->name('shares.upload-proof');
     Route::post('/shares/{id}/mark-paid', [SharedSubscriptionController::class, 'markPaid'])->name('shares.mark-paid');
     Route::post('/shares/{id}/send-reminder', [SharedSubscriptionController::class, 'sendReminder'])->name('shares.send-reminder');
     Route::post('/shares/{id}/toggle-public', [SharedSubscriptionController::class, 'togglePublic'])->name('shares.toggle-public');

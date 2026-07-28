@@ -91,6 +91,27 @@ class SharedSubscriptionController extends Controller
         return back()->with('success', "Berhasil menambahkan {$friendUser->name}! Tagihan terhitung otomatis: Rp" . number_format($finalSplitAmount, 0, ',', '.') . " / orang ({$totalMembers} anggota termasuk Ketua).");
     }
 
+    public function uploadProof(Request $request, $id)
+    {
+        $share = SubscriptionShare::where('id', $id)->where('friend_user_id', Auth::id())->firstOrFail();
+
+        $request->validate([
+            'proof' => 'required|image|max:2048',
+        ]);
+
+        if ($request->hasFile('proof')) {
+            $path = $request->file('proof')->store('proofs', 'public');
+            
+            $share->update([
+                'payment_proof_path' => $path,
+            ]);
+
+            return back()->with('success', 'Bukti transfer berhasil diunggah! Menunggu validasi dari Ketua.');
+        }
+
+        return back()->with('error', 'Gagal mengunggah bukti transfer.');
+    }
+
     public function markPaid($id)
     {
         $share = SubscriptionShare::where('id', $id)->where('owner_id', Auth::id())->firstOrFail();
@@ -170,7 +191,13 @@ class SharedSubscriptionController extends Controller
 
     public function destroy($id)
     {
-        $share = SubscriptionShare::where('id', $id)->where('owner_id', Auth::id())->firstOrFail();
+        $share = SubscriptionShare::where('id', $id)
+            ->where(function($q) {
+                $q->where('owner_id', Auth::id())
+                  ->orWhere('friend_user_id', Auth::id());
+            })->firstOrFail();
+
+        $isOwner = $share->owner_id === Auth::id();
         $subscription = $share->subscription;
         $share->delete();
 
@@ -178,7 +205,11 @@ class SharedSubscriptionController extends Controller
             $this->recalculateAutoSplits($subscription);
         }
 
-        return back()->with('success', 'Anggota patungan berhasil dihapus dan porsi patungan dihitung ulang!');
+        $message = $isOwner 
+            ? 'Anggota patungan berhasil dihapus dan porsi patungan dihitung ulang!' 
+            : 'Anda berhasil menolak/keluar dari grup patungan tersebut!';
+
+        return back()->with('success', $message);
     }
 
     public function togglePublic($id)

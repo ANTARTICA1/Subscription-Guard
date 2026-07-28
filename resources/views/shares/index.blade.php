@@ -131,17 +131,25 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                                         Bukti
                                     </button>
-                                @else
-                                    <span class="px-2 py-1 rounded text-[10px] font-bold bg-amber-500/10 text-amber-500 border border-amber-500/30">
-                                        MENUNGGAK
+                                @elseif($share->payment_proof_path)
+                                    <span class="px-2 py-1 rounded text-[10px] font-bold bg-blue-500/10 text-blue-500 border border-blue-500/30">
+                                        MENUNGGU VALIDASI
                                     </span>
-                                    <form method="POST" action="{{ route('shares.mark-paid', $share->id) }}">
+                                    <button @click="showBukti = true" class="px-2 py-1 rounded text-[10px] font-bold bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-color)] hover:bg-[var(--bg-secondary)] flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                        Bukti
+                                    </button>
+                                    <form method="POST" action="{{ route('shares.mark-paid', $share->id) }}" class="ml-1">
                                         @csrf
                                         <button type="submit" class="px-2 py-1 rounded text-[10px] font-bold bg-[var(--text-primary)] text-[var(--bg-primary)] hover:opacity-80 transition-colors flex items-center gap-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                                             Validasi
                                         </button>
                                     </form>
+                                @else
+                                    <span class="px-2 py-1 rounded text-[10px] font-bold bg-amber-500/10 text-amber-500 border border-amber-500/30">
+                                        BELUM BAYAR
+                                    </span>
                                 @endif
 
                                 <form method="POST" action="{{ route('shares.destroy', $share->id) }}" onsubmit="return confirm('Keluarkan anggota ini?')">
@@ -157,21 +165,20 @@
                                 <div class="bg-[var(--bg-secondary)] p-6 rounded-2xl max-w-sm w-full border border-[var(--border-color)] text-center relative shadow-xl">
                                     <h4 class="text-lg font-bold text-[var(--text-primary)] mb-4">Bukti Transfer</h4>
                                     
-                                    <div class="bg-white p-4 rounded-xl mb-6 shadow-sm border border-slate-200 text-left text-slate-800">
-                                        <div class="border-b border-dashed border-slate-300 pb-3 mb-3 text-center">
-                                            <p class="font-black text-xl text-emerald-600">BERHASIL</p>
-                                            <p class="text-xs text-slate-500">{{ date('d M Y, H:i') }}</p>
-                                        </div>
-                                        <p class="text-xs font-bold text-slate-500 mb-1">Transfer ke:</p>
-                                        <p class="font-bold text-sm mb-3">Ketua {{ $sub->user->name ?? 'Anda' }}</p>
+                                    <div class="bg-[var(--bg-primary)] p-2 rounded-xl mb-6 shadow-sm border border-[var(--border-color)] text-center">
+                                        @if($share->payment_proof_path)
+                                            <img src="{{ Storage::url($share->payment_proof_path) }}" alt="Bukti Transfer" class="w-full rounded-lg object-contain max-h-64 mb-3">
+                                        @else
+                                            <div class="py-8 text-[var(--text-muted)] flex flex-col items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                                <p class="text-xs">Tidak ada gambar bukti</p>
+                                            </div>
+                                        @endif
+                                        <p class="text-xs font-bold text-[var(--text-secondary)] mb-1">Transfer ke:</p>
+                                        <p class="font-bold text-sm mb-3 text-[var(--text-primary)]">Ketua {{ $sub->user->name ?? 'Anda' }}</p>
                                         
-                                        <p class="text-xs font-bold text-slate-500 mb-1">Nominal:</p>
-                                        <p class="font-black text-2xl text-slate-800">{{ $share->formatted_split_amount }}</p>
-                                        
-                                        <div class="mt-4 pt-3 border-t border-dashed border-slate-300 flex justify-between items-center text-[10px] text-slate-400">
-                                            <span>Ref: 8374928374{{ $share->id }}</span>
-                                            <span>Tatagih Pay</span>
-                                        </div>
+                                        <p class="text-xs font-bold text-[var(--text-secondary)] mb-1">Nominal:</p>
+                                        <p class="font-black text-2xl text-[var(--text-primary)]">{{ $share->formatted_split_amount }}</p>
                                     </div>
                                     <button @click="showBukti = false" class="w-full bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-color)] font-bold py-3 rounded-xl hover:bg-[var(--bg-primary)] transition-colors">
                                         Tutup
@@ -239,6 +246,8 @@
                             <p class="text-lg font-black text-[var(--text-primary)]">{{ $share->formatted_split_amount }}</p>
                             @if($share->payment_status === 'paid')
                                 <span class="px-2 py-1 rounded text-[10px] font-bold bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] border border-[var(--accent-primary)]/30">SUDAH LUNAS</span>
+                            @elseif($share->payment_proof_path)
+                                <span class="px-2 py-1 rounded text-[10px] font-bold bg-blue-500/10 text-blue-500 border border-blue-500/30">MENUNGGU VALIDASI</span>
                             @else
                                 <span class="px-2 py-1 rounded text-[10px] font-bold bg-amber-500/10 text-amber-500 border border-amber-500/30">BELUM BAYAR</span>
                             @endif
@@ -246,8 +255,14 @@
                     </div>
 
                     @if($share->payment_status !== 'paid')
-                    <div class="pt-4 border-t border-[var(--border-color)]">
-                        <button @click="showUpload = true" class="w-full bg-[var(--bg-elevated)] text-[var(--text-primary)] hover:bg-[var(--bg-primary)] border border-[var(--border-color)] font-bold py-2 rounded-lg text-sm transition-colors flex items-center justify-center gap-2">
+                    <div class="pt-4 border-t border-[var(--border-color)] flex gap-2">
+                        <form method="POST" action="{{ route('shares.destroy', $share->id) }}" onsubmit="return confirm('Anda yakin ingin menolak dan keluar dari grup patungan ini?')" class="flex-none">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white border border-red-500/30 font-bold py-2 px-3 rounded-lg text-sm transition-colors flex items-center justify-center h-full" title="Tolak Patungan">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            </button>
+                        </form>
+                        <button @click="showUpload = true" class="flex-1 bg-[var(--bg-elevated)] text-[var(--text-primary)] hover:bg-[var(--bg-primary)] border border-[var(--border-color)] font-bold py-2 rounded-lg text-sm transition-colors flex items-center justify-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
                             Upload Bukti Transfer
                         </button>
@@ -260,23 +275,24 @@
                             <h4 class="text-xl font-bold text-[var(--text-primary)] mb-2">Upload Bukti TF</h4>
                             <p class="text-sm text-[var(--text-muted)] mb-6">Silakan transfer <strong>{{ $share->formatted_split_amount }}</strong> ke rekening Ketua, lalu upload buktinya ke sini.</p>
                             
-                            <div class="border-2 border-dashed border-[var(--border-color)] rounded-xl p-8 mb-6 hover:border-[var(--accent-primary)] hover:bg-[var(--bg-elevated)] transition-colors cursor-pointer group bg-[var(--bg-primary)]">
-                                <div class="w-12 h-12 mx-auto rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-light)] flex items-center justify-center mb-3 group-hover:bg-[var(--accent-primary)]/10 group-hover:text-[var(--accent-primary)] group-hover:border-[var(--accent-primary)]/30 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--text-muted)] group-hover:text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                                </div>
-                                <p class="text-sm font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]">Pilih File Screenshot</p>
-                                <p class="text-[10px] text-[var(--text-muted)] mt-1">JPG, PNG (Max. 2MB)</p>
-                            </div>
-                            
-                            <div class="flex gap-3">
-                                <button @click="showUpload = false" class="flex-1 bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-color)] font-bold py-3 rounded-xl hover:bg-[var(--bg-primary)] transition-colors">Batal</button>
+                            <form method="POST" action="{{ route('shares.upload-proof', $share->id) }}" enctype="multipart/form-data">
+                                @csrf
                                 
-                                <form method="POST" action="{{ route('shares.mark-paid', $share->id) }}" class="flex-1">
-                                    @csrf
+                                <label for="proof_{{ $share->id }}" class="block border-2 border-dashed border-[var(--border-color)] rounded-xl p-8 mb-6 hover:border-[var(--accent-primary)] hover:bg-[var(--bg-elevated)] transition-colors cursor-pointer group bg-[var(--bg-primary)]">
+                                    <div class="w-12 h-12 mx-auto rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-light)] flex items-center justify-center mb-3 group-hover:bg-[var(--accent-primary)]/10 group-hover:text-[var(--accent-primary)] group-hover:border-[var(--accent-primary)]/30 transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--text-muted)] group-hover:text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                                    </div>
+                                    <p class="text-sm font-bold text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]">Pilih File Screenshot</p>
+                                    <p class="text-[10px] text-[var(--text-muted)] mt-1">JPG, PNG (Max. 2MB)</p>
+                                    <input type="file" id="proof_{{ $share->id }}" name="proof" class="hidden" accept="image/jpeg, image/png, image/jpg" required>
+                                </label>
+                                
+                                <div class="flex gap-3">
+                                    <button type="button" @click="showUpload = false" class="flex-1 bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-color)] font-bold py-3 rounded-xl hover:bg-[var(--bg-primary)] transition-colors">Batal</button>
                                     
-                                    <button type="submit" class="w-full bg-[var(--accent-primary)] text-white font-bold py-3 rounded-xl hover:bg-[var(--accent-secondary)] transition-colors">Kirim Bukti</button>
-                                </form>
-                            </div>
+                                    <button type="submit" class="flex-1 bg-[var(--accent-primary)] text-white font-bold py-3 rounded-xl hover:bg-[var(--accent-secondary)] transition-colors">Kirim Bukti</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

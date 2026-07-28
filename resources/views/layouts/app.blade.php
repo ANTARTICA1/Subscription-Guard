@@ -12,9 +12,15 @@
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
     
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    <script>
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme) {
+            document.documentElement.setAttribute('data-theme', storedTheme);
+        }
+    </script>
     <style>
-        /* Flat UI overrides for body */
+        [x-cloak] { display: none !important; }
         body {
             background-color: var(--bg-primary);
             color: var(--text-primary);
@@ -24,7 +30,6 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* Clean Sidebar styling */
         .admin-sidebar {
             background-color: var(--bg-secondary);
             border-right: 1px solid var(--border-color);
@@ -103,7 +108,6 @@
             margin: 1.5rem 0 0.5rem 1rem;
         }
 
-        /* Responsive */
         @media (max-width: 1024px) {
             .admin-sidebar {
                 transform: translateX(-100%);
@@ -153,11 +157,6 @@
             <a href="{{ route('calendar') }}" class="nav-link {{ request()->routeIs('calendar') ? 'active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                 Kalender
-            </a>
-
-            <a href="{{ route('payments.index') }}" class="nav-link {{ request()->routeIs('payments.*') ? 'active' : '' }}">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                Pembayaran
             </a>
 
             <p class="section-label">Social & Tim</p>

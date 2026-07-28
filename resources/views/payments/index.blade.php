@@ -96,7 +96,16 @@
             <tbody>
                 @forelse($payments as $payment)
                 <tr>
-                    <td><div class="flex items-center gap-2.5"><span class="text-base">{{ $payment->subscription->category->icon ?? '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>' }}</span><span class="font-bold" style="color: var(--text-primary);">{{ $payment->subscription->name ?? 'Dihapus' }}</span></div></td>
+                    <td>
+                        <div class="flex items-center gap-2.5">
+                            @if($payment->subscription?->logo)
+                                <img src="{{ $payment->subscription->logo }}" alt="{{ $payment->subscription->name }}" class="w-6 h-6 object-contain bg-white rounded p-0.5 border" style="border-color: var(--border-color);" onerror="this.style.display='none'">
+                            @else
+                                <span class="text-base">{!! $payment->subscription?->category?->icon ?? '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>' !!}</span>
+                            @endif
+                            <span class="font-bold" style="color: var(--text-primary);">{{ $payment->subscription->name ?? 'Dihapus' }}</span>
+                        </div>
+                    </td>
                     <td class="font-extrabold" style="color: var(--text-primary);">{{ $payment->formatted_amount }}</td>
                     <td style="color: var(--text-secondary);">{{ $payment->payment_date->translatedFormat('d M Y') }}</td>
                     <td><span class="badge badge-{{ $payment->status }}">{{ strtoupper($payment->status) }}</span></td>
