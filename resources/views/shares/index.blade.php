@@ -7,14 +7,15 @@
 <div class="max-w-6xl space-y-8" x-data="shareFormComponent()">
     
     
-    <div class="bg-[var(--bg-secondary)] border border-[var(--border-color)] shadow-sm p-6 rounded-xl relative overflow-hidden">
-        
-        <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-[var(--text-primary)]">
-            <div class="w-8 h-8 rounded-lg bg-[var(--accent-primary)]/10 text-[var(--accent-primary)] flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-            </div>
-            Buat Grup Patungan Baru
-        </h3>
+    <div class="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-2xl p-6 shadow-sm mb-8">
+            <h3 class="text-xl font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                Tambah Anggota ke Langganan Anda
+            </h3>
+            
+            <p class="text-sm text-[var(--text-muted)] mb-6 border-l-4 border-[var(--accent-primary)] pl-3 bg-[var(--accent-primary)]/5 py-2 rounded-r-lg">
+                <strong>Catatan:</strong> Form ini akan <u>menambahkan teman</u> ke tagihan langganan yang sudah Anda miliki. Jika Anda ingin membuat grup/tagihan yang sepenuhnya terpisah untuk orang lain, silakan <a href="{{ route('subscriptions.index') }}" class="text-[var(--accent-primary)] font-bold hover:underline">Buat Langganan Baru</a> terlebih dahulu.
+            </p>
 
         <form method="POST" action="{{ route('shares.store') }}">
             @csrf
@@ -48,7 +49,7 @@
                         Kalkulasi Pembagian Otomatis
                     </p>
                     <p class="text-xs text-[var(--text-muted)]">
-                        Total <span x-text="existingCount + 1" class="text-[var(--text-primary)] font-bold"></span> Orang (Ketua + Anggota). Tagihan akan dibagi rata.
+                        Total <span x-text="existingCount + 2" class="text-[var(--text-primary)] font-bold"></span> Orang (Ketua + Anggota). Tagihan akan dibagi rata.
                     </p>
                 </div>
                 
