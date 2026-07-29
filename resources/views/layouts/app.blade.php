@@ -20,7 +20,7 @@
     <style>
         [x-cloak] { display: none !important; }
         body {
-            background-color: var(--bg-primary);
+            background-color: #f8fafc;
             color: var(--text-primary);
             font-family: 'Inter', system-ui, sans-serif;
             margin: 0;
@@ -47,12 +47,12 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background-color: var(--bg-primary);
+            background-color: #f8fafc;
         }
         
         .admin-header {
             height: 70px;
-            background-color: var(--bg-primary);
+            background-color: #ffffff;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;

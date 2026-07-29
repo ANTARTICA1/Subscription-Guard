@@ -41,7 +41,7 @@ class SharedSubscriptionController extends Controller
 
         
         $sharedWithMe = SubscriptionShare::where('friend_user_id', $user->id)
-            ->with(['subscription.category', 'owner'])
+            ->with(['subscription.category', 'owner', 'subscription.shares'])
             ->get();
 
         return view('shares.index', compact('mySharedSubscriptions', 'mySubscriptions', 'friends', 'sharedWithMe'));
@@ -100,6 +100,9 @@ class SharedSubscriptionController extends Controller
         ]);
 
         if ($request->hasFile('proof')) {
+            if ($share->payment_proof_path) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($share->payment_proof_path);
+            }
             $path = $request->file('proof')->store('proofs', 'public');
             
             $share->update([
@@ -110,6 +113,22 @@ class SharedSubscriptionController extends Controller
         }
 
         return back()->with('error', 'Gagal mengunggah bukti transfer.');
+    }
+
+    public function rejectProof($id)
+    {
+        $share = SubscriptionShare::where('id', $id)->where('owner_id', Auth::id())->firstOrFail();
+        
+        if ($share->payment_proof_path) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($share->payment_proof_path);
+        }
+
+        $share->update([
+            'payment_proof_path' => null,
+            'payment_status' => 'pending',
+        ]);
+
+        return back()->with('success', "Bukti bayar dari {$share->friend_name} telah ditolak. Mereka harus mengunggah ulang.");
     }
 
     public function markPaid($id)

@@ -15,6 +15,7 @@ class SubscriptionShare extends Model
         'split_amount',
         'payment_status',
         'due_date',
+        'payment_proof_path',
     ];
 
     protected function casts(): array

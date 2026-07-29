@@ -111,6 +111,26 @@
 
                     
                     <div class="p-4 space-y-3">
+                        <h5 class="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Daftar Anggota Grup</h5>
+                        
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-amber-500/5 border border-amber-500/20">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-600 font-bold">
+                                    {{ substr(auth()->user()->name, 0, 1) }}
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-[var(--text-primary)]">{{ auth()->user()->name }} <span class="text-xs font-normal text-[var(--text-muted)]">(Anda)</span></p>
+                                    <p class="text-xs text-[var(--text-muted)]">Ketua Grup • Menanggung Rp{{ number_format($sub->amount / ($sub->shares->count() + 1), 0, ',', '.') }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-1 rounded text-[10px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/30 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                                    KETUA
+                                </span>
+                            </div>
+                        </div>
+
                         @foreach($sub->shares as $share)
                         <div class="flex items-center justify-between p-3 rounded-xl bg-[var(--bg-primary)] border border-[var(--border-color)]" x-data="{ showBukti: false }">
                             <div class="flex items-center gap-3">
@@ -142,9 +162,16 @@
                                     </button>
                                     <form method="POST" action="{{ route('shares.mark-paid', $share->id) }}" class="ml-1">
                                         @csrf
-                                        <button type="submit" class="px-2 py-1 rounded text-[10px] font-bold bg-[var(--text-primary)] text-[var(--bg-primary)] hover:opacity-80 transition-colors flex items-center gap-1">
+                                        <button type="submit" class="px-2 py-1 rounded text-[10px] font-bold bg-green-500 text-white hover:bg-green-600 transition-colors flex items-center gap-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                                            Validasi
+                                            Terima
+                                        </button>
+                                    </form>
+                                    <form method="POST" action="{{ route('shares.reject-proof', $share->id) }}" class="ml-1" onsubmit="return confirm('Tolak bukti bayar ini? Gambar akan dihapus dan status dikembalikan ke Menunggu Pembayaran.')">
+                                        @csrf
+                                        <button type="submit" class="px-2 py-1 rounded text-[10px] font-bold bg-red-500 text-white hover:bg-red-600 transition-colors flex items-center gap-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                            Tolak
                                         </button>
                                     </form>
                                 @else
@@ -252,6 +279,42 @@
                             @else
                                 <span class="px-2 py-1 rounded text-[10px] font-bold bg-amber-500/10 text-amber-500 border border-amber-500/30">BELUM BAYAR</span>
                             @endif
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t border-[var(--border-color)]">
+                        <p class="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-3">Daftar Anggota Grup ({{ $share->subscription->shares->count() + 1 }} Orang)</p>
+                        <div class="space-y-2">
+                            
+                            <div class="flex items-center justify-between p-2 rounded-lg bg-amber-500/5 border border-amber-500/20">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-full bg-amber-500/10 text-amber-600 flex items-center justify-center text-xs font-bold">
+                                        {{ substr($share->owner->name, 0, 1) }}
+                                    </div>
+                                    <p class="text-sm font-bold text-[var(--text-primary)]">{{ $share->owner->name }}</p>
+                                </div>
+                                <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/30 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                                    KETUA
+                                </span>
+                            </div>
+                            
+                            
+                            @foreach($share->subscription->shares as $memberShare)
+                            <div class="flex items-center justify-between p-2 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-color)]">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-light)] flex items-center justify-center text-xs font-bold text-[var(--text-primary)]">
+                                        {{ substr($memberShare->friend_name, 0, 1) }}
+                                    </div>
+                                    <p class="text-sm font-bold text-[var(--text-primary)]">
+                                        {{ $memberShare->friend_name }} 
+                                        @if($memberShare->friend_user_id === auth()->id())
+                                            <span class="text-xs font-normal text-[var(--text-muted)]">(Anda)</span>
+                                        @endif
+                                    </p>
+                                </div>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
 
