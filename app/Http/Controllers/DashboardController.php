@@ -11,6 +11,26 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
+    private function generateSparklinePath(array $data)
+    {
+        if (empty($data)) return 'M0,15 L100,15';
+        $min = min($data);
+        $max = max($data);
+        $range = $max - $min;
+        if ($range == 0) return 'M0,15 L100,15';
+
+        $points = [];
+        $count = count($data);
+        $step = 100 / max(1, $count - 1);
+        
+        foreach ($data as $i => $value) {
+            $x = $i * $step;
+            $y = 25 - ((($value - $min) / $range) * 20); // y maps from 5 to 25
+            $points[] = ($i === 0 ? 'M' : 'L') . round($x) . ',' . round($y);
+        }
+        return implode(' ', $points);
+    }
+
     public function index(HealthScoreService $healthScoreService)
     {
         $user = Auth::user();
@@ -92,6 +112,13 @@ class DashboardController extends Controller
             }
         }
 
+        // Generate dynamic sparklines based on real payment history trend
+        $maxExpense = max($chartData) ?: 1;
+        $activeSparkline = $this->generateSparklinePath(array_map(fn($v) => round(($v / $maxExpense) * $activeCount), $chartData));
+        $monthlySparkline = $this->generateSparklinePath($chartData);
+        $yearlySparkline = $this->generateSparklinePath(array_map(fn($v) => $v * 12, $chartData));
+        $categorySparkline = $this->generateSparklinePath(array_map(fn($v) => round(($v / $maxExpense) * $categoryCount), $chartData));
+
         return view('dashboard.index', compact(
             'user',
             'activeCount',
@@ -104,7 +131,11 @@ class DashboardController extends Controller
             'categoryData',
             'healthScore',
             'recentNotifications',
-            'calendarEvents'
+            'calendarEvents',
+            'activeSparkline',
+            'monthlySparkline',
+            'yearlySparkline',
+            'categorySparkline'
         ));
     }
 }

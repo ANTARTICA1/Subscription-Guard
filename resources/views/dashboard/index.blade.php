@@ -13,67 +13,99 @@
 @section('content')
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-    <div class="stat-card" x-data="{ count: 0 }" x-init="
+    <div class="bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md" style="border-radius: 20px; padding: 20px; border: 1px solid #f1f5f9;" x-data="{ count: 0 }" x-init="
         let target = {{ $activeCount }};
         let step = Math.ceil(target / 30);
         let interval = setInterval(() => { count += step; if(count >= target) { count = target; clearInterval(interval); } }, 30);
     ">
-        <div class="flex items-center justify-between">
-            <span class="stat-label">Active Subscriptions</span>
-            <div class="icon-box" style="background: var(--success-bg);">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" style="color: var(--success);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <div class="flex items-center gap-3 mb-4">
+            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: #f3e8ff; color: #9333ea;">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
+            <span class="text-sm font-semibold text-gray-500">Active Subscriptions</span>
         </div>
-        <div>
-            <p class="stat-value" x-text="count"></p>
-            <p class="stat-sub">Layanan aktif dipantau</p>
+        <div class="flex items-end justify-between">
+            <div>
+                <p class="text-2xl font-black text-gray-900 leading-none" x-text="count"></p>
+                <p class="text-gray-400 font-medium mt-2" style="font-size: 11px;">Layanan aktif digunakan</p>
+            </div>
+            <div style="width: 64px; height: 32px;">
+                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #9333ea; fill: none;">
+                    <path d="{{ $activeSparkline }} L100,35 L0,35 Z" style="fill: rgba(147, 51, 234, 0.15); stroke: none;" />
+                    <path d="{{ $activeSparkline }}" />
+                </svg>
+            </div>
         </div>
     </div>
 
-    <div class="stat-card" x-data="{ count: 0 }" x-init="
+    <div class="bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md" style="border-radius: 20px; padding: 20px; border: 1px solid #f1f5f9;" x-data="{ count: 0 }" x-init="
         let target = {{ $monthlyExpense }};
         let step = Math.ceil(target / 40);
         let interval = setInterval(() => { count += step; if(count >= target) { count = target; clearInterval(interval); } }, 25);
     ">
-        <div class="flex items-center justify-between">
-            <span class="stat-label">Pengeluaran Bulanan</span>
-            <div class="icon-box" style="background: var(--warning-bg);">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" style="color: var(--warning);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <div class="flex items-center gap-3 mb-4">
+            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: #dcfce7; color: #16a34a;">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
+            <span class="text-sm font-semibold text-gray-500">Pengeluaran Bulanan</span>
         </div>
-        <div>
-            <p class="stat-value" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
-            <p class="stat-sub">Total estimasi per bulan</p>
+        <div class="flex items-end justify-between">
+            <div>
+                <p class="text-2xl font-black text-gray-900 leading-none" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
+                <p class="text-gray-400 font-medium mt-2" style="font-size: 11px;">Total estimasi per bulan</p>
+            </div>
+            <div style="width: 64px; height: 32px;">
+                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #16a34a; fill: none;">
+                    <path d="{{ $monthlySparkline }} L100,35 L0,35 Z" style="fill: rgba(22, 163, 74, 0.15); stroke: none;" />
+                    <path d="{{ $monthlySparkline }}" />
+                </svg>
+            </div>
         </div>
     </div>
 
-    <div class="stat-card" x-data="{ count: 0 }" x-init="
+    <div class="bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md" style="border-radius: 20px; padding: 20px; border: 1px solid #f1f5f9;" x-data="{ count: 0 }" x-init="
         let target = {{ $yearlyExpense }};
         let step = Math.ceil(target / 40);
         let interval = setInterval(() => { count += step; if(count >= target) { count = target; clearInterval(interval); } }, 25);
     ">
-        <div class="flex items-center justify-between">
-            <span class="stat-label">Proyeksi Tahunan</span>
-            <div class="icon-box" style="background: var(--info-bg);">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" style="color: var(--info);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+        <div class="flex items-center gap-3 mb-4">
+            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: #e0f2fe; color: #0284c7;">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
             </div>
+            <span class="text-sm font-semibold text-gray-500">Proyeksi Tahunan</span>
         </div>
-        <div>
-            <p class="stat-value" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
-            <p class="stat-sub">Estimasi 12 bulan</p>
+        <div class="flex items-end justify-between">
+            <div>
+                <p class="text-2xl font-black text-gray-900 leading-none" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
+                <p class="text-gray-400 font-medium mt-2" style="font-size: 11px;">Estimasi 12 bulan</p>
+            </div>
+            <div style="width: 64px; height: 32px;">
+                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #0284c7; fill: none;">
+                    <path d="{{ $yearlySparkline }} L100,35 L0,35 Z" style="fill: rgba(2, 132, 199, 0.15); stroke: none;" />
+                    <path d="{{ $yearlySparkline }}" />
+                </svg>
+            </div>
         </div>
     </div>
 
-    <div class="stat-card">
-        <div class="flex items-center justify-between">
-            <span class="stat-label">Kategori Aktif</span>
-            <div class="icon-box" style="background: rgba(124,58,237,0.12);">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" style="color: var(--accent-primary);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
+    <div class="bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md" style="border-radius: 20px; padding: 20px; border: 1px solid #f1f5f9;">
+        <div class="flex items-center gap-3 mb-4">
+            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: #ffedd5; color: #ea580c;">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
             </div>
+            <span class="text-sm font-semibold text-gray-500">Kategori Aktif</span>
         </div>
-        <div>
-            <p class="stat-value">{{ $categoryCount }}</p>
-            <p class="stat-sub">Kategori digunakan</p>
+        <div class="flex items-end justify-between">
+            <div>
+                <p class="text-2xl font-black text-gray-900 leading-none">{{ $categoryCount }}</p>
+                <p class="text-gray-400 font-medium mt-2" style="font-size: 11px;">Kategori digunakan</p>
+            </div>
+            <div style="width: 64px; height: 32px;">
+                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #ea580c; fill: none;">
+                    <path d="{{ $categorySparkline }} L100,35 L0,35 Z" style="fill: rgba(234, 88, 12, 0.15); stroke: none;" />
+                    <path d="{{ $categorySparkline }}" />
+                </svg>
+            </div>
         </div>
     </div>
 </div>
@@ -312,6 +344,31 @@
             <p class="empty-desc text-sm">Belum ada notifikasi baru untuk Anda hari ini.</p>
         </div>
         @endforelse
+    </div>
+</div>
+
+<div class="mt-8 border border-blue-100 p-5 flex flex-col sm:flex-row items-center justify-between shadow-sm" style="background: linear-gradient(to right, #eff6ff, #eef2ff); border-radius: 1rem;">
+    <div class="flex items-center gap-4">
+        <div class="bg-white shadow-sm flex items-center justify-center text-blue-600" style="width: 48px; height: 48px; border-radius: 12px;">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+        </div>
+        <div>
+            <h4 class="text-sm font-bold text-gray-900">AI Assistant</h4>
+            <p class="text-xs text-gray-500 font-medium">Insight untukmu</p>
+        </div>
+    </div>
+    <div class="mt-4 sm:mt-0 flex-1 sm:px-8 text-center sm:text-left">
+        <p class="text-sm font-bold text-gray-800">Kamu bisa hemat Rp240.000/tahun!</p>
+        <p class="text-gray-500 font-medium" style="font-size: 11px;">Ada 1 layanan yang jarang digunakan. <a href="#" class="text-blue-600 hover:underline">Lihat rekomendasi →</a></p>
+    </div>
+    <div class="mt-4 sm:mt-0 flex items-center gap-3">
+        <button class="font-bold text-xs py-2 px-5 transition-colors flex items-center gap-2" style="background-color: #dcfce7; color: #16a34a; border-radius: 9999px; border: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+            Cek Sekarang
+        </button>
+        <button class="text-gray-400 hover:text-gray-600 p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
     </div>
 </div>
 

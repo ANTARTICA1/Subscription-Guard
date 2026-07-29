@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +13,9 @@
     
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
     <script>
-        const storedTheme = localStorage.getItem('theme');
-        if (storedTheme) {
-            document.documentElement.setAttribute('data-theme', storedTheme);
-        }
+        document.documentElement.setAttribute('data-theme', 'light');
     </script>
     <style>
         [x-cloak] { display: none !important; }
@@ -31,8 +29,8 @@
         }
         
         .admin-sidebar {
-            background-color: var(--bg-secondary);
-            border-right: 1px solid var(--border-color);
+            background-color: #0b1120;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
             width: 280px;
             height: 100vh;
             position: fixed;
@@ -70,7 +68,7 @@
             align-items: center;
             gap: 0.75rem;
             padding: 0.75rem 1rem;
-            color: var(--text-secondary);
+            color: #94a3b8;
             border-radius: 0.5rem;
             font-weight: 500;
             font-size: 0.875rem;
@@ -79,14 +77,14 @@
         }
         
         .nav-link:hover {
-            background-color: var(--bg-elevated);
-            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
         }
         
         .nav-link.active {
-            background-color: var(--accent-primary);
+            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
             color: #ffffff;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
         }
 
         .nav-link svg {
@@ -104,7 +102,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: var(--text-muted);
+            color: #475569;
             margin: 1.5rem 0 0.5rem 1rem;
         }
 
@@ -121,9 +119,7 @@
         }
     </style>
 </head>
-<body x-data="{ sidebarOpen: false, theme: localStorage.getItem('theme') || 'dark' }"
-      x-init="$watch('theme', val => { document.documentElement.setAttribute('data-theme', val); localStorage.setItem('theme', val); })"
-      :data-theme="theme">
+<body x-data="{ sidebarOpen: false }" data-theme="light">
 
     
     <div x-show="sidebarOpen" 
@@ -135,9 +131,9 @@
     
     <aside class="admin-sidebar" :class="{ 'open': sidebarOpen }">
         
-        <div class="flex items-center gap-3 px-6 h-[70px] border-b border-[var(--border-color)]">
+        <div class="flex items-center gap-3 px-6 h-[70px] border-b border-[rgba(255,255,255,0.05)]">
             <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black" style="background: var(--accent-gradient);">T</div>
-            <span class="text-lg font-bold text-[var(--text-primary)] tracking-tight">Tatagih</span>
+            <span class="text-lg font-bold text-white tracking-tight">Tatagih</span>
         </div>
 
         
@@ -219,37 +215,32 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                 </button>
                 <div>
-                    <h2 class="text-xl font-bold text-[var(--text-primary)]">@yield('heading', 'Dashboard')</h2>
-                    @hasSection('subheading')
-                    <p class="text-xs text-[var(--text-muted)] mt-1 hidden md:block">@yield('subheading')</p>
-                    @endif
+                    <h2 class="font-extrabold text-[var(--text-primary)] tracking-tight" style="font-size: 1.35rem;">Halo, {{ explode(' ', auth()->user()->name)[0] }}!</h2>
+                    <p class="text-xs text-[var(--text-muted)] mt-1 hidden md:block font-medium">Ringkasan & kontrol subscription anda</p>
                 </div>
             </div>
 
             <div class="flex items-center gap-4">
-
                 
-                <button @click="theme = theme === 'dark' ? 'light' : 'dark'" class="p-2 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-color)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors" title="Toggle Theme">
-                    <template x-if="theme === 'dark'">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                    </template>
-                    <template x-if="theme === 'light'">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-                    </template>
+                <div class="hidden md:flex items-center bg-white shadow-sm transition-all" style="border: 1px solid #e2e8f0; border-radius: 9999px; padding: 6px 16px;">
+                    <input type="text" placeholder="Cari subscription, kategori, atau..." style="background: transparent; border: none; outline: none; font-size: 12px; width: 220px; color: #334155;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" style="color: #0ea5e9;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </div>
+                
+                <button class="transition-colors relative flex items-center justify-center bg-white shadow-sm" style="border: 1px solid #e2e8f0; border-radius: 50%; width: 34px; height: 34px; color: #64748b;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
                 </button>
 
                 
                 <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open" @click.away="open = false" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-color)] hover:bg-[var(--border-color)] transition-colors">
+                    <button @click="open = !open" @click.away="open = false" class="flex items-center justify-center transition-colors bg-white shadow-sm" style="border: 1px solid #e2e8f0; border-radius: 50%; padding: 3px; width: 34px; height: 34px;">
                         @if(auth()->user()->avatar)
-                            <img src="{{ Storage::url(auth()->user()->avatar) }}" alt="Avatar" class="w-6 h-6 rounded-full object-cover border border-[var(--accent-primary)]">
+                            <img src="{{ Storage::url(auth()->user()->avatar) }}" alt="Avatar" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;">
                         @else
-                            <div class="w-6 h-6 rounded-full bg-[var(--accent-primary)] text-white flex items-center justify-center text-[10px] font-bold">
+                            <div class="rounded-full bg-[#e0e7ff] text-[#4f46e5] flex items-center justify-center font-bold" style="width: 28px; height: 28px; font-size: 11px; background-color: #e0e7ff; color: #4f46e5;">
                                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                             </div>
                         @endif
-                        <span class="text-sm font-bold text-[var(--text-primary)] hidden md:block">{{ auth()->user()->name }}</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                     </button>
 
                     
