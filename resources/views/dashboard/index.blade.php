@@ -170,10 +170,15 @@
                             {{ $sub->days_until_payment === 0 ? 'HARI INI' : $sub->days_until_payment . ' hari' }}
                         </span>
                     </div>
-                    <form method="POST" action="{{ route('subscriptions.mark-paid', $sub) }}">
-                        @csrf
-                        <button type="submit" class="btn-primary text-xs py-1.5 px-3">Bayar</button>
-                    </form>
+                    <div class="flex flex-col gap-1.5">
+                        <form method="POST" action="{{ route('subscriptions.mark-paid', $sub) }}">
+                            @csrf
+                            <button type="submit" class="btn-primary text-[10px] sm:text-xs py-1.5 px-3 w-full">Bayar</button>
+                        </form>
+                        @if($sub->cancel_url)
+                        <a href="{{ $sub->cancel_url }}" target="_blank" class="btn-secondary text-[10px] py-1 px-2 text-center text-[var(--danger)] hover:bg-[var(--danger-bg)] hover:border-[var(--danger)] transition-colors">Setop</a>
+                        @endif
+                    </div>
                 </div>
             </div>
             @empty

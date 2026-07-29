@@ -151,6 +151,40 @@ class Subscription extends Model
         return 'Rp' . number_format($this->amount, 0, ',', '.');
     }
 
+    public function getCancelUrlAttribute(): ?string
+    {
+        $name = strtolower($this->name);
+        
+        $urls = [
+            'netflix' => 'https://www.netflix.com/cancelplan',
+            'spotify' => 'https://www.spotify.com/account/change-plan/cancel/',
+            'youtube' => 'https://www.youtube.com/paid_memberships',
+            'xbox' => 'https://account.microsoft.com/services',
+            'game pass' => 'https://account.microsoft.com/services',
+            'apple' => 'https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/manageSubscriptions',
+            'disney' => 'https://www.disneyplus.com/account/subscription',
+            'amazon' => 'https://www.amazon.com/mc/pipelines/cancellation',
+            'prime' => 'https://www.amazon.com/mc/pipelines/cancellation',
+            'canva' => 'https://www.canva.com/settings/billing',
+            'chatgpt' => 'https://chat.openai.com/account/manage',
+            'openai' => 'https://chat.openai.com/account/manage',
+            'adobe' => 'https://account.adobe.com/plans',
+            'zoom' => 'https://zoom.us/billing',
+            'playstation' => 'https://id.sonyentertainmentnetwork.com/id/management/',
+            'ps plus' => 'https://id.sonyentertainmentnetwork.com/id/management/',
+            'google one' => 'https://one.google.com/settings',
+            'icloud' => 'https://support.apple.com/kb/HT207594',
+        ];
+
+        foreach ($urls as $keyword => $url) {
+            if (str_contains($name, $keyword)) {
+                return $url;
+            }
+        }
+
+        return null;
+    }
+
     public function getJoinUrlAttribute(): string
     {
         return route('shares.join', ['code' => $this->invite_code ?? 'GRP-DEMO']);

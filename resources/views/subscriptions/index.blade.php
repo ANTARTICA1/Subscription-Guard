@@ -112,6 +112,12 @@
             @endif
 
             <div class="flex justify-center gap-1.5 pt-3" style="border-top: 1px solid var(--border-color);" onclick="event.stopPropagation()">
+                @if($sub->cancel_url && $sub->status === 'active')
+                <a href="{{ $sub->cancel_url }}" target="_blank" class="btn-secondary text-[10px] sm:text-xs flex-1 py-1.5 flex flex-col xl:flex-row items-center justify-center gap-1 shadow-sm text-[var(--danger)] hover:border-[var(--danger)] hover:bg-[var(--danger-bg)] transition-colors" title="Batalkan Langganan Resmi">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+                    <span>Setop</span>
+                </a>
+                @endif
                 <form method="POST" action="{{ route('subscriptions.mark-paid', $sub) }}" class="flex-1">
                     @csrf
                     <button type="submit" class="btn-secondary text-[10px] sm:text-xs w-full py-1.5 flex flex-col xl:flex-row items-center justify-center gap-1 shadow-sm hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors" title="Bayar">
