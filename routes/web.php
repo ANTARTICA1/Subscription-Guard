@@ -7,7 +7,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SubscriptionController;
-use App\Http\Controllers\CalendarController;
+
 use App\Http\Controllers\PaymentHistoryController;
 use App\Http\Controllers\TelegramController;
 use App\Http\Controllers\FinancialAssistantController;
@@ -75,8 +75,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/comparisons', [SubscriptionComparisonController::class, 'index'])->name('comparisons.index');
 
-    
-    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
+
 
     
     Route::get('/payments', [PaymentHistoryController::class, 'index'])->name('payments.index');

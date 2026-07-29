@@ -69,7 +69,7 @@
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black" style="background: var(--accent-primary);">T</div>
-                <span class="text-xl font-bold tracking-tight text-[var(--text-primary)]">Tatagih SaaS</span>
+                <span class="text-xl font-bold tracking-tight text-[var(--text-primary)]">Tatagih</span>
             </div>
             <div class="hidden md:flex items-center gap-8 text-sm font-bold text-[var(--text-secondary)]">
                 <a href="#fitur" class="hover:text-[var(--text-primary)] transition-colors">Fitur</a>
@@ -328,7 +328,7 @@
             <a href="{{ route('register') }}" class="btn-finance text-lg px-10 py-4 rounded-xl inline-block shadow-lg">Daftar Sekarang — Gratis</a>
         </div>
         <div class="mt-20 pt-8 border-t border-[var(--border-color)] text-sm font-bold text-[var(--text-muted)] relative z-10">
-            &copy; {{ date('Y') }} Tatagih SaaS. All rights reserved.
+            &copy; {{ date('Y') }} Tatagih. All rights reserved.
         </div>
     </footer>
 

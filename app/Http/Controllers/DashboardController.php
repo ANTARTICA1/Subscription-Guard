@@ -54,6 +54,44 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        $now = Carbon::now();
+        $calendarEvents = [];
+        foreach ($user->activeSubscriptions as $sub) {
+            $day = $sub->payment_date;
+            if ($sub->billing_cycle === 'monthly') {
+                $lastDay = $now->copy()->endOfMonth()->day;
+                $payDay = min($day, $lastDay);
+                $calendarEvents[] = [
+                    'title' => $sub->name,
+                    'date' => $now->copy()->day($payDay)->format('Y-m-d'),
+                    'color' => $sub->category->color ?? '#6366f1',
+                ];
+            } elseif ($sub->billing_cycle === 'yearly') {
+                $yearlyDate = Carbon::createFromDate($now->year, 1, 1)->addDays($day - 1);
+                if ($yearlyDate->month === $now->month) {
+                    $calendarEvents[] = [
+                        'title' => $sub->name,
+                        'date' => $yearlyDate->format('Y-m-d'),
+                        'color' => $sub->category->color ?? '#6366f1',
+                    ];
+                }
+            } elseif ($sub->billing_cycle === 'weekly') {
+                $startOfMonth = $now->copy()->startOfMonth();
+                $endOfMonth = $now->copy()->endOfMonth();
+                $current = $startOfMonth->copy();
+                while ($current <= $endOfMonth) {
+                    if ($current->dayOfWeek === ($day % 7)) {
+                        $calendarEvents[] = [
+                            'title' => $sub->name,
+                            'date' => $current->format('Y-m-d'),
+                            'color' => $sub->category->color ?? '#6366f1',
+                        ];
+                    }
+                    $current->addDay();
+                }
+            }
+        }
+
         return view('dashboard.index', compact(
             'user',
             'activeCount',
@@ -65,7 +103,8 @@ class DashboardController extends Controller
             'chartData',
             'categoryData',
             'healthScore',
-            'recentNotifications'
+            'recentNotifications',
+            'calendarEvents'
         ));
     }
 }

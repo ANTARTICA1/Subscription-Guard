@@ -125,13 +125,13 @@ class SharedSubscriptionController extends Controller
         $share = SubscriptionShare::where('id', $id)->where('owner_id', Auth::id())->with('friendUser', 'subscription')->firstOrFail();
 
         if ($share->friendUser && $share->friendUser->telegram_chat_id) {
-            $message = "🔔 <b>Reminder Patungan Tatagih</b>\n\n"
+            $message = "<b>Reminder Patungan Tatagih</b>\n\n"
                 . "Halo <b>{$share->friend_name}</b>, Anda memiliki tagihan patungan subscription:\n\n"
-                . "📌 Layanan: <b>{$share->subscription->name}</b>\n"
-                . "💰 Bagian Anda: <b>{$share->formatted_split_amount}</b>\n"
-                . "👤 Pemilik Akun: <b>" . Auth::user()->name . "</b>\n\n"
+                . "Layanan: <b>{$share->subscription->name}</b>\n"
+                . "Bagian Anda: <b>{$share->formatted_split_amount}</b>\n"
+                . "Pemilik Akun: <b>" . Auth::user()->name . "</b>\n\n"
                 . "Mohon segera melakukan transfer/pembayaran patungan.\n\n"
-                . "📱 QRIS / QR Payment: " . $share->payment_qr_url;
+                . "QRIS / QR Payment: " . $share->payment_qr_url;
 
             $sent = $telegramService->sendMessage($share->friendUser->telegram_chat_id, $message);
 

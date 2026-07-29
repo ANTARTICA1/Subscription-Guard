@@ -113,14 +113,14 @@ class TelegramController extends Controller
                 return response()->json([
                     'method' => 'sendMessage',
                     'chat_id' => $chatId,
-                    'text' => "✅ Akun Tatagih berhasil terhubung!\n\nAnda akan menerima reminder tagihan subscription di sini.",
+                    'text' => "Akun Tatagih berhasil terhubung!\n\nAnda akan menerima reminder tagihan subscription di sini.",
                 ]);
             }
 
             return response()->json([
                 'method' => 'sendMessage',
                 'chat_id' => $chatId,
-                'text' => '❌ Kode verifikasi tidak valid atau sudah digunakan.',
+                'text' => 'Kode verifikasi tidak valid atau sudah digunakan.',
             ]);
         }
 
@@ -129,7 +129,7 @@ class TelegramController extends Controller
             return response()->json([
                 'method' => 'sendMessage',
                 'chat_id' => $chatId,
-                'text' => "🤖 Selamat datang di Tatagih Bot!\n\nGunakan perintah:\n/connect KODE_VERIFIKASI\n\nDapatkan kode verifikasi di dashboard Tatagih.",
+                'text' => "Selamat datang di Tatagih Bot!\n\nGunakan perintah:\n/connect KODE_VERIFIKASI\n\nDapatkan kode verifikasi di dashboard Tatagih.",
             ]);
         }
 

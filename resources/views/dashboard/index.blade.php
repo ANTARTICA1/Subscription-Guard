@@ -12,15 +12,6 @@
 
 @section('content')
 
-<div class="welcome-banner mb-8" x-data="{ greeting: '' }" x-init="
-    const h = new Date().getHours();
-    greeting = h < 11 ? 'Selamat Pagi' : h < 15 ? 'Selamat Siang' : h < 18 ? 'Selamat Sore' : 'Selamat Malam';
-">
-    <h2 x-text="greeting + ', {{ $user->name }}!'"></h2>
-    <p>Berikut ringkasan subscription Anda hari ini. Tetap pantau dan kelola dengan bijak.</p>
-</div>
-
-
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
     <div class="stat-card" x-data="{ count: 0 }" x-init="
         let target = {{ $activeCount }};
@@ -143,15 +134,14 @@
 </div>
 
 
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
     
-    <div class="card">
+    <div class="card lg:col-span-1">
         <div class="flex items-center justify-between mb-5">
             <h3 class="section-title flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 Tagihan Terdekat
             </h3>
-            <a href="{{ route('calendar') }}" class="btn-ghost text-xs">Kalender →</a>
         </div>
 
         <div class="space-y-3">
@@ -199,7 +189,7 @@
     </div>
 
     
-    <div class="card">
+    <div class="card lg:col-span-1">
         <h3 class="section-title mb-5 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
             Distribusi Kategori
@@ -218,6 +208,65 @@
             <canvas id="categoryChart"></canvas>
         </div>
         @endif
+    </div>
+
+    
+    <div class="card lg:col-span-1" x-data="miniCalendar()" x-init="init()">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="section-title flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                Kalender
+            </h3>
+            <span class="text-xs font-bold" style="color: var(--text-primary);" x-text="monthTitle"></span>
+        </div>
+
+        <div class="grid gap-1 mb-2" style="grid-template-columns: repeat(7, minmax(0, 1fr));">
+            <template x-for="day in ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']">
+                <div class="text-center text-[10px] font-bold py-1" style="color: var(--text-muted);" x-text="day"></div>
+            </template>
+        </div>
+
+        <div class="grid gap-1" style="grid-template-columns: repeat(7, minmax(0, 1fr));">
+            <template x-for="(day, index) in calendarDays" :key="index">
+                <div @click="if(day.hasEvent) selectedDay = day" 
+                     class="relative w-full pt-[100%] rounded-md transition-colors" 
+                     :class="(day.day > 0 ? (day.isToday ? 'bg-[var(--accent-primary)] text-white' : (day.hasEvent ? 'bg-[var(--bg-elevated)] cursor-pointer hover:bg-[var(--border-color)]' : '')) : '') + (selectedDay && selectedDay.day === day.day && day.day > 0 ? ' ring-2 ring-[var(--accent-primary)] ring-offset-1 ring-offset-[var(--bg-secondary)]' : '')"
+                     :title="day.hasEvent ? day.events.map(e => e.title).join(', ') : ''">
+                    <div class="absolute inset-0 flex items-center justify-center text-xs font-medium">
+                        <span x-text="day.day > 0 ? day.day : ''" :class="day.hasEvent && !day.isToday ? 'text-[var(--accent-primary)] font-bold' : ''"></span>
+                        <template x-if="day.hasEvent">
+                            <div class="absolute bottom-1 flex gap-0.5 justify-center w-full">
+                                <template x-for="event in day.events.slice(0, 3)">
+                                    <div class="w-1 h-1 rounded-full" :style="'background-color:' + (day.isToday ? 'white' : event.color)"></div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </div>
+        
+        <div class="mt-4 pt-3 border-t border-[var(--border-color)] min-h-[4rem] flex flex-col justify-center">
+            <template x-if="selectedDay">
+                <div>
+                    <p class="text-[11px] font-bold text-[var(--text-primary)] mb-2" x-text="'Tagihan tgl ' + selectedDay.day + ' ' + monthTitle + ':'"></p>
+                    <div class="space-y-1.5">
+                        <template x-for="event in selectedDay.events">
+                            <div class="flex items-center gap-2 text-xs">
+                                <div class="w-2 h-2 rounded-full flex-shrink-0" :style="'background-color:' + event.color"></div>
+                                <span class="text-[var(--text-secondary)] font-medium truncate" x-text="event.title"></span>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+            <template x-if="!selectedDay && hasAnyEvent">
+                <p class="text-[11px] text-[var(--text-muted)] text-center">Klik tanggal bertitik untuk melihat detail</p>
+            </template>
+            <template x-if="!hasAnyEvent">
+                <p class="text-[11px] text-[var(--text-muted)] text-center">Tidak ada tagihan bulan ini</p>
+            </template>
+        </div>
     </div>
 </div>
 
@@ -262,6 +311,40 @@
 </div>
 
 <script>
+function miniCalendar() {
+    return {
+        currentDate: new Date(),
+        events: @json($calendarEvents),
+        calendarDays: [],
+        monthTitle: '',
+        selectedDay: null,
+        hasAnyEvent: false,
+        init() {
+            const year = this.currentDate.getFullYear();
+            const month = this.currentDate.getMonth();
+            const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+            this.monthTitle = months[month] + ' ' + year;
+            const firstDay = new Date(year, month, 1);
+            let startDay = firstDay.getDay() - 1;
+            if (startDay < 0) startDay = 6;
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+            this.calendarDays = [];
+            for (let i = 0; i < startDay; i++) { this.calendarDays.push({ day: 0, events: [], hasEvent: false, isToday: false }); }
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+                const dayEvents = this.events.filter(e => e.date === dateStr);
+                const isToday = today.getDate() === d && today.getMonth() === month && today.getFullYear() === year;
+                this.calendarDays.push({ day: d, events: dayEvents, hasEvent: dayEvents.length > 0, isToday });
+            }
+            this.hasAnyEvent = this.events.length > 0;
+            
+            const todayObj = this.calendarDays.find(d => d.isToday && d.hasEvent);
+            if (todayObj) this.selectedDay = todayObj;
+        }
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
     const gridColor = isDark ? 'rgba(148, 163, 184, 0.06)' : 'rgba(124, 58, 237, 0.06)';
