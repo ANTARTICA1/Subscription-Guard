@@ -16,11 +16,9 @@
     <div class="w-full max-w-md relative z-10" style="animation: morphIn 0.8s cubic-bezier(0.22, 1, 0.36, 1);">
         
         <div class="text-center mb-8" style="animation: morphFadeUp 0.6s ease-out 0.2s both;">
-            <div class="mx-auto mb-4" style="width: 64px; height: 64px; border-radius: 20px; display: flex; align-items: center; justify-content: center; background: var(--accent-gradient); box-shadow: 0 8px 30px var(--accent-glow); color: #fff; font-weight: 900; font-size: 1.6rem; transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);"
-                 onmouseenter="this.style.transform='rotate(-10deg) scale(1.1)'"
+            <img src="{{ asset('images/logo.png') }}" alt="Tatagih Logo" class="mx-auto mb-6" style="width: 160px; height: auto; filter: drop-shadow(0 15px 35px rgba(139, 92, 246, 0.35)); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);"
+                 onmouseenter="this.style.transform='rotate(-5deg) scale(1.05)'"
                  onmouseleave="this.style.transform='rotate(0) scale(1)'">
-                T
-            </div>
             <h1 class="text-3xl font-bold" style="color: var(--text-primary); letter-spacing: -0.03em;">Tatagih</h1>
             <p class="text-sm mt-1" style="color: var(--text-muted);">Subscription Manager</p>
         </div>

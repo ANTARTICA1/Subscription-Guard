@@ -22,13 +22,13 @@
     --text-secondary: #cbd5e1;
     --text-muted: #64748b;
     
-    /* Emerald Green & Professional Blue Accents */
-    --accent-primary: #10b981;
-    --accent-secondary: #059669;
-    --accent-tertiary: #34d399;
-    --accent-gradient: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
-    --accent-gradient-wide: linear-gradient(135deg, #10b981 0%, #0ea5e9 50%, #3b82f6 100%);
-    --accent-glow: rgba(16, 185, 129, 0.15); /* Sangat halus, bukan neon */
+    /* Violet & Professional Blue Accents (Matching Logo) */
+    --accent-primary: #8b5cf6;
+    --accent-secondary: #6d28d9;
+    --accent-tertiary: #a78bfa;
+    --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+    --accent-gradient-wide: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #0ea5e9 100%);
+    --accent-glow: rgba(139, 92, 246, 0.25); /* Glow ungu halus */
     
     --success: #10b981;
     --success-bg: rgba(16, 185, 129, 0.18);
@@ -41,7 +41,7 @@
     
     --border-color: rgba(255, 255, 255, 0.08);
     --border-light: rgba(255, 255, 255, 0.15);
-    --border-accent: rgba(16, 185, 129, 0.4);
+    --border-accent: rgba(139, 92, 246, 0.4);
     
     --shadow-sm: 0 4px 12px rgba(0,0,0,0.25);
     --shadow-md: 0 8px 24px rgba(0,0,0,0.35);
@@ -69,10 +69,10 @@
     --text-secondary: #334155;
     --text-muted: #64748b;
     
-    --accent-primary: #059669;
-    --accent-secondary: #047857;
-    --accent-tertiary: #10b981;
-    --accent-glow: rgba(5, 150, 105, 0.1);
+    --accent-primary: #7c3aed;
+    --accent-secondary: #6d28d9;
+    --accent-tertiary: #8b5cf6;
+    --accent-glow: rgba(124, 58, 237, 0.15);
     
     --success-bg: rgba(16, 185, 129, 0.12);
     --warning-bg: rgba(245, 158, 11, 0.12);
@@ -81,7 +81,7 @@
     
     --border-color: rgba(15, 23, 42, 0.08);
     --border-light: rgba(15, 23, 42, 0.12);
-    --border-accent: rgba(5, 150, 105, 0.3);
+    --border-accent: rgba(124, 58, 237, 0.3);
     
     --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
     --shadow-md: 0 8px 24px rgba(0,0,0,0.08);

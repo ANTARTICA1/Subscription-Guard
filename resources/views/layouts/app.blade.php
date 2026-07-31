@@ -132,8 +132,8 @@
     <aside class="admin-sidebar" :class="{ 'open': sidebarOpen }">
         
         <div class="flex items-center gap-3 px-6 h-[70px] border-b border-[rgba(255,255,255,0.05)]">
-            <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black" style="background: var(--accent-gradient);">T</div>
-            <span class="text-lg font-bold text-white tracking-tight">Tatagih</span>
+            <img src="{{ asset('images/logo.png') }}" alt="Tatagih Logo" class="h-16 w-auto">
+            <span class="text-2xl font-bold text-white tracking-tight">Tatagih</span>
         </div>
 
         

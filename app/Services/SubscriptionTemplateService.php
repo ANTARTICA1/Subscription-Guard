@@ -40,7 +40,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'Vidio',
-                    'logo' => 'https://icon.horse/icon/vidio.com',
+                    'logo' => 'https://ui-avatars.com/api/?name=Vidio&background=e4202d&color=fff&bold=true',
                     'category' => 'Entertainment',
                     'plans' => [
                         ['name' => 'Platinum', 'price' => 43000],
@@ -48,7 +48,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'Vision+',
-                    'logo' => 'https://icon.horse/icon/visionplus.id',
+                    'logo' => 'https://www.google.com/s2/favicons?domain=visionplus.id&sz=128',
                     'category' => 'Entertainment',
                     'plans' => [
                         ['name' => 'Premium', 'price' => 20000],
@@ -57,7 +57,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'Prime Video',
-                    'logo' => 'https://icon.horse/icon/primevideo.com',
+                    'logo' => 'https://ui-avatars.com/api/?name=Prime+Video&background=00a8e1&color=fff&bold=true',
                     'category' => 'Entertainment',
                     'plans' => [
                         ['name' => 'Mobile', 'price' => 39000],
@@ -152,7 +152,7 @@ class SubscriptionTemplateService
             'AI & Productivity' => [
                 [
                     'name' => 'ChatGPT',
-                    'logo' => 'https://icon.horse/icon/chatgpt.com',
+                    'logo' => 'https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128',
                     'category' => 'Software',
                     'plans' => [
                         ['name' => 'Plus', 'price' => 349000],
@@ -272,7 +272,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'Dropbox',
-                    'logo' => 'https://icon.horse/icon/dropbox.com',
+                    'logo' => 'https://ui-avatars.com/api/?name=Dropbox&background=0061fe&color=fff&bold=true',
                     'category' => 'Internet',
                     'plans' => [
                         ['name' => 'Plus 2TB', 'price' => 195000],
@@ -281,7 +281,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'OneDrive',
-                    'logo' => 'https://icon.horse/icon/onedrive.live.com',
+                    'logo' => 'https://www.google.com/s2/favicons?domain=onedrive.live.com&sz=128',
                     'category' => 'Internet',
                     'plans' => [
                         ['name' => 'Standalone 100GB', 'price' => 28999],
@@ -332,7 +332,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'EA Play',
-                    'logo' => 'https://icon.horse/icon/ea.com',
+                    'logo' => 'https://ui-avatars.com/api/?name=EA+Play&background=ff4747&color=fff&bold=true',
                     'category' => 'Gaming',
                     'plans' => [
                         ['name' => 'Standard', 'price' => 87000],
@@ -340,7 +340,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'Ubisoft+',
-                    'logo' => 'https://icon.horse/icon/ubisoft.com',
+                    'logo' => 'https://ui-avatars.com/api/?name=Ubisoft&background=000000&color=fff&bold=true',
                     'category' => 'Gaming',
                     'plans' => [
                         ['name' => 'PC Access', 'price' => 275000],
@@ -359,7 +359,7 @@ class SubscriptionTemplateService
             'Podcast & Audio' => [
                 [
                     'name' => 'Noice',
-                    'logo' => 'https://icon.horse/icon/noice.id',
+                    'logo' => 'https://ui-avatars.com/api/?name=Noice&background=ffea00&color=000&bold=true',
                     'category' => 'Entertainment',
                     'plans' => [
                         ['name' => 'Premium', 'price' => 40000],
@@ -379,7 +379,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'Google Workspace',
-                    'logo' => 'https://icon.horse/icon/workspace.google.com',
+                    'logo' => 'https://ui-avatars.com/api/?name=Workspace&background=4285F4&color=fff&bold=true',
                     'category' => 'Software',
                     'plans' => [
                         ['name' => 'Starter', 'price' => 96000],

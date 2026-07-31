@@ -68,8 +68,8 @@
     <nav class="solid-nav fixed w-full top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black" style="background: var(--accent-primary);">T</div>
-                <span class="text-xl font-bold tracking-tight text-[var(--text-primary)]">Tatagih</span>
+                <img src="{{ asset('images/logo.png') }}" alt="Tatagih Logo" class="h-16 w-auto">
+                <span class="text-2xl font-bold tracking-tight text-[var(--text-primary)]">Tatagih</span>
             </div>
             <div class="hidden md:flex items-center gap-8 text-sm font-bold text-[var(--text-secondary)]">
                 <a href="#fitur" class="hover:text-[var(--text-primary)] transition-colors">Fitur</a>
@@ -166,7 +166,7 @@
                 <div class="lg:w-1/2 scroll-fade-up" x-intersect="$el.classList.add('intersect-active')">
                     <h2 class="text-3xl md:text-5xl font-black text-[var(--text-primary)] leading-tight mb-4">Sistem Patungan <br><span class="text-[var(--text-secondary)]">Super Canggih</span></h2>
                     <p class="text-[var(--text-secondary)] text-lg font-medium mb-8 leading-relaxed">
-                        Punya langganan Netflix atau Spotify Family? Bagi biayanya secara otomatis. Sistem kami memantau siapa yang sudah bayar dan siapa yang menunggak. Lengkap dengan validasi <strong>Bukti Transfer</strong> untuk transparansi grup.
+                        Punya tagihan kos, internet, atau patungan langganan keluarga? Bagi biayanya secara otomatis. Sistem kami memantau siapa yang sudah bayar dan siapa yang menunggak. Lengkap dengan validasi <strong>Bukti Transfer</strong> untuk transparansi grup.
                     </p>
                     <ul class="space-y-4 mb-8">
                         <li class="flex items-center gap-3 text-[var(--text-primary)] font-bold">
@@ -197,7 +197,7 @@
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-[var(--bg-elevated)] border border-[var(--border-light)] rounded-lg flex items-center justify-center text-xl font-bold">N</div>
                                     <div>
-                                        <p class="font-bold text-sm text-[var(--text-primary)]">Netflix Premium 4K</p>
+                                        <p class="font-bold text-sm text-[var(--text-primary)]">Patungan Internet Kos</p>
                                         <p class="text-xs text-[var(--text-secondary)]">Rp46.500 / orang</p>
                                     </div>
                                 </div>
@@ -267,7 +267,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
                     </div>
-                    <p class="text-[var(--text-secondary)] text-sm mb-4 leading-relaxed font-medium">"Mengelola tagihan kos dan Netflix keluarga jadi gampang banget. Fitur Split Bill sangat membantu mencatat siapa saja yang nunggak."</p>
+                    <p class="text-[var(--text-secondary)] text-sm mb-4 leading-relaxed font-medium">"Mengelola tagihan kos dan patungan langganan keluarga jadi gampang banget. Fitur Split Bill sangat membantu mencatat siapa saja yang nunggak."</p>
                     <p class="text-[var(--text-primary)] font-bold text-sm">— Anita K.</p>
                 </div>
             </div>
