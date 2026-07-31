@@ -412,7 +412,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const gridColor = isDark ? 'rgba(148, 163, 184, 0.06)' : 'rgba(124, 58, 237, 0.06)';
     const tickColor = isDark ? '#586882' : '#7c7399';
 
-    // Spending Chart
     const spendingCtx = document.getElementById('spendingChart').getContext('2d');
     const gradient = spendingCtx.createLinearGradient(0, 0, 0, 260);
     gradient.addColorStop(0, 'rgba(124, 58, 237, 0.25)');
@@ -475,7 +474,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Category Chart
     const categoryCtx = document.getElementById('categoryChart').getContext('2d');
     const categoryData = @json($categoryData);
     new Chart(categoryCtx, {

@@ -213,7 +213,7 @@ $availableOptions = array_merge($mySubs, $allTemplates);
                         </td>
                         @endforeach
                     </tr>
-                    <tr class="hover:bg-[var(--bg-elevated)] transition-colors">
+                    <tr class="border-b border-[var(--border-color)] hover:bg-[var(--bg-elevated)] transition-colors">
                         <td class="p-5 font-semibold text-[var(--text-secondary)] align-top">Cocok Untuk</td>
                         @foreach($group['items'] as $item)
                         <td class="p-5 border-l border-[var(--border-color)] align-top">
@@ -221,6 +221,30 @@ $availableOptions = array_merge($mySubs, $allTemplates);
                         </td>
                         @endforeach
                     </tr>
+                    @if(isset($group['items'][0]['analytics']))
+                    <tr class="border-b border-[var(--border-color)] hover:bg-[var(--bg-elevated)] transition-colors bg-indigo-50/30">
+                        <td class="p-5 font-bold text-indigo-900 align-top flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                            Metrik Efisiensi
+                        </td>
+                        @foreach($group['items'] as $item)
+                        <td class="p-5 border-l border-[var(--border-color)] align-top">
+                            <span class="inline-block bg-white border border-indigo-100 rounded-md px-3 py-1 text-sm font-semibold text-indigo-700 shadow-sm">{{ $item['analytics']['cost_per_feature'] }}</span>
+                        </td>
+                        @endforeach
+                    </tr>
+                    <tr class="hover:bg-[var(--bg-elevated)] transition-colors bg-indigo-50/50">
+                        <td class="p-5 font-bold text-indigo-900 align-top flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                            AI Insight & ROI
+                        </td>
+                        @foreach($group['items'] as $item)
+                        <td class="p-5 border-l border-indigo-100 align-top">
+                            <p class="text-sm font-medium text-indigo-900 leading-relaxed">{{ $item['analytics']['switching_roi'] }}</p>
+                        </td>
+                        @endforeach
+                    </tr>
+                    @endif
                 </tbody>
             </table>
         </div>

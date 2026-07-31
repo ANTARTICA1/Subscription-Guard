@@ -3,12 +3,16 @@
 namespace App\Services;
 
 use App\Models\User;
+use Carbon\Carbon;
 
 class FinancialAssistantService
 {
-    
+    private HealthScoreService $healthScoreService;
 
-
+    public function __construct(HealthScoreService $healthScoreService)
+    {
+        $this->healthScoreService = $healthScoreService;
+    }
 
     public function analyze(User $user): array
     {
@@ -19,99 +23,101 @@ class FinancialAssistantService
 
         if ($subCount === 0) {
             return [
-                'summary' => 'Anda belum memiliki subscription aktif.',
+                'summary' => 'Anda belum memiliki subscription aktif. Data tidak cukup untuk dianalisis.',
                 'total_monthly' => 0,
                 'total_yearly' => 0,
+                'health_score' => 0,
+                'health_data' => $this->healthScoreService->calculateUnifiedScore($user, 0),
+                'personality' => 'Belum Ada Data',
                 'potential_savings' => 0,
                 'insights' => [],
-                'recommendations' => ['Mulai catat subscription Anda untuk mendapatkan analisis keuangan.'],
+                'recommendations' => ['Mulai catat subscription Anda untuk mendapatkan analisis keuangan intelijen.'],
                 'category_breakdown' => [],
             ];
         }
 
+        $healthData = $this->healthScoreService->calculateUnifiedScore($user, 0);
+        $healthScore = $healthData['score'];
+
+        $categoryGroups = $subscriptions->groupBy('category_id');
+        $maxCategoryConcentration = 0;
         
-        $categoryBreakdown = $subscriptions->groupBy('category.name')->map(function ($items, $category) {
+        $categoryBreakdown = $subscriptions->groupBy('category.name')->map(function ($items, $category) use (&$maxCategoryConcentration, $totalMonthly) {
             $total = $items->sum(fn($s) => $s->monthly_amount);
+            $ratio = $totalMonthly > 0 ? ($total / $totalMonthly) : 0;
+            if ($ratio > $maxCategoryConcentration) $maxCategoryConcentration = $ratio;
             return [
-                'category' => $category,
+                'category' => $category ?: 'Lainnya',
                 'count' => $items->count(),
                 'monthly_total' => $total,
                 'formatted_total' => 'Rp' . number_format($total, 0, ',', '.'),
                 'items' => $items->pluck('name')->toArray(),
+                'percentage' => round($ratio * 100)
             ];
         })->sortByDesc('monthly_total')->values()->toArray();
+
+        $personality = 'Balanced Subscriber';
+        $topCategoryName = !empty($categoryBreakdown) ? $categoryBreakdown[0]['category'] : '';
+        if ($maxCategoryConcentration > 0.5) {
+            if (stripos($topCategoryName, 'Entertainment') !== false || stripos($topCategoryName, 'Streaming') !== false) {
+                $personality = 'Entertainment Junkie';
+            } elseif (stripos($topCategoryName, 'Software') !== false || stripos($topCategoryName, 'Productivity') !== false) {
+                $personality = 'Productivity Hacker';
+            } elseif (stripos($topCategoryName, 'Gaming') !== false) {
+                $personality = 'Hardcore Gamer';
+            }
+        } elseif ($subCount > 10) {
+            $personality = 'Subscription Collector';
+        } elseif ($subCount <= 2 && $totalMonthly > 0) {
+            $personality = 'Minimalist';
+        }
 
         
         $insights = [];
 
-        
-        if (!empty($categoryBreakdown)) {
-            $topCategory = $categoryBreakdown[0];
-            $percentage = $totalMonthly > 0 ? round(($topCategory['monthly_total'] / $totalMonthly) * 100) : 0;
-            $insights[] = [
-                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>',
-                'title' => 'Kategori Terbesar',
-                'description' => "{$topCategory['category']} menghabiskan {$topCategory['formatted_total']}/bulan ({$percentage}% dari total).",
-            ];
-        }
-
-        
-        $mostExpensive = $subscriptions->sortByDesc('monthly_amount')->first();
-        if ($mostExpensive) {
-            $insights[] = [
-                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>',
-                'title' => 'Subscription Termahal',
-                'description' => "{$mostExpensive->name} dengan biaya {$mostExpensive->formatted_amount}/{$mostExpensive->billing_cycle}.",
-            ];
-        }
-
-        
-        $autoRenewSubs = $subscriptions->where('auto_renew', true);
-        $autoRenewTotal = $autoRenewSubs->sum(fn($s) => $s->monthly_amount);
-        if ($autoRenewSubs->count() > 0) {
-            $insights[] = [
-                'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>',
-                'title' => 'Auto-Renewal Aktif',
-                'description' => "{$autoRenewSubs->count()} subscription dengan auto-renewal. Total Rp" . number_format($autoRenewTotal, 0, ',', '.') . '/bulan akan terpotong otomatis.',
-            ];
-        }
-
-        
+        $fiveYearProjection = $totalYearly * 5;
         $insights[] = [
-            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>',
-            'title' => 'Proyeksi Tahunan',
-            'description' => 'Estimasi pengeluaran subscription tahun ini: Rp' . number_format($totalYearly, 0, ',', '.') . '.',
+            'icon' => 'trending-up',
+            'title' => 'Proyeksi 5 Tahun (Trajectory)',
+            'description' => "Jika Anda mempertahankan pola saat ini, Anda akan menghabiskan <b>Rp " . number_format($fiveYearProjection, 0, ',', '.') . "</b> dalam 5 tahun ke depan hanya untuk langganan.",
         ];
 
-        
+        if (!empty($categoryBreakdown)) {
+            $topCat = $categoryBreakdown[0];
+            $insights[] = [
+                'icon' => 'pie-chart',
+                'title' => 'Konsentrasi Ekstrim',
+                'description' => "<b>{$topCat['percentage']}%</b> dari pengeluaran Anda tersedot ke kategori {$topCat['category']}. Ini indikator kuat untuk melakukan pemangkasan.",
+            ];
+        }
+
+        $mostExpensive = $subscriptions->sortByDesc('monthly_amount')->first();
+        if ($mostExpensive && $mostExpensive->monthly_amount > ($totalMonthly * 0.3)) {
+            $insights[] = [
+                'icon' => 'alert-triangle',
+                'title' => 'Beban Mayoritas',
+                'description' => "<b>{$mostExpensive->name}</b> memakan porsi sangat besar (" . round(($mostExpensive->monthly_amount/$totalMonthly)*100) . "% dari total). Pertimbangkan untuk downgrade atau patungan.",
+            ];
+        }
+
         $recommendations = [];
         $potentialSavings = 0;
 
-        
-        $duplicateCategories = $subscriptions->groupBy('category_id')->filter(fn($items) => $items->count() > 1);
-        foreach ($duplicateCategories as $items) {
-            $names = $items->pluck('name')->join(', ');
-            $cheapest = $items->sortBy('monthly_amount')->first();
-            $savings = $items->sum(fn($s) => $s->monthly_amount) - $cheapest->monthly_amount;
-            if ($savings > 0) {
-                $potentialSavings += $savings;
-                $recommendations[] = "Anda memiliki beberapa subscription di kategori yang sama ({$names}). Pertimbangkan untuk memilih salah satu dan hemat Rp" . number_format($savings, 0, ',', '.') . '/bulan.';
-            }
+        $musicSubs = $subscriptions->filter(fn($s) => stripos($s->name, 'Music') !== false || stripos($s->name, 'Spotify') !== false);
+        $cloudSubs = $subscriptions->filter(fn($s) => stripos($s->name, 'iCloud') !== false || stripos($s->name, 'Google One') !== false);
+        $tvSubs = $subscriptions->filter(fn($s) => stripos($s->name, 'Apple TV') !== false || stripos($s->name, 'Netflix') !== false);
+
+        if ($musicSubs->count() > 0 && $cloudSubs->count() > 0 && $tvSubs->count() > 0) {
+            $recommendations[] = "Terdeteksi pola langganan terpisah (Musik + Cloud + TV). Ekosistem Bundle seperti <b>Apple One</b> atau <b>Google One Premium</b> dapat memangkas tagihan Anda secara radikal.";
+            $potentialSavings += 50000;
         }
 
-        
         $expensiveSubs = $subscriptions->filter(fn($s) => $s->monthly_amount > 150000)->sortByDesc('monthly_amount');
-        foreach ($expensiveSubs->take(2) as $sub) {
-            $recommendations[] = "{$sub->name} ({$sub->formatted_amount}/{$sub->billing_cycle}) termasuk subscription premium. Evaluasi apakah fitur premium benar-benar diperlukan atau bisa downgrade ke paket lebih murah.";
-            $potentialSavings += $sub->monthly_amount * 0.3; 
+        if ($expensiveSubs->count() > 0) {
+            $recommendations[] = "Beberapa langganan Anda (seperti {$expensiveSubs->first()->name}) berada di tier Premium. Pastikan tingkat utilitas (penggunaan) Anda harian. Jika jarang dipakai, segera batalkan.";
+            $potentialSavings += $expensiveSubs->first()->monthly_amount * 0.3; 
         }
 
-        
-        if ($totalMonthly > 1000000) {
-            $recommendations[] = 'Total pengeluaran subscription Anda melebihi Rp1.000.000/bulan. Ini setara dengan ' . round($totalYearly / 1000000, 1) . ' juta/tahun. Pertimbangkan untuk mengurangi subscription yang jarang digunakan.';
-        }
-
-        
         $monthlySubs = $subscriptions->where('billing_cycle', 'monthly');
         $yearlySavings = 0;
         foreach ($monthlySubs as $sub) {
@@ -119,18 +125,23 @@ class FinancialAssistantService
             $yearlySavings += $yearlyEstimate;
         }
         if ($yearlySavings > 50000) {
-            $recommendations[] = 'Beralih ke paket tahunan untuk beberapa subscription bisa menghemat hingga Rp' . number_format($yearlySavings, 0, ',', '.') . '/tahun (estimasi diskon 15%).';
+            $recommendations[] = "Sistem menemukan potensi penghematan <b>Rp" . number_format($yearlySavings, 0, ',', '.') . "/tahun</b> dengan beralih ke siklus pembayaran tahunan (asumsi diskon 15%).";
             $potentialSavings += $yearlySavings / 12;
         }
 
         if (empty($recommendations)) {
-            $recommendations[] = 'Pengelolaan subscription Anda sudah baik! Tetap pantau secara berkala.';
+            $recommendations[] = 'Skor kesehatan finansial Anda luar biasa. Tidak ada anomali atau pemborosan yang terdeteksi.';
         }
 
+        $healthData = $this->healthScoreService->calculateUnifiedScore($user, $potentialSavings);
+
         return [
-            'summary' => "Anda memiliki {$subCount} subscription aktif dengan total Rp" . number_format($totalMonthly, 0, ',', '.') . '/bulan.',
+            'summary' => "Anda mengelola {$subCount} langganan dengan akumulasi beban Rp" . number_format($totalMonthly, 0, ',', '.') . '/bulan.',
             'total_monthly' => $totalMonthly,
             'total_yearly' => $totalYearly,
+            'health_score' => $healthData['score'],
+            'health_data' => $healthData,
+            'personality' => $personality,
             'potential_savings' => round($potentialSavings),
             'insights' => $insights,
             'recommendations' => $recommendations,

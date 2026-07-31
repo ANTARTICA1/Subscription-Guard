@@ -83,11 +83,14 @@
                     
                     <div class="p-5 border-b border-[var(--border-color)] bg-[var(--bg-elevated)] flex items-center justify-between">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-light)] flex items-center justify-center text-xl shadow-sm">
-                                {{ $sub->category->icon ?? '' }}
-                                @empty($sub->category->icon)
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
-                                @endempty
+                            <div class="w-12 h-12 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-light)] flex items-center justify-center text-xl shadow-sm overflow-hidden">
+                                @if($sub->logo)
+                                    <img src="{{ $sub->logo }}" alt="{{ $sub->name }}" class="w-8 h-8 object-contain">
+                                @elseif($sub->category && $sub->category->icon)
+                                    {{ $sub->category->icon }}
+                                @else
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                                @endif
                             </div>
                             <div>
                                 <h4 class="font-bold text-[var(--text-primary)]">{{ $sub->name }}</h4>
@@ -259,11 +262,14 @@
                 <div class="bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-xl p-5 shadow-sm relative overflow-hidden" x-data="{ showUpload: false }">
                     <div class="flex items-start justify-between mb-4">
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-light)] flex items-center justify-center text-xl shadow-sm">
-                                {{ $share->subscription->category->icon ?? '' }}
-                                @empty($share->subscription->category->icon)
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
-                                @endempty
+                            <div class="w-12 h-12 rounded-lg bg-[var(--bg-primary)] border border-[var(--border-light)] flex items-center justify-center text-xl shadow-sm overflow-hidden">
+                                @if($share->subscription->logo)
+                                    <img src="{{ $share->subscription->logo }}" alt="{{ $share->subscription->name }}" class="w-8 h-8 object-contain">
+                                @elseif($share->subscription->category && $share->subscription->category->icon)
+                                    {{ $share->subscription->category->icon }}
+                                @else
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                                @endif
                             </div>
                             <div>
                                 <h4 class="font-bold text-[var(--text-primary)]">{{ $share->subscription->name }}</h4>
@@ -385,7 +391,7 @@ function shareFormComponent() {
             if (found) {
                 this.totalAmount = Number(found.amount);
                 this.existingCount = (found.shares ? found.shares.length : 0);
-                const totalPeople = this.existingCount + 2; // Ketua + current members + 1 new member
+                const totalPeople = this.existingCount + 2;
                 this.subAmount = Math.round(this.totalAmount / totalPeople);
             } else {
                 this.totalAmount = 0;

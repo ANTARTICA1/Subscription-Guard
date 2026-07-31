@@ -25,7 +25,7 @@ class DashboardController extends Controller
         
         foreach ($data as $i => $value) {
             $x = $i * $step;
-            $y = 25 - ((($value - $min) / $range) * 20); // y maps from 5 to 25
+            $y = 25 - ((($value - $min) / $range) * 20);
             $points[] = ($i === 0 ? 'M' : 'L') . round($x) . ',' . round($y);
         }
         return implode(' ', $points);

@@ -5,13 +5,8 @@
 @source "./../../resources/views/**/*.blade.php";
 @source "resources/views/**/*.blade.php";
 
-/* ═══════════════════════════════════════════════════════════════
-   TATAGIH — Ultra Premium Solid Design System & PPT Morph FX
-   High-Contrast, Vivid Colors, Slide Transitions, Zero Dim Text
-   ═══════════════════════════════════════════════════════════════ */
 
 :root {
-    /* Deep Navy Finansial Backgrounds */
     --bg-primary: #08101a;
     --bg-secondary: #0d1726;
     --bg-card: #111c2e;
@@ -22,13 +17,12 @@
     --text-secondary: #cbd5e1;
     --text-muted: #64748b;
     
-    /* Violet & Professional Blue Accents (Matching Logo) */
     --accent-primary: #8b5cf6;
     --accent-secondary: #6d28d9;
     --accent-tertiary: #a78bfa;
     --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
     --accent-gradient-wide: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #0ea5e9 100%);
-    --accent-glow: rgba(139, 92, 246, 0.25); /* Glow ungu halus */
+    --accent-glow: rgba(139, 92, 246, 0.25);
     
     --success: #10b981;
     --success-bg: rgba(16, 185, 129, 0.18);
@@ -46,7 +40,7 @@
     --shadow-sm: 0 4px 12px rgba(0,0,0,0.25);
     --shadow-md: 0 8px 24px rgba(0,0,0,0.35);
     --shadow-lg: 0 16px 40px rgba(0,0,0,0.45);
-    --shadow-glow: 0 10px 30px rgba(0,0,0,0.5); /* Mengubah glow jadi shadow elegan */
+    --shadow-glow: 0 10px 30px rgba(0,0,0,0.5);
     
     --radius-sm: 12px;
     --radius-md: 18px;
@@ -117,9 +111,6 @@
     transform: translateY(0);
 }
 
-/* ═══════════════════════════════════════════
-   PPT MORPH ANIMATIONS
-   ═══════════════════════════════════════════ */
 
 @keyframes morphIn {
     0% {
@@ -199,9 +190,6 @@
     100% { width: 0%; }
 }
 
-/* ═══════════════════════════════════════════
-   BASE RESET & TYPOGRAPHY
-   ═══════════════════════════════════════════ */
 
 * {
     box-sizing: border-box;
@@ -222,7 +210,6 @@ body {
     overflow-x: hidden;
 }
 
-/* Scrollbar */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb {
@@ -231,9 +218,6 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
 
-/* ═══════════════════════════════════════════
-   BACKGROUND ORBS (Dynamic Glowing Gradient Mesh)
-   ═══════════════════════════════════════════ */
 
 .bg-orbs {
     position: fixed;
@@ -275,9 +259,6 @@ body {
     opacity: 0.15;
 }
 
-/* ═══════════════════════════════════════════
-   SIDEBAR
-   ═══════════════════════════════════════════ */
 
 .sidebar {
     background: var(--bg-secondary);
@@ -463,9 +444,6 @@ body {
 .sidebar-user-actions a:hover { background: var(--bg-card-hover); color: var(--text-primary); }
 .sidebar-user-actions button:hover { background: var(--danger-bg); color: var(--danger); }
 
-/* ═══════════════════════════════════════════
-   MAIN CONTENT AREA
-   ═══════════════════════════════════════════ */
 
 .main-content {
     margin-left: 272px;
@@ -476,7 +454,6 @@ body {
     max-width: 1680px;
 }
 
-/* Page Header */
 .page-header {
     display: flex;
     align-items: center;
@@ -513,10 +490,6 @@ body {
     align-items: center;
     gap: 0.85rem;
 }
-
-/* ═══════════════════════════════════════════
-   CARDS — SOLID ULTRA PREMIUM (High Contrast & Glow)
-   ═══════════════════════════════════════════ */
 
 .card {
     background: var(--bg-card);
@@ -563,7 +536,6 @@ body {
     animation: morphScale 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Stat Cards */
 .stat-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -626,9 +598,6 @@ body {
     font-weight: 500;
 }
 
-/* ═══════════════════════════════════════════
-   BUTTONS
-   ═══════════════════════════════════════════ */
 
 .btn-primary {
     background: var(--accent-gradient);
@@ -733,7 +702,6 @@ body {
     color: var(--text-primary);
 }
 
-/* Floating Action Button */
 .fab {
     position: fixed;
     bottom: 2.25rem;
@@ -764,9 +732,6 @@ body {
     height: 26px;
 }
 
-/* ═══════════════════════════════════════════
-   FORMS & INPUTS
-   ═══════════════════════════════════════════ */
 
 .form-input, .form-select, textarea.form-input {
     background: var(--bg-primary);
@@ -811,9 +776,6 @@ body {
     padding-right: 2.6rem;
 }
 
-/* ═══════════════════════════════════════════
-   BADGES
-   ═══════════════════════════════════════════ */
 
 .badge {
     display: inline-flex;
@@ -833,10 +795,6 @@ body {
 .badge-failed { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(244, 63, 94, 0.3); }
 .badge-info { background: var(--info-bg); color: var(--info); border: 1px solid rgba(56, 189, 248, 0.3); }
 .badge-accent { background: rgba(139,92,246,0.18); color: var(--accent-tertiary); border: 1px solid rgba(139,92,246,0.35); }
-
-/* ═══════════════════════════════════════════
-   TABLES
-   ═══════════════════════════════════════════ */
 
 .modern-table {
     width: 100%;
@@ -870,9 +828,6 @@ body {
     color: var(--text-primary);
 }
 
-/* ═══════════════════════════════════════════
-   TOAST & MODAL
-   ═══════════════════════════════════════════ */
 
 .toast {
     position: fixed;
@@ -917,9 +872,6 @@ body {
     animation: morphIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ═══════════════════════════════════════════
-   HEALTH SCORE RING
-   ═══════════════════════════════════════════ */
 
 .score-ring {
     width: 135px;
@@ -943,9 +895,6 @@ body {
     letter-spacing: -0.04em;
 }
 
-/* ═══════════════════════════════════════════
-   CALENDAR
-   ═══════════════════════════════════════════ */
 
 .calendar-grid {
     display: grid;
@@ -983,10 +932,6 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-/* ═══════════════════════════════════════════
-   MISC UTILITIES
-   ═══════════════════════════════════════════ */
 
 .theme-toggle {
     background: var(--bg-card);

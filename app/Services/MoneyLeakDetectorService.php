@@ -3,74 +3,101 @@
 namespace App\Services;
 
 use App\Models\User;
+use Carbon\Carbon;
 
 class MoneyLeakDetectorService
 {
-    public function detect(User $user): array
+    public function detect(User $user, bool $calculateScore = true): array
     {
-        $subscriptions = $user->activeSubscriptions()->with('category', 'paymentHistories')->get();
+        $subs = $user->activeSubscriptions()->with('category')->get();
         $leaks = [];
-        $totalMonthlyLeak = 0;
+        $totalPotentialSavings = 0;
+        $monthlyExpense = $user->monthlyExpense();
 
-        foreach ($subscriptions as $sub) {
-            
-            if ($sub->auto_renew && $sub->monthly_amount >= 100000) {
-                $leaks[] = [
-                    'severity' => 'high',
-                    'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>',
-                    'subscription' => $sub->name,
-                    'title' => 'Auto-Renewal Risiko Tinggi',
-                    'description' => "{$sub->name} bernilai {$sub->formatted_amount}/{$sub->billing_cycle} akan terpotong otomatis tanpa konfirmasi.",
-                    'amount' => $sub->monthly_amount,
-                    'action' => 'Evaluasi matikan auto-renewal atau jadwalkan pembatalan sebelum tanggal ' . $sub->next_payment_date->format('d M Y'),
-                ];
-                $totalMonthlyLeak += $sub->monthly_amount * 0.5; 
-            }
+        $byCategory = $subs->groupBy('category_id');
+        foreach ($byCategory as $categoryId => $categorySubs) {
+            if ($categorySubs->count() > 1) {
+                $categoryName = $categorySubs->first()->category->name ?? 'Kategori Sama';
+                $names = $categorySubs->pluck('name')->join(' + ');
+                
+                $cheapest = $categorySubs->sortBy('monthly_amount')->first();
+                $savings = $categorySubs->sum(fn($s) => $s->monthly_amount) - $cheapest->monthly_amount;
+                
+                $totalPotentialSavings += $savings;
 
-            
-            $lastPayment = $sub->paymentHistories()->latest('payment_date')->first();
-            if (!$lastPayment && $sub->monthly_amount > 50000) {
                 $leaks[] = [
-                    'severity' => 'medium',
-                    'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>',
-                    'subscription' => $sub->name,
-                    'title' => 'Tanpa Catatan Penggunaan (Dormant)',
-                    'description' => "Layanan {$sub->name} belum pernah dicatat penggunaannya di riwayat pembayaran.",
-                    'amount' => $sub->monthly_amount,
-                    'action' => 'Pastikan Anda masih aktif memakai layanan ini, atau catat pembayaran pertamanya.',
+                    'type' => 'overlapping',
+                    'icon' => 'layers',
+                    'title' => 'Tumpang Tindih Kategori: ' . $categoryName,
+                    'description' => "Terdeteksi langganan ganda dengan utilitas serupa: <b>{$names}</b>.",
+                    'recommendation' => "Konsolidasi ke satu layanan (rekomendasi: <b>{$cheapest->name}</b>) untuk memotong pemborosan.",
+                    'potential_savings' => $savings,
+                    'severity' => $savings > 100000 ? 'high' : 'medium'
                 ];
-                $totalMonthlyLeak += $sub->monthly_amount * 0.3;
             }
         }
 
-        
-        $categoryGroups = $subscriptions->groupBy('category_id');
-        foreach ($categoryGroups as $catId => $group) {
-            if ($group->count() > 1) {
-                $categoryName = $group->first()->category->name ?? 'Kategori';
-                $names = $group->pluck('name')->join(', ');
-                $cheapest = $group->sortBy('monthly_amount')->first();
-                $extraCost = $group->sum('monthly_amount') - $cheapest->monthly_amount;
+        $vampireSubs = $subs->filter(fn($s) => $s->monthly_amount > 0 && $s->monthly_amount <= 35000);
+        if ($vampireSubs->count() > 0) {
+            $totalVampire = $vampireSubs->sum(fn($s) => $s->monthly_amount);
+            $fiveYearCost = $totalVampire * 12 * 5;
+            $names = $vampireSubs->pluck('name')->join(', ');
 
-                $leaks[] = [
-                    'severity' => 'high',
-                    'icon' => '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>',
-                    'subscription' => $names,
-                    'title' => "Tumpang Tindih Kategori {$categoryName}",
-                    'description' => "Anda berlangganan {$group->count()} layanan di kategori {$categoryName} sekaligus ({$names}).",
-                    'amount' => $extraCost,
-                    'action' => "Pertimbangkan untuk menyisakan 1 layanan terbaik dan hemat Rp" . number_format($extraCost, 0, ',', '.') . "/bulan.",
-                ];
-                $totalMonthlyLeak += $extraCost;
-            }
+            $leaks[] = [
+                'type' => 'vampire',
+                'icon' => 'droplet',
+                'title' => 'Vampire Spend Terdeteksi',
+                'description' => "Pengeluaran mikro (<b>{$names}</b>) tampak kecil (Total Rp" . number_format($totalVampire, 0, ',', '.') . "/bln), namun akan menguras <b>Rp" . number_format($fiveYearCost, 0, ',', '.') . "</b> dalam 5 tahun.",
+                'recommendation' => "Evaluasi ketat apakah layanan mikro ini memberikan ROI yang sepadan dengan biaya jangka panjangnya.",
+                'potential_savings' => $totalVampire,
+                'severity' => 'medium'
+            ];
+        }
+
+        $monthlyPremiumSubs = $subs->filter(fn($s) => $s->billing_cycle === 'monthly' && $s->amount >= 60000);
+        foreach ($monthlyPremiumSubs as $sub) {
+            $yearlySavings = ($sub->amount * 12) * 0.15; 
+            $totalPotentialSavings += ($yearlySavings / 12); 
+
+            $leaks[] = [
+                'type' => 'cycle',
+                'icon' => 'refresh-cw',
+                'title' => "Peluang Optimasi Tagihan: {$sub->name}",
+                'description' => "Anda membayar <b>{$sub->name}</b> secara bulanan (Rp" . number_format($sub->amount, 0, ',', '.') . "/bln). Beralih ke paket tahunan secara historis dapat menghemat 15-20%.",
+                'recommendation' => "Ubah siklus tagihan ke tahunan untuk menghemat sekitar <b>Rp" . number_format($yearlySavings, 0, ',', '.') . "</b> per tahun.",
+                'potential_savings' => round($yearlySavings / 12),
+                'severity' => 'low'
+            ];
+        }
+
+        $now = Carbon::now();
+        $suspiciousSubs = $subs->filter(function($s) use ($now) {
+            return $s->auto_renew && $s->created_at && $s->created_at->diffInDays($now) > 180;
+        });
+
+        if ($suspiciousSubs->count() > 0) {
+            $names = $suspiciousSubs->pluck('name')->join(', ');
+            $leaks[] = [
+                'type' => 'zombie',
+                'icon' => 'ghost',
+                'title' => 'Indikasi Langganan Pasif (Zombie)',
+                'description' => "Layanan <b>{$names}</b> berstatus auto-renew dan sudah aktif lebih dari 6 bulan.",
+                'recommendation' => "Verifikasi apakah Anda masih aktif menggunakan layanan ini. Jika tidak, batalkan untuk mencegah aliran dana pasif.",
+                'potential_savings' => 0,
+                'severity' => 'medium'
+            ];
+        }
+
+        $efficiencyScore = 100;
+        if ($calculateScore && $monthlyExpense > 0) {
+            $wasteRatio = $totalPotentialSavings / $monthlyExpense;
+            $efficiencyScore = max(10, min(100, 100 - ($wasteRatio * 100)));
         }
 
         return [
-            'leaks' => $leaks,
-            'total_monthly_leak' => round($totalMonthlyLeak),
-            'total_yearly_leak' => round($totalMonthlyLeak * 12),
-            'leak_count' => count($leaks),
-            'health_grade' => count($leaks) === 0 ? 'A+' : (count($leaks) <= 2 ? 'B' : 'D'),
+            'leaks' => collect($leaks)->sortByDesc('potential_savings')->values()->toArray(),
+            'total_potential_savings' => $totalPotentialSavings,
+            'efficiency_score' => (int) $efficiencyScore
         ];
     }
 }

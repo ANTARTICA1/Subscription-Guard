@@ -31,7 +31,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'Disney+ Hotstar',
-                    'logo' => 'https://icon.horse/icon/hotstar.com',
+                    'logo' => 'https://img.icons8.com/?size=512&id=o7YMV0TFYOgR&format=png',
                     'category' => 'Entertainment',
                     'plans' => [
                         ['name' => 'Basic', 'price' => 65000],
@@ -57,7 +57,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'Prime Video',
-                    'logo' => 'https://ui-avatars.com/api/?name=Prime+Video&background=00a8e1&color=fff&bold=true',
+                    'logo' => 'https://img.icons8.com/?size=100&id=mJTj7Q9EPSVn&format=png&color=000000',
                     'category' => 'Entertainment',
                     'plans' => [
                         ['name' => 'Mobile', 'price' => 39000],
@@ -250,6 +250,16 @@ class SubscriptionTemplateService
 
             'Cloud Storage' => [
                 [
+                    'name' => 'Google Drive',
+                    'logo' => 'https://img.icons8.com/?size=512&id=ya4CrqO7PgnY&format=png',
+                    'category' => 'Internet',
+                    'plans' => [
+                        ['name' => 'Basic 100GB', 'price' => 26900],
+                        ['name' => 'Standard 200GB', 'price' => 43000],
+                        ['name' => 'Premium 2TB', 'price' => 135000],
+                    ],
+                ],
+                [
                     'name' => 'Google One',
                     'logo' => 'https://icon.horse/icon/one.google.com',
                     'category' => 'Internet',
@@ -272,7 +282,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'Dropbox',
-                    'logo' => 'https://ui-avatars.com/api/?name=Dropbox&background=0061fe&color=fff&bold=true',
+                    'logo' => 'https://img.icons8.com/?size=512&id=13657&format=png',
                     'category' => 'Internet',
                     'plans' => [
                         ['name' => 'Plus 2TB', 'price' => 195000],
@@ -340,7 +350,7 @@ class SubscriptionTemplateService
                 ],
                 [
                     'name' => 'Ubisoft+',
-                    'logo' => 'https://ui-avatars.com/api/?name=Ubisoft&background=000000&color=fff&bold=true',
+                    'logo' => 'https://img.icons8.com/?size=512&id=QkQFVbxVuRUw&format=png',
                     'category' => 'Gaming',
                     'plans' => [
                         ['name' => 'PC Access', 'price' => 275000],
@@ -367,7 +377,7 @@ class SubscriptionTemplateService
                 ],
             ],
 
-            'Meeting & Workspace' => [
+            'Meeting' => [
                 [
                     'name' => 'Zoom',
                     'logo' => 'https://icon.horse/icon/zoom.us',
@@ -375,16 +385,6 @@ class SubscriptionTemplateService
                     'plans' => [
                         ['name' => 'Pro', 'price' => 240000],
                         ['name' => 'Business', 'price' => 350000],
-                    ],
-                ],
-                [
-                    'name' => 'Google Workspace',
-                    'logo' => 'https://ui-avatars.com/api/?name=Workspace&background=4285F4&color=fff&bold=true',
-                    'category' => 'Software',
-                    'plans' => [
-                        ['name' => 'Starter', 'price' => 96000],
-                        ['name' => 'Standard', 'price' => 192000],
-                        ['name' => 'Plus', 'price' => 288000],
                     ],
                 ],
                 [

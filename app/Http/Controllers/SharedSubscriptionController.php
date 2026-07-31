@@ -24,8 +24,8 @@ class SharedSubscriptionController extends Controller
 
         
         $mySharedSubscriptions = Subscription::where('user_id', $user->id)
+            ->active()
             ->with(['shares.friendUser', 'category'])
-            ->has('shares')
             ->get();
 
         
