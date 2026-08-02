@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Tatagih - Kelola subscription dan recurring expense Anda dengan mudah">
     <title>@yield('title', 'Tatagih') - Subscription Manager</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <link rel="stylesheet" href="/css/tailwind-compiled.css?v={{ time() }}">
     @vite(['resources/js/app.js'])
     

@@ -70,6 +70,10 @@ class SharedSubscriptionController extends Controller
             return back()->withErrors(['friend_user_id' => 'Anggota harus dari daftar teman Anda.']);
         }
 
+        if ($sub->is_personal) {
+            return back()->with('error', 'Maaf, layanan ini bersifat personal/pribadi (seperti BPJS atau Asuransi) dan tidak dapat di-share/patungan dengan orang lain.');
+        }
+
         
         $totalMembers = $sub->shares()->count() + 2;
         $autoSplitAmount = round($sub->amount / $totalMembers);
@@ -188,6 +192,10 @@ class SharedSubscriptionController extends Controller
 
         if ($existing) {
             return redirect()->route('shares.index')->with('error', 'Anda sudah bergabung dalam grup patungan ini.');
+        }
+
+        if ($subscription->is_personal) {
+            return redirect()->route('shares.index')->with('error', 'Maaf, layanan ini bersifat personal/pribadi (seperti BPJS atau Asuransi) dan tidak dapat di-share/patungan dengan orang lain.');
         }
 
         $totalMembers = $subscription->shares()->count() + 2;

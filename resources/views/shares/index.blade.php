@@ -25,7 +25,11 @@
                     <select name="subscription_id" x-model="subId" @change="updateAmount()" class="w-full bg-[var(--bg-primary)] border border-[var(--border-color)] rounded-xl px-4 py-3 text-[var(--text-primary)] focus:ring-2 focus:ring-[var(--accent-primary)] focus:border-[var(--accent-primary)] transition-all" required>
                         <option value="">Pilih Subscription...</option>
                         @foreach($mySubscriptions as $sub)
-                        <option value="{{ $sub->id }}">{{ $sub->name }} ({{ $sub->formatted_amount }})</option>
+                            @if($sub->is_personal)
+                                <option value="{{ $sub->id }}" disabled class="text-red-400">{{ $sub->name }} (Personal - Tidak bisa di-share)</option>
+                            @else
+                                <option value="{{ $sub->id }}">{{ $sub->name }} ({{ $sub->formatted_amount }})</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>

@@ -194,4 +194,20 @@ class Subscription extends Model
     {
         return 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=' . urlencode($this->join_url);
     }
+
+    public function getIsPersonalAttribute(): bool
+    {
+        $personalKeywords = ['bpjs', 'kesehatan', 'asuransi', 'pribadi', 'personal', 'ktp', 'pinjaman', 'kredit', 'tagihan pribadi', 'obat', 'asuransi jiwa'];
+        
+        $name = strtolower($this->name);
+        $categoryName = $this->category ? strtolower($this->category->name) : '';
+
+        foreach ($personalKeywords as $keyword) {
+            if (str_contains($name, $keyword) || str_contains($categoryName, $keyword)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }

@@ -36,7 +36,7 @@ class SubscriptionComparisonController extends Controller
                 $item['is_best_value'] = ($index === $bestValueIndex);
                 $item['is_cheapest'] = ($index === $cheapestIndex);
             }
-
+            unset($item); 
             $group['items'] = $items;
             $comparisons[] = $group;
         }
