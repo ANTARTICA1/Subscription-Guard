@@ -287,8 +287,12 @@
                 </a>
             </div>
             
-            <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl overflow-hidden">
-                <table class="w-full text-left border-collapse">
+            <div class="md:hidden flex items-center justify-end gap-1 text-[10px] text-[#4b5e78] italic mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                <span>Geser tabel</span>
+            </div>
+            <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl overflow-x-auto w-full">
+                <table class="w-full min-w-[500px] text-left border-collapse whitespace-nowrap">
                     <thead>
                         <tr class="bg-[#111c2e] border-b border-[rgba(255,255,255,0.04)] text-[#94a3b8] text-[10px] font-bold uppercase tracking-widest">
                             <th class="px-6 py-3 font-medium">Teman</th>
@@ -444,8 +448,13 @@
                         </h4>
                         <a href="#" class="text-[11px] text-indigo-400 hover:text-indigo-300 font-medium transition-colors">Lihat Semua</a>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
+                    
+                    <div class="md:hidden flex items-center justify-end gap-1 text-[10px] text-[#4b5e78] italic mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+                        <span>Geser tabel</span>
+                    </div>
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full min-w-[600px] text-left border-collapse whitespace-nowrap">
                             <thead>
                                 <tr class="bg-[#111c2e] text-[#4b5e78] text-[10px] font-bold uppercase tracking-widest border-b border-[rgba(255,255,255,0.04)]">
                                     <th class="px-5 py-3 font-medium">Subscription</th>
