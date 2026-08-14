@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="light">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,139 +8,45 @@
     <title>@yield('title', 'Tatagih') - Subscription Manager</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <link rel="stylesheet" href="/css/tailwind-compiled.css?v={{ time() }}">
-    @vite(['resources/js/app.js'])
-    
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
-    
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
-    <script>
-        document.documentElement.setAttribute('data-theme', 'light');
-    </script>
     <style>
-        [x-cloak] { display: none !important; }
-        body {
-            background-color: #f8fafc;
-            color: var(--text-primary);
-            font-family: 'Inter', system-ui, sans-serif;
-            margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
-        
-        .admin-sidebar {
-            background-color: #0b1120;
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
-            width: 280px;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            z-index: 50;
-            transition: transform 0.3s ease;
-        }
-        
-        .admin-main {
-            margin-left: 280px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background-color: #f8fafc;
-        }
-        
-        .admin-header {
-            height: 70px;
-            background-color: #ffffff;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 40;
-        }
-        
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            color: #94a3b8;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
-            margin-bottom: 0.25rem;
-        }
-        
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: #ffffff;
-        }
-        
-        .nav-link.active {
-            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
-            color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-        }
-
-        .nav-link svg {
-            width: 1.25rem;
-            height: 1.25rem;
-            opacity: 0.8;
-        }
-
-        .nav-link.active svg {
-            opacity: 1;
-        }
-        
-        .section-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #475569;
-            margin: 1.5rem 0 0.5rem 1rem;
-        }
-
-        @media (max-width: 1024px) {
-            .admin-sidebar {
-                transform: translateX(-100%);
-            }
-            .admin-sidebar.open {
-                transform: translateX(0);
-            }
-            .admin-main {
-                margin-left: 0;
-            }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
-<body x-data="{ sidebarOpen: false }" data-theme="light">
+<body x-data="{ sidebarOpen: false }">
 
-    
-    <div x-show="sidebarOpen" 
-         x-transition.opacity 
-         @click="sidebarOpen = false" 
-         class="fixed inset-0 bg-black/50 z-40 lg:hidden">
+    {{-- Mobile Overlay --}}
+    <div x-show="sidebarOpen"
+         x-transition.opacity
+         @click="sidebarOpen = false"
+         class="fixed inset-0 bg-black/60 z-40 lg:hidden">
     </div>
 
-    
+    {{-- Sidebar --}}
     <aside class="admin-sidebar" :class="{ 'open': sidebarOpen }">
-        
-        <div class="flex items-center gap-3 px-6 h-[70px] border-b border-[rgba(255,255,255,0.05)]">
-            <img src="{{ asset('images/logo.png') }}" alt="Tatagih Logo" class="h-16 w-auto">
-            <span class="text-2xl font-bold text-white tracking-tight">Tatagih</span>
+        {{-- Logo --}}
+        <div class="flex items-center gap-3 px-5 h-[68px] border-b border-[rgba(255,255,255,0.06)]">
+            <img src="{{ asset('images/logo.png') }}" alt="Tatagih Logo" class="h-10 w-auto">
+            <div>
+                <span class="text-lg font-bold text-white tracking-tight">Tatagih</span>
+                <p class="text-[10px] text-[#4b5e78] font-medium -mt-0.5">Subscription Manager</p>
+            </div>
         </div>
 
-        
-        <div class="flex-1 overflow-y-auto py-4 px-4 scrollbar-hide">
+        {{-- Navigation --}}
+        <div class="flex-1 overflow-y-auto py-4 px-3 hide-scrollbar">
             <p class="section-label">Main Menu</p>
-            
+
             <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 12a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1v-7z" /></svg>
                 Dashboard
@@ -160,7 +66,7 @@
                     Pusat Pembayaran
                 </div>
                 @if($pendingValidationsCount > 0)
-                    <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{{ $pendingValidationsCount }}</span>
+                    <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center">{{ $pendingValidationsCount }}</span>
                 @endif
             </a>
 
@@ -195,70 +101,81 @@
 
             <a href="{{ route('assistant') }}" class="nav-link {{ request()->routeIs('assistant') ? 'active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                Tata Asisten
+                TATA Asisten
             </a>
 
             <a href="{{ route('telegram.connect') }}" class="nav-link {{ request()->routeIs('telegram.*') ? 'active' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
                 Integrasi Telegram
             </a>
-            
-            <div class="h-8"></div> 
+
+            <div class="h-4"></div>
+        </div>
+
+        {{-- User Section --}}
+        <div class="px-4 py-3 border-t border-[rgba(255,255,255,0.06)]">
+            <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-[rgba(255,255,255,0.04)] transition-colors group">
+                @if(auth()->user()->avatar)
+                    <img src="{{ Storage::url(auth()->user()->avatar) }}" alt="Avatar" class="w-9 h-9 rounded-lg object-cover">
+                @else
+                    <div class="sidebar-user-avatar">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </div>
+                @endif
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-[#f1f5f9] truncate">{{ auth()->user()->name }}</p>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#4b5e78] group-hover:text-[#94a3b8] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+            </a>
         </div>
     </aside>
 
-    
+    {{-- Main Content --}}
     <main class="admin-main">
-        
+        {{-- Header --}}
         <header class="admin-header">
-            <div class="flex items-center gap-4">
-                <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+            <div class="flex items-center gap-3">
+                <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden p-2 text-[#94a3b8] hover:text-white rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                 </button>
                 <div>
-                    <h2 class="font-extrabold text-[var(--text-primary)] tracking-tight" style="font-size: 1.35rem;">Halo, {{ explode(' ', auth()->user()->name)[0] }}!</h2>
-                    <p class="text-xs text-[var(--text-muted)] mt-1 hidden md:block font-medium">Ringkasan & kontrol subscription anda</p>
+                    <h2 class="font-bold text-[#f1f5f9] tracking-tight text-lg">Halo, {{ explode(' ', auth()->user()->name)[0] }}!</h2>
+                    <p class="text-xs text-[#4b5e78] hidden md:block font-medium">@yield('header_desc', 'Kelola detail subscription Anda dengan mudah.')</p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-4">
-                
-                <div class="hidden md:flex items-center bg-white shadow-sm transition-all" style="border: 1px solid #e2e8f0; border-radius: 9999px; padding: 6px 16px;">
-                    <input type="text" placeholder="Cari subscription, kategori, atau..." style="background: transparent; border: none; outline: none; font-size: 12px; width: 220px; color: #334155;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" style="color: #0ea5e9;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                </div>
-                
-                <button class="transition-colors relative flex items-center justify-center bg-white shadow-sm" style="border: 1px solid #e2e8f0; border-radius: 50%; width: 34px; height: 34px; color: #64748b;">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
-                </button>
+            <div class="flex items-center gap-3">
+                {{-- Search Bar Removed --}}
 
-                
+                {{-- Notification Removed --}}
+
+                {{-- Avatar Dropdown --}}
                 <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open" @click.away="open = false" class="flex items-center justify-center transition-colors bg-white shadow-sm" style="border: 1px solid #e2e8f0; border-radius: 50%; padding: 3px; width: 34px; height: 34px;">
+                    <button @click="open = !open" @click.away="open = false" class="flex items-center gap-2 p-1 rounded-lg hover:bg-[rgba(255,255,255,0.04)] transition-colors">
                         @if(auth()->user()->avatar)
-                            <img src="{{ Storage::url(auth()->user()->avatar) }}" alt="Avatar" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover;">
+                            <img src="{{ Storage::url(auth()->user()->avatar) }}" alt="Avatar" class="w-8 h-8 rounded-lg object-cover">
                         @else
-                            <div class="rounded-full bg-[#e0e7ff] text-[#4f46e5] flex items-center justify-center font-bold" style="width: 28px; height: 28px; font-size: 11px; background-color: #e0e7ff; color: #4f46e5;">
+                            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-white font-bold text-xs">
                                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                             </div>
                         @endif
                     </button>
 
-                    
-                    <div x-show="open" x-transition x-cloak class="absolute right-0 mt-2 w-48 rounded-xl shadow-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] overflow-hidden z-50">
-                        <div class="px-4 py-3 border-b border-[var(--border-color)]">
-                            <p class="text-sm font-bold text-[var(--text-primary)]">{{ auth()->user()->name }}</p>
-                            <p class="text-xs text-[var(--text-muted)] truncate">{{ auth()->user()->email }}</p>
+                    {{-- Dropdown Menu --}}
+                    <div x-show="open" x-transition x-cloak class="absolute right-0 mt-2 w-52 rounded-xl shadow-lg border border-[rgba(255,255,255,0.06)] bg-[#111c2e] overflow-hidden z-50">
+                        <div class="px-4 py-3 border-b border-[rgba(255,255,255,0.06)]">
+                            <p class="text-sm font-semibold text-[#f1f5f9]">{{ auth()->user()->name }}</p>
+                            <p class="text-xs text-[#4b5e78] truncate">{{ auth()->user()->email }}</p>
                         </div>
-                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)] transition-colors">
-                            <div class="flex items-center gap-2">
+                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2.5 text-sm text-[#94a3b8] hover:bg-[rgba(255,255,255,0.04)] hover:text-[#f1f5f9] transition-colors">
+                            <div class="flex items-center gap-2.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                                 Pengaturan Profil
                             </div>
                         </a>
                         <form method="POST" action="{{ route('logout') }}" class="block w-full">
                             @csrf
-                            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-500/10 transition-colors flex items-center gap-2">
+                            <button type="submit" class="w-full text-left px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors flex items-center gap-2.5">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                                 Keluar
                             </button>
@@ -270,20 +187,27 @@
             </div>
         </header>
 
-        
-        <div class="p-6 md:p-8 max-w-7xl mx-auto w-full flex-1">
-            @yield('content')
+        {{-- Page Content --}}
+        <div class="p-5 md:p-7 max-w-7xl mx-auto w-full flex flex-col">
+            <div class="w-full">
+                @yield('content')
+            </div>
+            
+            {{-- Footer --}}
+            <div class="mt-0 pt-3 border-t border-[rgba(255,255,255,0.04)] text-center text-[10px] text-[#4b5e78]">
+                © 2026 Tatagih. All rights reserved.
+            </div>
         </div>
     </main>
 
-    
-    <a href="{{ route('subscriptions.create') }}" class="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-[var(--accent-primary)] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all z-40">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+    {{-- Mobile FAB --}}
+    <a href="{{ route('subscriptions.create') }}" class="md:hidden fixed bottom-5 right-5 w-12 h-12 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white rounded-xl flex items-center justify-center shadow-lg z-40">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
         </svg>
     </a>
 
-    
+    {{-- Toast Notifications --}}
     @if(session('success'))
     <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)"
          x-transition:enter="transition ease-out duration-300"
@@ -292,8 +216,8 @@
          x-transition:leave="transition ease-in duration-200"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0 translate-y-full"
-         class="fixed bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-6 bg-emerald-500 text-white px-6 py-3 rounded-xl shadow-lg font-medium text-sm flex items-center gap-3 z-50">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+         class="fixed bottom-5 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-5 bg-emerald-600 text-white px-5 py-3 rounded-xl shadow-lg font-medium text-sm flex items-center gap-2.5 z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         {{ session('success') }}
     </div>
     @endif
@@ -306,10 +230,12 @@
          x-transition:leave="transition ease-in duration-200"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0 translate-y-full"
-         class="fixed bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-6 bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg font-medium text-sm flex items-center gap-3 z-50">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+         class="fixed bottom-5 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-5 bg-red-600 text-white px-5 py-3 rounded-xl shadow-lg font-medium text-sm flex items-center gap-2.5 z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         {{ session('error') }}
     </div>
     @endif
+
+    @yield('scripts')
 </body>
 </html>

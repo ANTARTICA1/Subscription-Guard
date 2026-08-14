@@ -13,24 +13,24 @@
 @section('content')
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-    <div class="bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md" style="border-radius: 20px; padding: 20px; border: 1px solid #f1f5f9;" x-data="{ count: 0 }" x-init="
+    <div class="card hover:-translate-y-1" x-data="{ count: 0 }" x-init="
         let target = {{ $activeCount }};
         let step = Math.ceil(target / 30);
         let interval = setInterval(() => { count += step; if(count >= target) { count = target; clearInterval(interval); } }, 30);
     ">
         <div class="flex items-center gap-3 mb-4">
-            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: #f3e8ff; color: #9333ea;">
+            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: rgba(147, 51, 234, 0.15); color: #a855f7;">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
-            <span class="text-sm font-semibold text-gray-500">Active Subscriptions</span>
+            <span class="text-sm font-semibold" style="color: var(--text-secondary);">Active Subscriptions</span>
         </div>
-        <div class="flex items-end justify-between">
-            <div>
-                <p class="text-2xl font-black text-gray-900 leading-none" x-text="count"></p>
-                <p class="text-gray-400 font-medium mt-2" style="font-size: 11px;">Layanan aktif digunakan</p>
+        <div class="flex items-end justify-between gap-2 min-w-0">
+            <div class="min-w-0">
+                <p class="text-lg xl:text-xl font-black leading-tight tracking-tight whitespace-nowrap" style="color: var(--text-primary);" x-text="count"></p>
+                <p class="font-medium mt-1.5 truncate" style="font-size: 11px; color: var(--text-muted);">Layanan aktif digunakan</p>
             </div>
-            <div style="width: 64px; height: 32px;">
-                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #9333ea; fill: none;">
+            <div class="flex-shrink-0 w-12 h-6 xl:w-16 xl:h-8">
+                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #9333ea; fill: none; overflow: visible;">
                     <path d="{{ $activeSparkline }} L100,35 L0,35 Z" style="fill: rgba(147, 51, 234, 0.15); stroke: none;" />
                     <path d="{{ $activeSparkline }}" />
                 </svg>
@@ -38,24 +38,24 @@
         </div>
     </div>
 
-    <div class="bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md" style="border-radius: 20px; padding: 20px; border: 1px solid #f1f5f9;" x-data="{ count: 0 }" x-init="
+    <div class="card hover:-translate-y-1" x-data="{ count: 0 }" x-init="
         let target = {{ $monthlyExpense }};
         let step = Math.ceil(target / 40);
         let interval = setInterval(() => { count += step; if(count >= target) { count = target; clearInterval(interval); } }, 25);
     ">
         <div class="flex items-center gap-3 mb-4">
-            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: #dcfce7; color: #16a34a;">
+            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: rgba(34, 197, 94, 0.15); color: #4ade80;">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
-            <span class="text-sm font-semibold text-gray-500">Pengeluaran Bulanan</span>
+            <span class="text-sm font-semibold" style="color: var(--text-secondary);">Pengeluaran Bulanan</span>
         </div>
-        <div class="flex items-end justify-between">
-            <div>
-                <p class="text-2xl font-black text-gray-900 leading-none" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
-                <p class="text-gray-400 font-medium mt-2" style="font-size: 11px;">Total estimasi per bulan</p>
+        <div class="flex items-end justify-between gap-2 min-w-0">
+            <div class="min-w-0">
+                <p class="text-lg xl:text-xl font-black leading-tight tracking-tight whitespace-nowrap" style="color: var(--text-primary);" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
+                <p class="font-medium mt-1.5 truncate" style="font-size: 11px; color: var(--text-muted);">Total estimasi per bulan</p>
             </div>
-            <div style="width: 64px; height: 32px;">
-                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #16a34a; fill: none;">
+            <div class="flex-shrink-0 w-12 h-6 xl:w-16 xl:h-8">
+                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #16a34a; fill: none; overflow: visible;">
                     <path d="{{ $monthlySparkline }} L100,35 L0,35 Z" style="fill: rgba(22, 163, 74, 0.15); stroke: none;" />
                     <path d="{{ $monthlySparkline }}" />
                 </svg>
@@ -63,24 +63,24 @@
         </div>
     </div>
 
-    <div class="bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md" style="border-radius: 20px; padding: 20px; border: 1px solid #f1f5f9;" x-data="{ count: 0 }" x-init="
+    <div class="card hover:-translate-y-1" x-data="{ count: 0 }" x-init="
         let target = {{ $yearlyExpense }};
         let step = Math.ceil(target / 40);
         let interval = setInterval(() => { count += step; if(count >= target) { count = target; clearInterval(interval); } }, 25);
     ">
         <div class="flex items-center gap-3 mb-4">
-            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: #e0f2fe; color: #0284c7;">
+            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: rgba(14, 165, 233, 0.15); color: #38bdf8;">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
             </div>
-            <span class="text-sm font-semibold text-gray-500">Proyeksi Tahunan</span>
+            <span class="text-sm font-semibold" style="color: var(--text-secondary);">Proyeksi Tahunan</span>
         </div>
-        <div class="flex items-end justify-between">
-            <div>
-                <p class="text-2xl font-black text-gray-900 leading-none" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
-                <p class="text-gray-400 font-medium mt-2" style="font-size: 11px;">Estimasi 12 bulan</p>
+        <div class="flex items-end justify-between gap-2 min-w-0">
+            <div class="min-w-0">
+                <p class="text-lg xl:text-xl font-black leading-tight tracking-tight whitespace-nowrap" style="color: var(--text-primary);" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
+                <p class="font-medium mt-1.5 truncate" style="font-size: 11px; color: var(--text-muted);">Estimasi 12 bulan</p>
             </div>
-            <div style="width: 64px; height: 32px;">
-                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #0284c7; fill: none;">
+            <div class="flex-shrink-0 w-12 h-6 xl:w-16 xl:h-8">
+                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #0284c7; fill: none; overflow: visible;">
                     <path d="{{ $yearlySparkline }} L100,35 L0,35 Z" style="fill: rgba(2, 132, 199, 0.15); stroke: none;" />
                     <path d="{{ $yearlySparkline }}" />
                 </svg>
@@ -88,20 +88,20 @@
         </div>
     </div>
 
-    <div class="bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-md" style="border-radius: 20px; padding: 20px; border: 1px solid #f1f5f9;">
+    <div class="card hover:-translate-y-1">
         <div class="flex items-center gap-3 mb-4">
-            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: #ffedd5; color: #ea580c;">
+            <div class="flex items-center justify-center" style="width: 40px; height: 40px; border-radius: 12px; background-color: rgba(249, 115, 22, 0.15); color: #fb923c;">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
             </div>
-            <span class="text-sm font-semibold text-gray-500">Kategori Aktif</span>
+            <span class="text-sm font-semibold" style="color: var(--text-secondary);">Kategori Aktif</span>
         </div>
-        <div class="flex items-end justify-between">
-            <div>
-                <p class="text-2xl font-black text-gray-900 leading-none">{{ $categoryCount }}</p>
-                <p class="text-gray-400 font-medium mt-2" style="font-size: 11px;">Kategori digunakan</p>
+        <div class="flex items-end justify-between gap-2 min-w-0">
+            <div class="min-w-0">
+                <p class="text-lg xl:text-xl font-black leading-tight tracking-tight whitespace-nowrap" style="color: var(--text-primary);">{{ $categoryCount }}</p>
+                <p class="font-medium mt-1.5 truncate" style="font-size: 11px; color: var(--text-muted);">Kategori digunakan</p>
             </div>
-            <div style="width: 64px; height: 32px;">
-                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #ea580c; fill: none;">
+            <div class="flex-shrink-0 w-12 h-6 xl:w-16 xl:h-8">
+                <svg viewBox="0 0 100 30" class="w-full h-full" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke: #ea580c; fill: none; overflow: visible;">
                     <path d="{{ $categorySparkline }} L100,35 L0,35 Z" style="fill: rgba(234, 88, 12, 0.15); stroke: none;" />
                     <path d="{{ $categorySparkline }}" />
                 </svg>
@@ -179,36 +179,34 @@
         <div class="space-y-3">
             @forelse($upcoming as $sub)
             <div class="item-row">
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3" style="min-width: 0; flex: 1;">
                     @if($sub->logo)
                     <div class="w-10 h-10 flex-shrink-0 bg-white border border-[var(--border-color)] rounded-xl p-1.5 flex items-center justify-center">
                         <img src="{{ $sub->logo }}" alt="{{ $sub->name }}" class="w-full h-full object-contain" onerror="this.style.display='none'">
                     </div>
                     @else
-                    <div class="icon-box" style="background: {{ $sub->category->color }}15;">
+                    <div class="icon-box flex-shrink-0" style="background: {{ $sub->category->color }}15;">
                         {{ $sub->category->icon }}
                     </div>
                     @endif
-                    <div>
-                        <p class="text-sm font-bold" style="color: var(--text-primary);">{{ $sub->name }}</p>
-                        <p class="text-xs" style="color: var(--text-muted);">{{ $sub->next_payment_date->translatedFormat('d M Y') }}</p>
+                    <div style="min-width: 0; flex: 1;">
+                        <p class="text-sm font-bold truncate" style="color: var(--text-primary);" title="{{ $sub->name }}">{{ $sub->name }}</p>
+                        <p class="text-xs truncate" style="color: var(--text-muted);">{{ $sub->next_payment_date->translatedFormat('d M Y') }}</p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <div class="text-right">
-                        <p class="font-extrabold text-sm" style="color: var(--text-primary);">{{ $sub->formatted_amount }}</p>
-                        <span class="badge text-xs" style="background: {{ $sub->days_until_payment <= 1 ? 'var(--danger-bg)' : ($sub->days_until_payment <= 3 ? 'var(--warning-bg)' : 'var(--success-bg)') }}; color: {{ $sub->days_until_payment <= 1 ? 'var(--danger)' : ($sub->days_until_payment <= 3 ? 'var(--warning)' : 'var(--success)') }};">
-                            {{ $sub->days_until_payment === 0 ? 'HARI INI' : $sub->days_until_payment . ' hari' }}
+                <div class="flex flex-col items-end gap-1.5 flex-shrink-0">
+                    <p class="font-extrabold text-sm" style="color: var(--text-primary);">{{ $sub->formatted_amount }}</p>
+                    <div class="flex items-center gap-2">
+                        <span class="badge" style="font-size: 9px; padding: 0.2rem 0.5rem; background: {{ $sub->days_until_payment <= 1 ? 'var(--danger-bg)' : ($sub->days_until_payment <= 3 ? 'var(--warning-bg)' : 'var(--success-bg)') }}; color: {{ $sub->days_until_payment <= 1 ? 'var(--danger)' : ($sub->days_until_payment <= 3 ? 'var(--warning)' : 'var(--success)') }};">
+                            {{ $sub->days_until_payment === 0 ? 'HARI INI' : $sub->days_until_payment . ' hr' }}
                         </span>
-                    </div>
-                    <div class="flex flex-col gap-1.5">
                         <form method="POST" action="{{ route('subscriptions.mark-paid', $sub) }}">
                             @csrf
-                            <button type="submit" class="btn-primary text-[10px] sm:text-xs py-1.5 px-3 w-full">Bayar</button>
+                            <button type="submit" class="btn-primary" style="font-size: 10px; padding: 0.3rem 0.7rem;">Bayar</button>
                         </form>
                         @if($sub->cancel_url)
-                        <a href="{{ $sub->cancel_url }}" target="_blank" class="btn-secondary text-[10px] py-1 px-2 text-center text-[var(--danger)] hover:bg-[var(--danger-bg)] hover:border-[var(--danger)] transition-colors">Setop</a>
+                        <a href="{{ $sub->cancel_url }}" target="_blank" class="btn-secondary" style="font-size: 10px; padding: 0.3rem 0.6rem; color: var(--danger);">Setop</a>
                         @endif
                     </div>
                 </div>
@@ -227,7 +225,7 @@
 
     
     <div class="card lg:col-span-1">
-        <h3 class="section-title mb-5 flex items-center gap-2">
+        <h3 class="section-title mb-8 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
             Distribusi Kategori
         </h3>
@@ -308,67 +306,28 @@
 </div>
 
 
-<div class="card">
-    <h3 class="section-title mb-5 flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
-        Notifikasi Terbaru
-    </h3>
-    <div class="space-y-2.5">
-        @forelse($recentNotifications as $notif)
-        <div class="item-row">
-            <div class="flex items-center gap-3">
-                <span class="text-lg">
-                    @if($notif->type === 'due_date')
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--danger)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                    @elseif($notif->type === 'H-1')
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--warning)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                    @else
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--info)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    @endif
-                </span>
-                <div>
-                    <p class="text-xs font-bold" style="color: var(--text-primary);">{{ $notif->subscription->name ?? 'System' }} — {{ $notif->type }}</p>
-                    <p class="text-xs" style="color: var(--text-muted);">{{ Str::limit($notif->message, 90) }}</p>
-                </div>
-            </div>
-            <span class="badge badge-{{ $notif->status === 'sent' ? 'active' : ($notif->status === 'pending' ? 'pending' : 'failed') }}">
-                {{ strtoupper($notif->status) }}
-            </span>
-        </div>
-        @empty
-        <div class="empty-state py-6 flex flex-col items-center justify-center">
-            <span class="empty-icon text-2xl">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[var(--text-muted)] mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-            </span>
-            <p class="empty-title text-lg mt-2">Kotak Masuk Kosong</p>
-            <p class="empty-desc text-sm">Belum ada notifikasi baru untuk Anda hari ini.</p>
-        </div>
-        @endforelse
-    </div>
-</div>
+<div class="mt-4 p-6 flex flex-col md:flex-row items-center justify-between relative overflow-hidden" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+    <!-- Background glowing effect for dark mode -->
+    <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full pointer-events-none" style="background: var(--accent-primary); filter: blur(80px); opacity: 0.15;"></div>
+    <div class="absolute -left-20 -bottom-20 w-64 h-64 rounded-full pointer-events-none" style="background: var(--info); filter: blur(80px); opacity: 0.15;"></div>
 
-<div class="mt-8 border border-blue-100 p-5 flex flex-col sm:flex-row items-center justify-between shadow-sm" style="background: linear-gradient(to right, #eff6ff, #eef2ff); border-radius: 1rem;">
-    <div class="flex items-center gap-4">
-        <div class="bg-white shadow-sm flex items-center justify-center text-blue-600" style="width: 48px; height: 48px; border-radius: 12px;">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+    <div class="flex flex-col sm:flex-row items-center gap-5 relative z-10 w-full md:w-auto text-center sm:text-left">
+        <!-- Dummy Profile Stack -->
+        <div class="flex -space-x-3 flex-shrink-0">
+            <img class="w-12 h-12 rounded-full object-cover" style="border: 2px solid var(--bg-card);" src="https://i.pravatar.cc/150?u=1" alt="Teman 1">
+            <img class="w-12 h-12 rounded-full object-cover" style="border: 2px solid var(--bg-card);" src="https://i.pravatar.cc/150?u=2" alt="Teman 2">
+            <img class="w-12 h-12 rounded-full object-cover" style="border: 2px solid var(--bg-card);" src="https://i.pravatar.cc/150?u=3" alt="Teman 3">
+            <div class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold text-white z-10" style="background: var(--bg-elevated); border: 2px solid var(--bg-card);">+3</div>
         </div>
         <div>
-            <h4 class="text-sm font-bold text-gray-900">AI Assistant</h4>
-            <p class="text-xs text-gray-500 font-medium">Insight untukmu</p>
+            <h4 class="text-base font-extrabold mb-1" style="color: var(--text-primary);">Patungan Tagihan? (Share Subs)</h4>
+            <p class="text-xs font-medium" style="color: var(--text-secondary);">Bagi tagihan otomatis dengan teman. Lacak siapa yang belum bayar tanpa canggung.</p>
         </div>
     </div>
-    <div class="mt-4 sm:mt-0 flex-1 sm:px-8 text-center sm:text-left">
-        <p class="text-sm font-bold text-gray-800">Kamu bisa hemat Rp240.000/tahun!</p>
-        <p class="text-gray-500 font-medium" style="font-size: 11px;">Ada 1 layanan yang jarang digunakan. <a href="#" class="text-blue-600 hover:underline">Lihat rekomendasi →</a></p>
-    </div>
-    <div class="mt-4 sm:mt-0 flex items-center gap-3">
-        <button class="font-bold text-xs py-2 px-5 transition-colors flex items-center gap-2" style="background-color: #dcfce7; color: #16a34a; border-radius: 9999px; border: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-            Cek Sekarang
-        </button>
-        <button class="text-gray-400 hover:text-gray-600 p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-        </button>
+    <div class="mt-5 md:mt-0 flex items-center justify-center w-full md:w-auto relative z-10" style="transform: translateY(-12px);">
+        <a href="#" class="btn-primary rounded-full text-xs font-bold" style="box-shadow: 0 0 15px var(--accent-glow);">
+            Coba Share Subs
+        </a>
     </div>
 </div>
 
@@ -495,12 +454,18 @@ document.addEventListener('DOMContentLoaded', function() {
             plugins: {
                 legend: {
                     position: 'bottom',
+                    title: {
+                        display: true,
+                        text: '',
+                        padding: { top: 8 }
+                    },
                     labels: {
                         color: tickColor,
                         font: { size: 11, family: 'Inter' },
-                        padding: 14,
+                        padding: 15,
                         usePointStyle: true,
-                        pointStyleWidth: 10,
+                        boxWidth: 10,
+                        boxHeight: 10
                     }
                 },
                 tooltip: {

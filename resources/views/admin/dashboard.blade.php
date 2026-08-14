@@ -51,7 +51,7 @@
         <h3 class="text-lg font-bold mb-4" style="color: var(--text-primary);">Kategori Populer</h3>
         @foreach($popularCategories as $cat)
         <div class="flex items-center gap-3 p-3 rounded-xl mb-2" style="background: var(--bg-primary);">
-            <span class="text-xl">{{ $cat->icon }}</span>
+            <span class="text-xl font-extrabold uppercase">{{ substr($cat->name, 0, 1) }}</span>
             <div class="flex-1">
                 <p class="font-semibold text-sm" style="color: var(--text-primary);">{{ $cat->name }}</p>
                 <div class="w-full h-2 rounded-full mt-1" style="background: var(--border-color);">

@@ -27,7 +27,13 @@ class SocialController extends Controller
         $friendIds = $acceptedFriendships->map(fn($f) => $f->user_id === $user->id ? $f->friend_id : $f->user_id);
         $friends = User::whereIn('id', $friendIds)->get();
 
-        return view('social.index', compact('user', 'pendingRequests', 'friends'));
+        $suggestedFriends = User::where('id', '!=', $user->id)
+            ->whereNotIn('id', $friendIds)
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
+
+        return view('social.index', compact('user', 'pendingRequests', 'friends', 'suggestedFriends'));
     }
 
     public function addFriend(Request $request)

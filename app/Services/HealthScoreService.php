@@ -9,8 +9,11 @@ class HealthScoreService
     public function calculate(User $user): array
     {
         $unified = $this->calculateUnifiedScore($user, 0);
-        $score = $unified['score'];
-        
+        return $this->formatScore($unified['score']);
+    }
+
+    public function formatScore(int $score): array
+    {
         $label = match (true) {
             $score >= 90 => 'Sempurna',
             $score >= 75 => 'Baik',
@@ -37,7 +40,7 @@ class HealthScoreService
         ];
     }
 
-    public function calculateUnifiedScore(User $user, float $potentialSavings): array
+    public function calculateUnifiedScore(User $user, float $potentialSavings, array $context = []): array
     {
         $subs = $user->activeSubscriptions()->with('category')->get();
         $totalMonthly = $user->monthlyExpense();
@@ -52,9 +55,20 @@ class HealthScoreService
             ];
         }
 
+        $redundancyCount = $context['redundancy_count'] ?? 0;
+        $hasCashflowRisk = $context['has_cashflow_risk'] ?? false;
+
         $wasteRatio = $totalMonthly > 0 ? ($potentialSavings / $totalMonthly) : 0;
-        $wasteScore = 40 - ($wasteRatio * 40); 
-        $wasteScore = max(0, min(40, $wasteScore));
+        $wasteScore = 30 - ($wasteRatio * 30); 
+        $wasteScore = max(0, min(30, $wasteScore));
+
+        $redundancyScore = 15;
+        if ($redundancyCount > 0) {
+            $redundancyScore -= ($redundancyCount * 5);
+        }
+        $redundancyScore = max(0, min(15, $redundancyScore));
+
+        $cashflowScore = $hasCashflowRisk ? 5 : 15;
 
         $categoryGroups = $subs->groupBy('category_id');
         $maxCategoryConcentration = 0;
@@ -63,25 +77,24 @@ class HealthScoreService
             $ratio = $catTotal / $totalMonthly;
             if ($ratio > $maxCategoryConcentration) $maxCategoryConcentration = $ratio;
         }
-        
-        $concentrationScore = 25;
+        $concentrationScore = 10;
         if ($maxCategoryConcentration > 0.5) {
-            $concentrationScore -= (($maxCategoryConcentration - 0.5) * 50); 
+            $concentrationScore -= (($maxCategoryConcentration - 0.5) * 20); 
         }
-        $concentrationScore = max(0, min(25, $concentrationScore));
+        $concentrationScore = max(0, min(10, $concentrationScore));
 
-        $countScore = 20;
+        $countScore = 15;
         if ($subCount > 7) {
             $countScore -= ($subCount - 7) * 2;
         }
-        $countScore = max(0, min(20, $countScore));
+        $countScore = max(0, min(15, $countScore));
 
         $yearlyCount = $subs->where('billing_cycle', 'yearly')->count();
         $yearlyRatio = $yearlyCount / $subCount;
         $yearlyScore = $yearlyRatio * 15;
         $yearlyScore = max(0, min(15, $yearlyScore));
 
-        $totalScore = (int) round($wasteScore + $concentrationScore + $countScore + $yearlyScore);
+        $totalScore = (int) round($wasteScore + $redundancyScore + $cashflowScore + $concentrationScore + $countScore + $yearlyScore);
 
         return [
             'score' => $totalScore,
@@ -89,26 +102,38 @@ class HealthScoreService
                 [
                     'name' => 'Efisiensi Tagihan', 
                     'score' => (int) round($wasteScore), 
-                    'max' => 40,
-                    'desc' => $wasteScore < 30 ? 'Terdapat banyak indikasi pemborosan.' : 'Sangat efisien tanpa kebocoran.'
+                    'max' => 30,
+                    'desc' => $wasteScore < 20 ? 'Terdapat indikasi pemborosan.' : 'Sangat efisien tanpa kebocoran.'
                 ],
                 [
-                    'name' => 'Diversifikasi Kategori', 
+                    'name' => 'Redundansi Layanan', 
+                    'score' => (int) round($redundancyScore), 
+                    'max' => 15,
+                    'desc' => $redundancyScore < 15 ? 'Terdeteksi layanan langganan tumpang tindih.' : 'Tidak ada duplikasi layanan.'
+                ],
+                [
+                    'name' => 'Distribusi Arus Kas', 
+                    'score' => (int) round($cashflowScore), 
+                    'max' => 15,
+                    'desc' => $cashflowScore < 15 ? 'Jadwal penagihan menumpuk berdekatan (risiko tinggi).' : 'Arus kas sehat, jadwal tersebar.'
+                ],
+                [
+                    'name' => 'Konsentrasi Kategori', 
                     'score' => (int) round($concentrationScore), 
-                    'max' => 25,
-                    'desc' => $concentrationScore < 20 ? 'Pengeluaran terlalu menumpuk di 1 kategori.' : 'Alokasi dana tersebar dengan sehat.'
+                    'max' => 10,
+                    'desc' => $concentrationScore < 7 ? 'Pengeluaran terlalu menumpuk di 1 kategori.' : 'Alokasi dana tersebar dengan baik.'
                 ],
                 [
                     'name' => 'Beban Kuantitas', 
                     'score' => (int) round($countScore), 
-                    'max' => 20,
-                    'desc' => $countScore < 15 ? 'Terlalu banyak layanan aktif (Fatigue).' : 'Jumlah langganan terkendali.'
+                    'max' => 15,
+                    'desc' => $countScore < 10 ? 'Terlalu banyak layanan aktif (Fatigue).' : 'Jumlah langganan terkendali.'
                 ],
                 [
                     'name' => 'Perencanaan Jangka Panjang', 
                     'score' => (int) round($yearlyScore), 
                     'max' => 15,
-                    'desc' => $yearlyScore < 5 ? 'Mayoritas siklus bulanan (kurang hemat).' : 'Optimalisasi diskon tahunan.'
+                    'desc' => $yearlyScore < 5 ? 'Sebagian besar siklus bulanan (kurang hemat).' : 'Optimalisasi diskon tahunan yang baik.'
                 ],
             ]
         ];

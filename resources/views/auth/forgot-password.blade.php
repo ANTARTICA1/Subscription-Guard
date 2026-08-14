@@ -2,26 +2,35 @@
 @section('title', 'Lupa Password')
 
 @section('content')
-<h2 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Lupa Password?</h2>
-<p class="text-sm mb-6" style="color: var(--text-muted);">Masukkan email Anda untuk menerima link reset password.</p>
-
-@if(session('status'))
-<div class="mb-4 p-3 rounded-xl" style="background: var(--success-bg); border: 1px solid var(--success); color: var(--success); font-size: 0.85rem;">
-    {{ session('status') }}
-</div>
-@endif
-
-<form method="POST" action="{{ route('password.email') }}">
-    @csrf
-    <div class="mb-6">
-        <label class="form-label">Email</label>
-        <input type="email" name="email" value="{{ old('email') }}" class="form-input" placeholder="nama@email.com" required>
+<div class="auth-card">
+    <div class="logo-section">
+        <img src="{{ asset('images/logo.png') }}" alt="Tatagih Logo">
+        <h1>Lupa Password?</h1>
+        <p>Masukkan email Anda dan kami akan mengirimkan link reset</p>
     </div>
 
-    <button type="submit" class="btn-primary w-full justify-center">Kirim Link Reset</button>
-</form>
-@endsection
+    @if(session('status'))
+        <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-xl text-sm mb-4 font-medium">
+            {{ session('status') }}
+        </div>
+    @endif
 
-@section('footer')
-<a href="{{ route('login') }}" class="font-semibold" style="color: var(--accent-primary);">← Kembali ke Login</a>
+    <form method="POST" action="{{ route('password.email') }}">
+        @csrf
+
+        <div class="auth-input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="nama@email.com" required autofocus>
+            @error('email')
+                <p class="error-msg">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <button type="submit" class="auth-submit">Kirim Link Reset Password</button>
+    </form>
+
+    <div class="auth-footer">
+        Ingat password Anda? <a href="{{ route('login') }}">Kembali ke login</a>
+    </div>
+</div>
 @endsection

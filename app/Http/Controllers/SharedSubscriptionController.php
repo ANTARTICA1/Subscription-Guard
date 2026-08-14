@@ -51,48 +51,55 @@ class SharedSubscriptionController extends Controller
     {
         $request->validate([
             'subscription_id' => 'required|exists:subscriptions,id',
-            'friend_user_id' => 'required|exists:users,id',
-            'split_amount' => 'required|numeric|min:0',
+            'friend_user_ids' => 'required|array|min:1',
+            'friend_user_ids.*' => 'exists:users,id',
         ]);
 
         $sub = Subscription::where('id', $request->subscription_id)->where('user_id', Auth::id())->firstOrFail();
-        $friendUser = User::findOrFail($request->friend_user_id);
-
-        
-        $isFriend = \App\Models\Friendship::where('status', 'accepted')
-            ->where(function($q) use ($friendUser) {
-                $q->where('user_id', Auth::id())->where('friend_id', $friendUser->id);
-            })->orWhere(function($q) use ($friendUser) {
-                $q->where('friend_id', Auth::id())->where('user_id', $friendUser->id);
-            })->exists();
-        
-        if (!$isFriend) {
-            return back()->withErrors(['friend_user_id' => 'Anggota harus dari daftar teman Anda.']);
-        }
 
         if ($sub->is_personal) {
-            return back()->with('error', 'Maaf, layanan ini bersifat personal/pribadi (seperti BPJS atau Asuransi) dan tidak dapat di-share/patungan dengan orang lain.');
+            return back()->with('error', 'Maaf, layanan ini bersifat personal/pribadi dan tidak dapat di-share/patungan dengan orang lain.');
         }
 
-        
-        $totalMembers = $sub->shares()->count() + 2;
-        $autoSplitAmount = round($sub->amount / $totalMembers);
-        $finalSplitAmount = $autoSplitAmount;
+        $friendUsers = User::whereIn('id', $request->friend_user_ids)->get();
+        $addedCount = 0;
 
-        SubscriptionShare::create([
-            'subscription_id' => $sub->id,
-            'owner_id' => Auth::id(),
-            'friend_user_id' => $friendUser->id,
-            'friend_name' => $friendUser->name,
-            'split_amount' => $finalSplitAmount,
-            'payment_status' => 'pending',
-            'due_date' => $sub->next_payment_date->format('Y-m-d'),
-        ]);
+        foreach ($friendUsers as $friendUser) {
+            // Check if already shared
+            $existing = SubscriptionShare::where('subscription_id', $sub->id)
+                ->where('friend_user_id', $friendUser->id)
+                ->exists();
+            
+            if ($existing) continue;
 
-        
-        $this->recalculateAutoSplits($sub);
+            $isFriend = \App\Models\Friendship::where('status', 'accepted')
+                ->where(function($q) use ($friendUser) {
+                    $q->where('user_id', Auth::id())->where('friend_id', $friendUser->id);
+                })->orWhere(function($q) use ($friendUser) {
+                    $q->where('friend_id', Auth::id())->where('user_id', $friendUser->id);
+                })->exists();
+            
+            if (!$isFriend) continue;
 
-        return back()->with('success', "Berhasil menambahkan {$friendUser->name}! Tagihan terhitung otomatis: Rp" . number_format($finalSplitAmount, 0, ',', '.') . " / orang ({$totalMembers} anggota termasuk Ketua).");
+            SubscriptionShare::create([
+                'subscription_id' => $sub->id,
+                'owner_id' => Auth::id(),
+                'friend_user_id' => $friendUser->id,
+                'friend_name' => $friendUser->name,
+                'split_amount' => 0, // Will recalculate below
+                'payment_status' => 'pending',
+                'due_date' => $sub->next_payment_date->format('Y-m-d'),
+            ]);
+            
+            $addedCount++;
+        }
+
+        if ($addedCount > 0) {
+            $this->recalculateAutoSplits($sub);
+            return back()->with('success', "Berhasil mengundang {$addedCount} teman! Biaya telah dibagi ulang secara otomatis.");
+        }
+
+        return back()->with('error', 'Tidak ada teman baru yang ditambahkan (mungkin sudah menjadi anggota atau bukan teman).');
     }
 
     public function uploadProof(Request $request, $id)

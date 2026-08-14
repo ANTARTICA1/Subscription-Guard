@@ -129,11 +129,57 @@ class FinancialAssistantService
             $potentialSavings += $yearlySavings / 12;
         }
 
+        if ($totalMonthly > 500000) {
+            $insights[] = [
+                'icon' => 'alert-triangle',
+                'title' => 'Inflasi Gaya Hidup',
+                'description' => "Beban langganan mencapai <b>Rp " . number_format($totalMonthly, 0, ',', '.') . "</b>/bulan. Angka ini cukup tinggi, awasi agar tidak mengganggu rasio tabungan (saving rate) Anda.",
+            ];
+        }
+
+        $hasCashflowRisk = false;
+        $monthlyPaymentDates = $subscriptions->where('billing_cycle', 'monthly')->pluck('payment_date')->toArray();
+        $dateCounts = array_count_values($monthlyPaymentDates);
+        foreach ($dateCounts as $date => $count) {
+            if ($count >= 3) {
+                $hasCashflowRisk = true;
+                $insights[] = [
+                    'icon' => 'calendar',
+                    'title' => 'Tsunami Tagihan',
+                    'description' => "Ada <b>{$count} tagihan</b> yang jatuh tempo di tanggal <b>{$date}</b>. Hati-hati dengan risiko arus kas tersendat di pertengahan bulan. Pertimbangkan geser tanggal tagihan jika memungkinkan.",
+                ];
+                break;
+            }
+        }
+
+        $redundancyCount = 0;
+        
+        $videoStreamers = $subscriptions->filter(fn($s) => preg_match('/netflix|disney|prime|hbo|vidio|viu/i', $s->name));
+        if ($videoStreamers->count() > 1) {
+            $redundancyCount++;
+            $names = $videoStreamers->pluck('name')->implode(' & ');
+            $recommendations[] = "Redundansi Streaming Video: <b>{$names}</b>. Sebaiknya Anda berlangganan bergilir (ganti-ganti aplikasi tiap bulan) daripada berlangganan semuanya sekaligus.";
+            $cheapest = $videoStreamers->sortBy('monthly_amount')->first();
+            $potentialSavings += $cheapest->monthly_amount;
+        }
+
+        $musicStreamers = $subscriptions->filter(fn($s) => preg_match('/spotify|apple music|youtube music|joox/i', $s->name));
+        if ($musicStreamers->count() > 1) {
+            $redundancyCount++;
+            $names = $musicStreamers->pluck('name')->implode(' & ');
+            $recommendations[] = "Tumpang tindih Layanan Musik: <b>{$names}</b>. Katalog lagu mayoritas identik. Batalkan salah satu untuk penghematan instan.";
+            $cheapest = $musicStreamers->sortBy('monthly_amount')->first();
+            $potentialSavings += $cheapest->monthly_amount;
+        }
+
         if (empty($recommendations)) {
             $recommendations[] = 'Skor kesehatan finansial Anda luar biasa. Tidak ada anomali atau pemborosan yang terdeteksi.';
         }
 
-        $healthData = $this->healthScoreService->calculateUnifiedScore($user, $potentialSavings);
+        $healthData = $this->healthScoreService->calculateUnifiedScore($user, $potentialSavings, [
+            'redundancy_count' => $redundancyCount,
+            'has_cashflow_risk' => $hasCashflowRisk
+        ]);
 
         return [
             'summary' => "Anda mengelola {$subCount} langganan dengan akumulasi beban Rp" . number_format($totalMonthly, 0, ',', '.') . '/bulan.',

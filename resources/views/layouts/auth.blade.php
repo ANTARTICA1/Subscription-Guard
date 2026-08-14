@@ -1,59 +1,168 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Login') - Tatagih</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
-    <link rel="stylesheet" href="{{ asset('css/tailwind-compiled.css') }}?v={{ time() }}">
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        body {
+        .auth-bg {
             background-color: #03060D;
-            background-image: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
-        input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 30px #0b1121 inset !important;
-            -webkit-text-fill-color: white !important;
-            transition: background-color 5000s ease-in-out 0s;
+        .auth-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, transparent 70%);
+            pointer-events: none;
         }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        .auth-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            right: -15%;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .auth-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 480px;
+            padding: 1.5rem;
+        }
+        .auth-card {
+            background: #0d1526;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 2.5rem;
+        }
+        .auth-card .logo-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .auth-card .logo-section img {
+            height: 48px;
+            margin: 0 auto 0.75rem;
+        }
+        .auth-card .logo-section h1 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #f1f5f9;
+            letter-spacing: -0.02em;
+        }
+        .auth-card .logo-section p {
+            color: #4b5e78;
+            font-size: 0.82rem;
+            margin-top: 0.3rem;
+        }
+        .auth-input-group {
+            margin-bottom: 1.15rem;
+        }
+        .auth-input-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 0.4rem;
+        }
+        .auth-input-group input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            background: #080d19;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            color: #f1f5f9;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+        .auth-input-group input:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.08);
+        }
+        .auth-input-group input::placeholder {
+            color: #4b5e78;
+        }
+        .auth-input-group .error-msg {
+            color: #ef4444;
+            font-size: 0.72rem;
+            margin-top: 0.3rem;
+        }
+        .auth-submit {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: filter 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            margin-top: 0.5rem;
+        }
+        .auth-submit:hover {
+            filter: brightness(1.1);
+        }
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.82rem;
+            color: #4b5e78;
+        }
+        .auth-footer a {
+            color: #10b981;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1.25rem 0;
+        }
+        .auth-divider span {
+            font-size: 0.72rem;
+            color: #4b5e78;
+            white-space: nowrap;
+        }
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans text-white items-center justify-center p-4 sm:p-6 lg:p-10 overflow-x-hidden">
-    
-    <!-- Huge Outer Card -->
-    <div class="w-full max-w-[1150px] relative z-10 flex flex-col lg:flex-row items-center justify-between rounded-[2rem] p-6 lg:p-12 shadow-2xl gap-10 lg:gap-16" style="background-color: #0A0F1C; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03), 0 30px 60px rgba(0,0,0,0.5);">
-        
-        <!-- Left Side: Branding & Illustration -->
-        <div class="hidden lg:flex flex-col items-center w-full lg:w-[50%]">
-            @yield('left-content')
-        </div>
-
-        <!-- Right Side: Form Card -->
-        <div class="w-full lg:w-[50%] max-w-[440px] mx-auto lg:mx-0">
-            @yield('content')
-        </div>
-        
-    </div>
-
-    <!-- Footer Area (Outside the Huge Card) -->
-    <div class="w-full mt-8 text-center flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 text-xs text-gray-500 font-medium tracking-wide">
-        <div class="flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-            Privasi Terjamin
-        </div>
-        <div class="hidden sm:block w-1 h-1 rounded-full bg-gray-700"></div>
-        <div class="flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-            Data dienkripsi end-to-end
-        </div>
-        <div class="hidden sm:block w-1 h-1 rounded-full bg-gray-700"></div>
-        <div>© 2026 Tatagih. All rights reserved.</div>
+<body class="auth-bg">
+    <div class="auth-container">
+        @yield('content')
     </div>
 </body>
 </html>

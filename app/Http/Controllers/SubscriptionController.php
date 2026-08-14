@@ -27,10 +27,43 @@ class SubscriptionController extends Controller
             $query->where('status', $request->status);
         }
 
-        $subscriptions = $query->latest()->paginate(12);
+        // Fetch ALL without pagination for dashboard stats
+        $subscriptions = $query->latest()->get();
         $categories = Category::all();
+        
+        $activeSubs = $subscriptions->where('status', 'active');
+        $totalActiveCount = $activeSubs->count();
+        $monthlySpending = $activeSubs->sum('amount');
+        
+        // Tagihan jatuh tempo dalam 7 hari ke depan
+        $upcomingCount = $activeSubs->filter(function($sub) {
+            return $sub->days_until_payment <= 7;
+        })->count();
 
-        return view('subscriptions.index', compact('subscriptions', 'categories'));
+        // Data dummy: Total penghematan (misalnya dari patungan/tips hemat)
+        $totalSavings = 248000;
+
+        // Ambil semua kategori untuk dihitung statistik popularitas (Aktif)
+        $popularCategories = $categories->map(function($cat) use ($activeSubs) {
+            $cat->active_count = $activeSubs->where('category_id', $cat->id)->count();
+            return $cat;
+        })->filter(function($cat) {
+            return $cat->active_count > 0;
+        })->sortByDesc('active_count')->values();
+
+        // Pembayaran mendatang diurutkan berdasarkan hari terdekat
+        $upcomingPayments = $activeSubs->sortBy('days_until_payment')->take(5)->values();
+
+        return view('subscriptions.index', compact(
+            'subscriptions', 
+            'categories', 
+            'totalActiveCount', 
+            'monthlySpending', 
+            'upcomingCount', 
+            'totalSavings',
+            'popularCategories',
+            'upcomingPayments'
+        ));
     }
 
     public function create(\App\Services\SubscriptionTemplateService $templateService)

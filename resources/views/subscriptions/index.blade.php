@@ -1,169 +1,367 @@
 @extends('layouts.app')
 @section('title', 'Subscriptions')
-@section('heading', 'Subscriptions')
-@section('subheading', 'Kelola semua layanan berbayar rutin Anda')
-
-@section('actions')
-<div class="flex items-center gap-2">
-    <a href="{{ route('subscriptions.export') }}" class="btn-secondary text-xs">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-        Export
-    </a>
-    <a href="{{ route('subscriptions.create') }}" class="btn-primary text-xs">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-        Tambah
-    </a>
-</div>
-@endsection
 
 @section('content')
+@section('actions')
+    <div class="flex items-center gap-3">
+        <a href="{{ route('subscriptions.export') }}" class="px-4 py-2.5 bg-[#080d19] border border-[rgba(255,255,255,0.06)] hover:bg-[rgba(255,255,255,0.03)] text-white text-xs font-bold rounded-xl flex items-center gap-2 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+            Export
+        </a>
+        
+        <a href="{{ route('subscriptions.create') }}" class="px-4 py-2.5 bg-gradient-to-r from-[#3b82f6] to-[#06b6d4] text-white text-xs font-bold rounded-xl flex items-center gap-2 hover:opacity-90 transition-opacity">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+            Tambah
+        </a>
+    </div>
+@endsection
 
-<div class="card mb-6">
-    <form method="GET" class="flex flex-col sm:flex-row flex-wrap items-center gap-3">
-        <div class="flex-1 min-w-[220px] w-full">
-            <input type="text" name="search" value="{{ request('search') }}" class="form-input" placeholder="Cari subscription...">
+
+{{-- 4 Metric Cards --}}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+    
+    {{-- Card 1: Total Subscription --}}
+    <div class="bg-gradient-to-br from-[#1e1536] to-[#0f172a] border border-purple-500/20 rounded-2xl p-5 relative overflow-hidden">
+        <div class="flex items-start justify-between relative z-10">
+            <div>
+                <p class="text-[11px] text-purple-200/60 font-semibold mb-1">Total Subscription</p>
+                <h3 class="text-3xl font-bold text-white">{{ $totalActiveCount }}</h3>
+                <p class="text-[10px] text-purple-200/50 mt-1">Aktif saat ini</p>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+            </div>
         </div>
-        <div class="min-w-[170px] w-full sm:w-auto">
-            <select name="category" class="form-select">
-                <option value="">Semua Kategori</option>
-                @foreach($categories as $cat)
-                <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
-                @endforeach
-            </select>
+    </div>
+    
+    {{-- Card 2: Pengeluaran Bulan Ini --}}
+    <div class="bg-gradient-to-br from-[#102a24] to-[#0f172a] border border-emerald-500/20 rounded-2xl p-5 relative overflow-hidden">
+        <div class="flex items-start justify-between relative z-10">
+            <div>
+                <p class="text-[11px] text-emerald-200/60 font-semibold mb-1">Pengeluaran Bulan Ini</p>
+                <h3 class="text-2xl font-bold text-white mb-1">Rp{{ number_format($monthlySpending, 0, ',', '.') }}</h3>
+                <p class="text-[10px] text-[#94a3b8] mt-1"><span class="text-emerald-400 font-bold">+8%</span> dari bulan lalu</p>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+            </div>
         </div>
-        <div class="min-w-[150px] w-full sm:w-auto">
-            <select name="status" class="form-select">
-                <option value="">Semua Status</option>
-                <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
-                <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Nonaktif</option>
-            </select>
+    </div>
+    
+    {{-- Card 3: Akan Datang --}}
+    <div class="bg-gradient-to-br from-[#2a1a10] to-[#0f172a] border border-orange-500/20 rounded-2xl p-5 relative overflow-hidden">
+        <div class="flex items-start justify-between relative z-10">
+            <div>
+                <p class="text-[11px] text-orange-200/60 font-semibold mb-1">Akan Datang</p>
+                <h3 class="text-3xl font-bold text-white">{{ $upcomingCount }}</h3>
+                <p class="text-[10px] text-orange-200/50 mt-1">Dalam 7 hari</p>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+            </div>
         </div>
-        <div class="flex items-center gap-2 w-full sm:w-auto">
-            <button type="submit" class="btn-secondary py-2 text-xs">Filter</button>
-            @if(request()->hasAny(['search','category','status']))
-            <a href="{{ route('subscriptions.index') }}" class="btn-ghost text-xs">Reset</a>
-            @endif
+    </div>
+    
+    {{-- Card 4: Total Hemat --}}
+    <div class="bg-gradient-to-br from-[#101a2a] to-[#0f172a] border border-blue-500/20 rounded-2xl p-5 relative overflow-hidden">
+        <div class="flex items-start justify-between relative z-10">
+            <div>
+                <p class="text-[11px] text-blue-200/60 font-semibold mb-1">Total Hemat</p>
+                <h3 class="text-2xl font-bold text-white mb-1">Rp{{ number_format($totalSavings, 0, ',', '.') }}</h3>
+                <p class="text-[10px] text-[#94a3b8] mt-1">Dari deteksi pemborosan</p>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
         </div>
-    </form>
+    </div>
+    
 </div>
 
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 morph-stagger">
-    @forelse($subscriptions as $sub)
-    <div class="card flex flex-col justify-between cursor-pointer hover:shadow-lg transition-all group" onclick="window.location='{{ route('subscriptions.show', $sub) }}'">
-        <div>
-            <div class="flex items-start justify-between mb-3">
+{{-- Main Dashboard Layout --}}
+<div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-2">
+    
+    {{-- Left Column (Takes 2/3 or 3/4) --}}
+    <div class="lg:col-span-2 xl:col-span-3 space-y-6">
+        
+        {{-- Subscription Aktif List Box --}}
+        <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-2xl p-6">
+            
+            <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
-                    @if($sub->logo)
-                    <div class="w-10 h-10 flex-shrink-0 bg-white border border-[var(--border-color)] rounded-xl p-1.5 flex items-center justify-center">
-                        <img src="{{ $sub->logo }}" alt="{{ $sub->name }}" class="w-full h-full object-contain" onerror="this.style.display='none'">
-                    </div>
-                    @else
-                    <div class="icon-box" style="background: {{ $sub->category->color }}15;">
-                        {{ $sub->category->icon }}
-                    </div>
-                    @endif
-                    <div>
-                        <h3 class="font-bold text-sm hover:underline" style="color: var(--text-primary);">{{ $sub->name }}</h3>
-                        <p class="text-xs" style="color: var(--text-muted);">{{ $sub->category->name }}</p>
-                    </div>
+                    <h3 class="text-lg font-bold text-white">Subscription Aktif</h3>
+                    <span class="px-2 py-0.5 rounded-lg bg-[#192a42] text-[#94a3b8] text-[10px] font-bold">{{ $totalActiveCount }}</span>
                 </div>
-                <div class="flex items-center gap-1.5">
-                    <span class="badge badge-{{ $sub->status }}">{{ strtoupper($sub->status) }}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity text-[var(--accent-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                <div class="flex items-center gap-3">
+                    <div class="relative hidden sm:block">
+                        <select class="appearance-none bg-[#080d19] border border-[rgba(255,255,255,0.06)] text-[#94a3b8] text-xs font-semibold rounded-lg pl-4 pr-8 py-2 focus:outline-none focus:border-indigo-500 transition-colors">
+                            <option>Semua Kategori</option>
+                        </select>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[#4b5e78] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                    <button class="px-4 py-2 bg-[#080d19] border border-[rgba(255,255,255,0.06)] text-[#f1f5f9] text-xs font-semibold rounded-lg flex items-center gap-2 hover:bg-[rgba(255,255,255,0.03)] transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>
+                        Filter
+                    </button>
                 </div>
             </div>
 
-            <div class="space-y-2 text-xs my-4 pt-3" style="border-top: 1px solid var(--border-color);">
-                <div class="flex justify-between">
-                    <span style="color: var(--text-muted);">Biaya:</span>
-                    <span class="font-bold text-sm" style="color: var(--text-primary);">{{ $sub->formatted_amount }}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span style="color: var(--text-muted);">Siklus:</span>
-                    <span class="font-semibold" style="color: var(--text-secondary);">{{ ucfirst($sub->billing_cycle) }}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span style="color: var(--text-muted);">Jatuh Tempo:</span>
-                    <span class="font-semibold" style="color: {{ $sub->days_until_payment <= 3 ? 'var(--warning)' : 'var(--text-secondary)' }};">
-                        @if($sub->status === 'active')
-                            {{ $sub->days_until_payment }} hari lagi
+            <div class="flex flex-col">
+                @foreach($subscriptions as $sub)
+                @php
+                    $isActive = $sub->status === 'active';
+                    $progressPercent = $isActive ? max(0, min(100, 100 - ($sub->days_until_payment * 3.33))) : 0;
+                    $progressColor = $sub->days_until_payment <= 3 ? 'bg-amber-500' : 'bg-emerald-500';
+                @endphp
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between py-4 border-b border-[rgba(255,255,255,0.03)] group">
+                    
+                    {{-- Identity --}}
+                    <div class="flex items-center gap-4 sm:w-5/12 mb-3 sm:mb-0">
+                        @if($sub->logo)
+                        <div class="w-10 h-10 flex-shrink-0 bg-[#080d19] border border-[rgba(255,255,255,0.03)] rounded-full p-2 flex items-center justify-center">
+                            <img src="{{ $sub->logo }}" alt="{{ $sub->name }}" class="w-full h-full object-contain" onerror="this.style.display='none'">
+                        </div>
                         @else
-                            —
+                        <div class="w-10 h-10 flex-shrink-0 rounded-full flex items-center justify-center text-lg font-bold" style="background: {{ $sub->category->color ?? '#3b82f6' }}15; color: {{ $sub->category->color ?? '#3b82f6' }}">
+                            <span class="text-sm font-extrabold uppercase">{{ substr($sub->category->name ?? 'S', 0, 1) }}</span>
+                        </div>
                         @endif
-                    </span>
+                        
+                        <div>
+                            <h4 class="font-bold text-[#f1f5f9] text-sm leading-tight">{{ $sub->name }}</h4>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-xs text-[#94a3b8]">{{ $sub->category->name ?? 'Lainnya' }}</span>
+                                @if($isActive)
+                                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold tracking-wide uppercase">ACTIVE</span>
+                                @else
+                                    <span class="text-[9px] px-1.5 py-0.5 rounded bg-[#192a42] text-[#94a3b8] font-bold tracking-wide uppercase">INACTIVE</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Billing --}}
+                    <div class="sm:w-4/12 mb-3 sm:mb-0">
+                        <p class="text-xs font-bold text-white mb-1">
+                            Rp{{ number_format($sub->amount, 0, ',', '.') }} <span class="text-[10px] text-[#4b5e78] font-normal">/ {{ ucfirst($sub->billing_cycle) }}</span>
+                        </p>
+                        @if($isActive)
+                            <p class="text-[10px] text-[#94a3b8] mb-1.5">Renews in {{ $sub->days_until_payment }} hari lagi</p>
+                            <div class="w-48 h-0.5 bg-[#192a42] rounded-full overflow-hidden">
+                                <div class="h-full {{ $progressColor }} rounded-full" style="width: {{ $progressPercent }}%"></div>
+                            </div>
+                        @else
+                            <p class="text-[10px] text-red-400 mb-1.5">Expired {{ abs($sub->days_until_payment) }} hari yang lalu</p>
+                            <div class="w-48 h-0.5 bg-[#192a42] rounded-full overflow-hidden"></div>
+                        @endif
+                    </div>
+
+                    {{-- Actions --}}
+                    <div class="flex items-center gap-2 justify-end sm:w-3/12">
+                        @if($isActive)
+                            <a href="{{ route('subscriptions.show', $sub) }}" class="px-4 py-1.5 bg-[#080d19] border border-[rgba(255,255,255,0.06)] hover:bg-[#192a42] text-[#f1f5f9] text-xs font-semibold rounded-lg transition-colors">
+                                Kelola
+                            </a>
+                        @else
+                            <form method="POST" action="{{ route('subscriptions.toggle-status', $sub) }}">
+                                @csrf
+                                <button type="submit" class="px-4 py-1.5 bg-[#080d19] border border-[rgba(255,255,255,0.06)] hover:bg-[#192a42] text-[#f1f5f9] text-xs font-semibold rounded-lg transition-colors whitespace-nowrap">
+                                    Aktifkan Kembali
+                                </button>
+                            </form>
+                        @endif
+                        
+                        <div class="relative" x-data="{ open: false }">
+                            <button @click="open = !open" @click.away="open = false" class="p-1.5 bg-[#080d19] border border-[rgba(255,255,255,0.06)] hover:bg-[#192a42] rounded-lg text-[#94a3b8] transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" /></svg>
+                            </button>
+                            <div x-show="open" x-transition x-cloak class="absolute right-0 mt-2 w-36 bg-[#111c2e] border border-[rgba(255,255,255,0.1)] rounded-xl shadow-xl z-50 overflow-hidden py-1">
+                                <a href="{{ route('subscriptions.edit', $sub) }}" class="flex items-center gap-2 px-4 py-2 text-xs text-[#f1f5f9] hover:bg-[#192a42] transition-colors">Edit</a>
+                                @if($isActive)
+                                <form method="POST" action="{{ route('subscriptions.toggle-status', $sub) }}">
+                                    @csrf
+                                    <button type="submit" class="w-full flex items-center gap-2 text-left px-4 py-2 text-xs text-[#f1f5f9] hover:bg-[#192a42] transition-colors">Pause</button>
+                                </form>
+                                @endif
+                                <form method="POST" action="{{ route('subscriptions.destroy', $sub) }}" onsubmit="return confirm('Hapus subscription ini?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="w-full flex items-center gap-2 text-left px-4 py-2 text-xs text-red-400 hover:bg-red-500/10 transition-colors">Hapus</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                @endforeach
             </div>
+
+            <button class="w-full mt-4 py-3 bg-[#080d19] hover:bg-[#0a1222] border border-[rgba(255,255,255,0.03)] rounded-xl text-xs font-semibold text-[#f1f5f9] transition-colors">
+                Lihat Semua Subscription
+            </button>
         </div>
 
+        {{-- Kategori Populer --}}
         <div>
-            @if($sub->status !== 'active')
-            <div class="p-2.5 rounded-lg text-xs font-semibold flex items-center gap-2 mb-3" style="background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-color);">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Langganan Di-Pause
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-base font-bold text-white">Kategori Populer</h3>
+                <a href="#" class="text-xs text-indigo-400 hover:text-indigo-300">Lihat semua</a>
             </div>
-            @elseif($sub->auto_renew)
-            <div class="p-2.5 rounded-lg text-xs font-semibold flex items-center gap-2 mb-3" style="background: var(--warning-bg); color: var(--warning);">
-                Auto-Renewal Aktif
-            </div>
-            @else
-            <div class="p-2.5 rounded-lg text-xs font-semibold flex items-center gap-2 mb-3" style="background: var(--border-color); color: var(--text-muted);">
-                Renewal Manual
-            </div>
-            @endif
-
-            <div class="flex justify-center gap-1.5 pt-3" style="border-top: 1px solid var(--border-color);" onclick="event.stopPropagation()">
-                @if($sub->cancel_url && $sub->status === 'active')
-                <a href="{{ $sub->cancel_url }}" target="_blank" class="btn-secondary text-[10px] sm:text-xs flex-1 py-1.5 flex flex-col xl:flex-row items-center justify-center gap-1 shadow-sm text-[var(--danger)] hover:border-[var(--danger)] hover:bg-[var(--danger-bg)] transition-colors" title="Batalkan Langganan Resmi">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
-                    <span>Setop</span>
-                </a>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                @foreach($popularCategories->take(5) as $cat)
+                <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-xl p-4 flex items-center gap-3 hover:border-[rgba(255,255,255,0.15)] transition-colors cursor-pointer">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-extrabold uppercase" style="background: {{ $cat->color }}15; color: {{ $cat->color }}">
+                        {{ substr($cat->name, 0, 1) }}
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-white">{{ $cat->name }}</p>
+                        <p class="text-[10px] text-[#94a3b8]">{{ $cat->active_count }} aktif</p>
+                    </div>
+                </div>
+                @endforeach
+                {{-- If less than 5, we can show a placeholder or let it be --}}
+                @if($popularCategories->count() < 5)
+                <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-xl p-4 flex items-center gap-3 opacity-50 cursor-not-allowed">
+                    <div class="w-8 h-8 rounded-lg bg-[#192a42] text-[#4b5e78] flex items-center justify-center text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-white">Lainnya</p>
+                        <p class="text-[10px] text-[#94a3b8]">-</p>
+                    </div>
+                </div>
                 @endif
-                <form method="POST" action="{{ route('subscriptions.mark-paid', $sub) }}" class="flex-1">
-                    @csrf
-                    <button type="submit" class="btn-secondary text-[10px] sm:text-xs w-full py-1.5 flex flex-col xl:flex-row items-center justify-center gap-1 shadow-sm hover:border-[var(--accent-primary)] hover:text-[var(--accent-primary)] transition-colors" title="Bayar">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg> 
-                        <span>Bayar</span>
-                    </button>
-                </form>
-                <form method="POST" action="{{ route('subscriptions.toggle-status', $sub) }}" class="flex-1">
-                    @csrf
-                    <button type="submit" class="btn-secondary text-[10px] sm:text-xs w-full py-1.5 flex flex-col xl:flex-row items-center justify-center gap-1 shadow-sm" title="{{ $sub->status === 'active' ? 'Pause' : 'Resume' }}">
-                        @if($sub->status === 'active')
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            <span>Pause</span>
-                        @else
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            <span>Resume</span>
-                        @endif
-                    </button>
-                </form>
-                <a href="{{ route('subscriptions.edit', $sub) }}" class="btn-secondary text-[10px] sm:text-xs flex-1 py-1.5 flex flex-col xl:flex-row items-center justify-center gap-1 shadow-sm" title="Edit">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                    <span>Edit</span>
-                </a>
-                <form method="POST" action="{{ route('subscriptions.destroy', $sub) }}" onsubmit="return confirm('Hapus subscription ini?')" class="flex-1">
-                    @csrf @method('DELETE')
-                    <button type="submit" class="btn-secondary text-[10px] sm:text-xs w-full py-1.5 flex flex-col xl:flex-row items-center justify-center gap-1 shadow-sm hover:text-red-500 hover:border-red-500 transition-colors" title="Hapus">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                        <span>Hapus</span>
-                    </button>
-                </form>
             </div>
         </div>
-    </div>
-    @empty
-    <div class="col-span-full card">
-        <div class="empty-state">
-            <span class="empty-icon"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg></span>
-            <p class="empty-title">Belum ada subscription</p>
-            <p class="empty-desc">Tambahkan subscription pertama Anda untuk mulai mencatat tagihan.</p>
-            <a href="{{ route('subscriptions.create') }}" class="btn-primary">+ Tambah Subscription</a>
-        </div>
-    </div>
-    @endforelse
-</div>
 
-<div class="mt-6">
-    {{ $subscriptions->withQueryString()->links() }}
+    </div>
+
+    {{-- Right Column (Takes 1/3 or 1/4) --}}
+    <div class="lg:col-span-1 space-y-6">
+        
+        {{-- Pembayaran Mendatang --}}
+        <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-5">
+                <h3 class="text-[13px] font-bold text-white">Pembayaran Mendatang</h3>
+                <a href="#" class="text-[10px] text-indigo-400 hover:text-indigo-300">Lihat semua</a>
+            </div>
+            
+            <div class="space-y-4 mb-5">
+                @forelse($upcomingPayments as $payment)
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        @if($payment->logo)
+                        <div class="w-6 h-6 flex-shrink-0 bg-[#080d19] rounded-full p-1 flex items-center justify-center">
+                            <img src="{{ $payment->logo }}" class="w-full h-full object-contain">
+                        </div>
+                        @else
+                        <div class="w-6 h-6 flex-shrink-0 rounded-full flex items-center justify-center text-[10px] font-bold" style="background: {{ $payment->category->color ?? '#3b82f6' }}15; color: {{ $payment->category->color ?? '#3b82f6' }}">
+                            {!! $payment->category->icon ?? 'S' !!}
+                        </div>
+                        @endif
+                        <p class="text-[11px] font-semibold text-[#f1f5f9]">{{ $payment->name }}</p>
+                    </div>
+                    <div class="flex items-center gap-3 text-right">
+                        <p class="text-[10px] text-[#94a3b8]">Rp{{ number_format($payment->amount, 0, ',', '.') }}</p>
+                        <p class="text-[10px] font-bold {{ $payment->days_until_payment <= 3 ? 'text-amber-500' : 'text-emerald-500' }} w-14">{{ $payment->days_until_payment }} hari lagi</p>
+                    </div>
+                </div>
+                @empty
+                <p class="text-xs text-[#4b5e78] text-center py-2">Tidak ada tagihan dalam waktu dekat.</p>
+                @endforelse
+            </div>
+            
+            <button class="w-full py-2.5 bg-[#192a42] hover:bg-[#1e3350] border border-[rgba(255,255,255,0.03)] rounded-xl text-[11px] font-bold text-indigo-300 transition-colors">
+                Lihat Kalender Lengkap
+            </button>
+        </div>
+
+        {{-- Pengeluaran Bulanan (Chart Dummy) --}}
+        <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-2xl p-6 relative">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-[13px] font-bold text-white">Pengeluaran Bulanan</h3>
+                <div class="relative">
+                    <select class="appearance-none bg-transparent border border-[rgba(255,255,255,0.06)] text-[#94a3b8] text-[10px] font-semibold rounded-lg pl-2 pr-6 py-1 focus:outline-none focus:border-indigo-500">
+                        <option>6 Bulan Terakhir</option>
+                    </select>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-[#4b5e78] absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <h4 class="text-xl font-bold text-white mb-1">Rp{{ number_format($monthlySpending, 0, ',', '.') }} <span class="text-[10px] text-emerald-400 font-normal">+8% <span class="text-[#4b5e78]">dari bulan lalu</span></span></h4>
+            </div>
+            
+            {{-- Dummy Chart --}}
+            <div class="h-32 w-full mt-6 relative flex items-end">
+                {{-- Horizontal Lines --}}
+                <div class="absolute inset-0 flex flex-col justify-between z-0">
+                    <div class="w-full border-t border-[rgba(255,255,255,0.03)] relative"><span class="absolute -top-2 -left-1 text-[8px] text-[#4b5e78]">1.8M</span></div>
+                    <div class="w-full border-t border-[rgba(255,255,255,0.03)] relative"><span class="absolute -top-2 -left-1 text-[8px] text-[#4b5e78]">1.2M</span></div>
+                    <div class="w-full border-t border-[rgba(255,255,255,0.03)] relative"><span class="absolute -top-2 -left-1 text-[8px] text-[#4b5e78]">600K</span></div>
+                    <div class="w-full border-t border-[rgba(255,255,255,0.03)] relative"><span class="absolute -top-2 -left-1 text-[8px] text-[#4b5e78]">0</span></div>
+                </div>
+                
+                {{-- Chart SVG (Approximation of curved line) --}}
+                <div class="absolute inset-0 z-10 pl-6 pt-2 pb-1 pr-2">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full overflow-visible">
+                        <path d="M0,60 Q10,50 20,55 T40,65 T60,55 T80,50 T100,55 L100,100 L0,100 Z" fill="url(#gradient)" opacity="0.3"></path>
+                        <path d="M0,60 Q10,50 20,55 T40,65 T60,55 T80,50 T100,55" fill="none" stroke="#a855f7" stroke-width="2"></path>
+                        
+                        <circle cx="0" cy="60" r="2" fill="#a855f7" stroke="#111c2e" stroke-width="1"></circle>
+                        <circle cx="20" cy="55" r="2" fill="#a855f7" stroke="#111c2e" stroke-width="1"></circle>
+                        <circle cx="40" cy="65" r="2" fill="#a855f7" stroke="#111c2e" stroke-width="1"></circle>
+                        <circle cx="60" cy="55" r="2" fill="#a855f7" stroke="#111c2e" stroke-width="1"></circle>
+                        <circle cx="80" cy="50" r="2" fill="#a855f7" stroke="#111c2e" stroke-width="1"></circle>
+                        <circle cx="100" cy="55" r="2" fill="#fff" stroke="#a855f7" stroke-width="1.5"></circle>
+                        
+                        <defs>
+                            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#a855f7" stop-opacity="0.8"></stop>
+                                <stop offset="100%" stop-color="#a855f7" stop-opacity="0"></stop>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                
+                {{-- Tooltip (Jul) --}}
+                <div class="absolute right-0 top-6 bg-purple-600 rounded-lg px-2 py-1 text-center shadow-lg z-20">
+                    <p class="text-[9px] text-white/80">Jul</p>
+                    <p class="text-[10px] font-bold text-white">Rp{{ number_format($monthlySpending, 0, ',', '.') }}</p>
+                    <div class="absolute -bottom-1 right-3 w-2 h-2 bg-purple-600 rotate-45"></div>
+                </div>
+            </div>
+            
+            {{-- X-Axis Labels --}}
+            <div class="flex justify-between mt-2 pl-6 pr-2">
+                <span class="text-[9px] text-[#4b5e78]">Feb</span>
+                <span class="text-[9px] text-[#4b5e78]">Mar</span>
+                <span class="text-[9px] text-[#4b5e78]">Apr</span>
+                <span class="text-[9px] text-[#4b5e78]">May</span>
+                <span class="text-[9px] text-[#4b5e78]">Jun</span>
+                <span class="text-[9px] text-[#4b5e78]">Jul</span>
+            </div>
+        </div>
+
+        {{-- Tips Hemat --}}
+        <div class="bg-[#19150d] border border-amber-500/20 rounded-2xl p-6 relative overflow-hidden">
+            <div class="absolute top-4 right-4 w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+            </div>
+            
+            <h3 class="text-sm font-bold text-amber-500 mb-4">Tips Hemat</h3>
+            
+            <p class="text-xs text-[#f1f5f9] mb-2 leading-relaxed">
+                Kamu bisa hemat hingga <span class="text-emerald-400 font-bold">Rp248.000/bulan</span>
+            </p>
+            <p class="text-[10px] text-[#94a3b8] mb-5 leading-relaxed">
+                Batalkan 2 subscription yang jarang digunakan.
+            </p>
+            
+            <button class="px-4 py-2 border border-amber-500/30 hover:bg-amber-500/10 text-amber-500 text-[10px] font-bold rounded-lg transition-colors">
+                Lihat Rekomendasi
+            </button>
+        </div>
+
+    </div>
 </div>
 @endsection
