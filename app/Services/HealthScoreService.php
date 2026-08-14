@@ -9,11 +9,23 @@ class HealthScoreService
     public function calculate(User $user): array
     {
         $unified = $this->calculateUnifiedScore($user, 0);
-        return $this->formatScore($unified['score']);
+        $hasData = $user->activeSubscriptions()->count() > 0 && $user->monthlyExpense() > 0;
+        return $this->formatScore($unified['score'], $hasData);
     }
 
-    public function formatScore(int $score): array
+    public function formatScore(int $score, bool $hasData = true): array
     {
+        if (!$hasData) {
+            return [
+                'score' => 0,
+                'label' => 'Belum Ada Data',
+                'color' => '#64748b',
+                'recommendations' => [
+                    'Tambahkan subscription pertama Anda untuk mulai melacak efisiensi pengeluaran.'
+                ]
+            ];
+        }
+
         $label = match (true) {
             $score >= 90 => 'Sempurna',
             $score >= 75 => 'Baik',

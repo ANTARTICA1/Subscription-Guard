@@ -81,7 +81,7 @@ class DashboardController extends Controller
 
         
         $analysis = $assistantService->analyze($user);
-        $healthScore = $healthScoreService->formatScore($analysis['health_score']);
+        $healthScore = $healthScoreService->formatScore($analysis['health_score'], $activeCount > 0 && $monthlyExpense > 0);
 
         
         $recentNotifications = Notification::where('user_id', $user->id)
