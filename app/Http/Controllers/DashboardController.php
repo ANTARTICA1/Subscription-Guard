@@ -17,7 +17,7 @@ class DashboardController extends Controller
         $min = min($data);
         $max = max($data);
         $range = $max - $min;
-        if ($range == 0) return 'M0,20 Q25,5 50,20 T100,20';
+        if ($range == 0) return 'M0,15 L100,15';
 
         $count = count($data);
         $step = 100 / max(1, $count - 1);

@@ -118,7 +118,7 @@
             <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.03)] rounded-2xl p-6 relative overflow-hidden group transition-colors" :class="leak.severity === 'high' ? 'hover:border-[#ef4444]/30' : (leak.severity === 'medium' ? 'hover:border-[#f59e0b]/30' : 'hover:border-blue-500/30')">
                 
                 {{-- Left Glowing Line --}}
-                <div class="absolute left-0 top-6 bottom-6 w-[3px] rounded-r-full" :class="leak.severity === 'high' ? 'bg-[#ef4444] shadow-[0_0_10px_rgba(239,68,68,0.8)]' : (leak.severity === 'medium' ? 'bg-[#f59e0b] shadow-[0_0_10px_rgba(245,158,11,0.8)]' : 'bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]')"></div>
+                <div x-show="leak.severity !== 'low'" class="absolute left-0 top-6 bottom-6 w-[3px] rounded-r-full" :class="leak.severity === 'high' ? 'bg-[#ef4444] shadow-[0_0_10px_rgba(239,68,68,0.8)]' : 'bg-[#f59e0b] shadow-[0_0_10px_rgba(245,158,11,0.8)]'"></div>
                 
                 <div class="flex flex-col lg:flex-row gap-6 pl-2 relative z-10">
                     

@@ -138,13 +138,13 @@
                 <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden p-2 text-[#94a3b8] hover:text-white rounded-lg transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                 </button>
-                <div>
-                    <h2 class="font-bold text-[#f1f5f9] tracking-tight text-lg">Halo, {{ explode(' ', auth()->user()->name)[0] }}!</h2>
+                <div class="min-w-0 flex-1">
+                    <h2 class="font-bold text-[#f1f5f9] tracking-tight text-lg truncate">Halo, {{ explode(' ', auth()->user()->name)[0] }}!</h2>
                     <p class="text-xs text-[#4b5e78] hidden md:block font-medium">@yield('header_desc', 'Kelola detail subscription Anda dengan mudah.')</p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 md:gap-3 shrink-0">
                 {{-- Search Bar Removed --}}
 
                 {{-- Notification Removed --}}

@@ -3,15 +3,15 @@
 
 @section('content')
 @section('actions')
-    <div class="flex items-center gap-3">
-        <a href="{{ route('subscriptions.export') }}" class="px-4 py-2.5 bg-[#080d19] border border-[rgba(255,255,255,0.06)] hover:bg-[rgba(255,255,255,0.03)] text-white text-xs font-bold rounded-xl flex items-center gap-2 transition-colors">
+    <div class="flex items-center gap-2 md:gap-3">
+        <a href="{{ route('subscriptions.export') }}" class="px-3 md:px-4 py-2 md:py-2.5 bg-[#080d19] border border-[rgba(255,255,255,0.06)] hover:bg-[rgba(255,255,255,0.03)] text-white text-[10px] md:text-xs font-bold rounded-lg md:rounded-xl flex items-center gap-1.5 md:gap-2 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-            Export
+            <span class="hidden sm:inline">Export</span>
         </a>
         
-        <a href="{{ route('subscriptions.create') }}" class="px-4 py-2.5 bg-gradient-to-r from-[#3b82f6] to-[#06b6d4] text-white text-xs font-bold rounded-xl flex items-center gap-2 hover:opacity-90 transition-opacity">
+        <a href="{{ route('subscriptions.create') }}" class="px-3 md:px-4 py-2 md:py-2.5 bg-gradient-to-r from-[#3b82f6] to-[#06b6d4] text-white text-[10px] md:text-xs font-bold rounded-lg md:rounded-xl flex items-center gap-1.5 md:gap-2 hover:opacity-90 transition-opacity">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-            Tambah
+            <span class="hidden sm:inline">Tambah</span>
         </a>
     </div>
 @endsection
@@ -312,9 +312,9 @@
                 Batalkan 2 subscription yang jarang digunakan.
             </p>
             
-            <button class="px-4 py-2 border border-amber-500/30 hover:bg-amber-500/10 text-amber-500 text-[10px] font-bold rounded-lg transition-colors">
+            <a href="{{ route('leaks.index') }}" class="inline-block px-4 py-2 border border-amber-500/30 hover:bg-amber-500/10 text-amber-500 text-[10px] font-bold rounded-lg transition-colors text-center">
                 Lihat Rekomendasi
-            </button>
+            </a>
         </div>
 
     </div>

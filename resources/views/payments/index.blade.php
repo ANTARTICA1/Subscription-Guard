@@ -350,9 +350,9 @@
                         <p class="text-xs text-[#94a3b8] font-medium tracking-wide mb-1">Total Pengeluaran</p>
                         <h2 class="text-3xl font-black text-white mb-2 leading-none">Rp{{ number_format($totalPaid, 0, ',', '.') }}</h2>
                         <p class="text-[10px] text-[#4b5e78] flex items-center gap-1">
-                            <span class="text-emerald-400 font-bold flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
-                                12.5%
+                            <span class="{{ $totalPaidDiffPct >= 0 ? 'text-emerald-400' : 'text-red-400' }} font-bold flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 {{ $totalPaidDiffPct < 0 ? 'rotate-180' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+                                {{ abs($totalPaidDiffPct) }}%
                             </span>
                             dari bulan lalu
                         </p>
@@ -360,7 +360,7 @@
                 </div>
                 {{-- Decorative mini sparkline --}}
                 <div class="w-24 h-12 opacity-50 shrink-0 self-end xl:self-center">
-                    <svg viewBox="0 0 100 30" class="w-full h-full stroke-emerald-500" fill="none" stroke-width="2"><path d="M0 25 Q10 20 20 25 T40 15 T60 20 T80 5 T100 15" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg viewBox="0 0 100 30" class="w-full h-full stroke-emerald-500" fill="none" stroke-width="2"><path d="{{ $totalPaidSparkline }}" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
             </div>
 
@@ -373,13 +373,13 @@
                     <div>
                         <p class="text-xs text-[#94a3b8] font-medium tracking-wide mb-1">Transaksi Bulan Ini</p>
                         <div class="flex items-baseline gap-2 mb-2">
-                            <h2 class="text-3xl font-black text-white leading-none">{{ $payments->where('payment_date', '>=', now()->startOfMonth())->count() }}</h2>
+                            <h2 class="text-3xl font-black text-white leading-none">{{ $thisMonthCount }}</h2>
                             <span class="text-xs text-[#4b5e78]">{{ now()->translatedFormat('M Y') }}</span>
                         </div>
                         <p class="text-[10px] text-[#4b5e78] flex items-center gap-1">
-                            <span class="text-emerald-400 font-bold flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
-                                1
+                            <span class="{{ $trxCountDiff >= 0 ? 'text-emerald-400' : 'text-red-400' }} font-bold flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 {{ $trxCountDiff < 0 ? 'rotate-180' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+                                {{ abs($trxCountDiff) }}
                             </span>
                             transaksi dari bulan lalu
                         </p>
@@ -387,7 +387,7 @@
                 </div>
                 {{-- Decorative mini sparkline --}}
                 <div class="w-24 h-12 opacity-50 shrink-0 self-end xl:self-center">
-                    <svg viewBox="0 0 100 30" class="w-full h-full stroke-purple-500" fill="none" stroke-width="2"><path d="M0 20 Q15 25 25 15 T50 10 T75 25 T100 10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg viewBox="0 0 100 30" class="w-full h-full stroke-purple-500" fill="none" stroke-width="2"><path d="{{ $transactionCountSparkline }}" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
             </div>
 
@@ -407,7 +407,7 @@
                 </div>
                 {{-- Decorative mini sparkline --}}
                 <div class="w-24 h-12 opacity-50 shrink-0 self-end xl:self-center">
-                    <svg viewBox="0 0 100 30" class="w-full h-full stroke-amber-500" fill="none" stroke-width="2"><path d="M0 15 Q10 5 20 15 T40 5 T60 20 T80 5 T100 15" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <svg viewBox="0 0 100 30" class="w-full h-full stroke-amber-500" fill="none" stroke-width="2"><path d="{{ $activeSubSparkline }}" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
             </div>
         </div>
@@ -566,31 +566,23 @@
                             <canvas id="categoryDonutChart"></canvas>
                             <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                                 <span class="text-[9px] text-[#94a3b8]">Total</span>
-                                <span class="text-xs font-bold text-white">Rp{{ number_format($totalPaid / 1000, 0, ',', '.') }}k</span>
+                                <span class="text-xs font-bold text-white">Rp{{ number_format($totalCategorySum / 1000, 0, ',', '.') }}k</span>
                             </div>
                         </div>
                         <div class="flex-1 space-y-3">
+                            @forelse(array_slice($donutLabels, 0, 3) as $i => $label)
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
-                                    <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-                                    <span class="text-[10px] font-bold text-white">Hiburan</span>
+                                    <span class="w-2 h-2 rounded-full" style="background-color: {{ $donutColors[$i] }}"></span>
+                                    <span class="text-[10px] font-bold text-white">{{ $label }}</span>
                                 </div>
-                                <span class="text-[10px] text-[#94a3b8]">60%</span>
+                                <span class="text-[10px] text-[#94a3b8]">{{ $donutPercentages[$i] }}%</span>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
-                                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                                    <span class="text-[10px] font-bold text-white">Produktivitas</span>
-                                </div>
-                                <span class="text-[10px] text-[#94a3b8]">25%</span>
+                            @empty
+                            <div class="text-center">
+                                <span class="text-[10px] text-[#94a3b8]">Belum ada kategori</span>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2">
-                                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                                    <span class="text-[10px] font-bold text-white">Lainnya</span>
-                                </div>
-                                <span class="text-[10px] text-[#94a3b8]">15%</span>
-                            </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -707,14 +699,10 @@
             new Chart(ctxDonut, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Hiburan', 'Produktivitas', 'Lainnya'],
+                    labels: {!! json_encode($donutLabels) !!},
                     datasets: [{
-                        data: [60, 25, 15],
-                        backgroundColor: [
-                            '#a855f7', // purple-500
-                            '#3b82f6', // blue-500
-                            '#10b981'  // emerald-500
-                        ],
+                        data: {!! json_encode($donutData) !!},
+                        backgroundColor: {!! json_encode($donutColors) !!},
                         borderWidth: 2,
                         borderColor: '#0b121f',
                         hoverOffset: 4
