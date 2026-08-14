@@ -291,54 +291,9 @@
                 <h4 class="text-xl font-bold text-white mb-1">Rp{{ number_format($monthlySpending, 0, ',', '.') }} <span class="text-[10px] text-emerald-400 font-normal">+8% <span class="text-[#4b5e78]">dari bulan lalu</span></span></h4>
             </div>
             
-            {{-- Dummy Chart --}}
-            <div class="h-32 w-full mt-6 relative flex items-end">
-                {{-- Horizontal Lines --}}
-                <div class="absolute inset-0 flex flex-col justify-between z-0">
-                    <div class="w-full border-t border-[rgba(255,255,255,0.03)] relative"><span class="absolute -top-2 -left-1 text-[8px] text-[#4b5e78]">1.8M</span></div>
-                    <div class="w-full border-t border-[rgba(255,255,255,0.03)] relative"><span class="absolute -top-2 -left-1 text-[8px] text-[#4b5e78]">1.2M</span></div>
-                    <div class="w-full border-t border-[rgba(255,255,255,0.03)] relative"><span class="absolute -top-2 -left-1 text-[8px] text-[#4b5e78]">600K</span></div>
-                    <div class="w-full border-t border-[rgba(255,255,255,0.03)] relative"><span class="absolute -top-2 -left-1 text-[8px] text-[#4b5e78]">0</span></div>
-                </div>
-                
-                {{-- Chart SVG (Approximation of curved line) --}}
-                <div class="absolute inset-0 z-10 pl-6 pt-2 pb-1 pr-2">
-                    <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full overflow-visible">
-                        <path d="M0,60 Q10,50 20,55 T40,65 T60,55 T80,50 T100,55 L100,100 L0,100 Z" fill="url(#gradient)" opacity="0.3"></path>
-                        <path d="M0,60 Q10,50 20,55 T40,65 T60,55 T80,50 T100,55" fill="none" stroke="#a855f7" stroke-width="2"></path>
-                        
-                        <circle cx="0" cy="60" r="2" fill="#a855f7" stroke="#111c2e" stroke-width="1"></circle>
-                        <circle cx="20" cy="55" r="2" fill="#a855f7" stroke="#111c2e" stroke-width="1"></circle>
-                        <circle cx="40" cy="65" r="2" fill="#a855f7" stroke="#111c2e" stroke-width="1"></circle>
-                        <circle cx="60" cy="55" r="2" fill="#a855f7" stroke="#111c2e" stroke-width="1"></circle>
-                        <circle cx="80" cy="50" r="2" fill="#a855f7" stroke="#111c2e" stroke-width="1"></circle>
-                        <circle cx="100" cy="55" r="2" fill="#fff" stroke="#a855f7" stroke-width="1.5"></circle>
-                        
-                        <defs>
-                            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stop-color="#a855f7" stop-opacity="0.8"></stop>
-                                <stop offset="100%" stop-color="#a855f7" stop-opacity="0"></stop>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-                
-                {{-- Tooltip (Jul) --}}
-                <div class="absolute right-0 top-6 bg-purple-600 rounded-lg px-2 py-1 text-center shadow-lg z-20">
-                    <p class="text-[9px] text-white/80">Jul</p>
-                    <p class="text-[10px] font-bold text-white">Rp{{ number_format($monthlySpending, 0, ',', '.') }}</p>
-                    <div class="absolute -bottom-1 right-3 w-2 h-2 bg-purple-600 rotate-45"></div>
-                </div>
-            </div>
-            
-            {{-- X-Axis Labels --}}
-            <div class="flex justify-between mt-2 pl-6 pr-2">
-                <span class="text-[9px] text-[#4b5e78]">Feb</span>
-                <span class="text-[9px] text-[#4b5e78]">Mar</span>
-                <span class="text-[9px] text-[#4b5e78]">Apr</span>
-                <span class="text-[9px] text-[#4b5e78]">May</span>
-                <span class="text-[9px] text-[#4b5e78]">Jun</span>
-                <span class="text-[9px] text-[#4b5e78]">Jul</span>
+            {{-- Real Chart --}}
+            <div class="h-36 w-full mt-6 relative">
+                <canvas id="monthlySpendingChart"></canvas>
             </div>
         </div>
 
@@ -364,4 +319,72 @@
 
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('monthlySpendingChart');
+    if (ctx) {
+        const context = ctx.getContext('2d');
+        const gradient = context.createLinearGradient(0, 0, 0, 128);
+        gradient.addColorStop(0, 'rgba(168, 85, 247, 0.4)');
+        gradient.addColorStop(1, 'rgba(168, 85, 247, 0)');
+
+        new Chart(context, {
+            type: 'line',
+            data: {
+                labels: @json($chartLabels),
+                datasets: [{
+                    data: @json($chartData),
+                    borderColor: '#a855f7',
+                    backgroundColor: gradient,
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#a855f7',
+                    pointBorderColor: '#111c2e',
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 6,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#9333ea',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        displayColors: false,
+                        callbacks: {
+                            label: (context) => 'Rp' + new Intl.NumberFormat('id-ID').format(context.raw)
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false, drawBorder: false },
+                        ticks: { color: '#4b5e78', font: { size: 9, family: 'Inter' } }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.03)', drawBorder: false },
+                        ticks: {
+                            color: '#4b5e78',
+                            font: { size: 9, family: 'Inter' },
+                            maxTicksLimit: 4,
+                            callback: function(v) {
+                                if (v >= 1000000) return (v / 1000000).toFixed(1) + 'M';
+                                if (v >= 1000) return (v / 1000) + 'K';
+                                return v;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
 @endsection

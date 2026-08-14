@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class SubscriptionController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, \App\Services\FinancialAssistantService $assistantService)
     {
-        $query = Subscription::where('user_id', Auth::id())->with('category');
+        $user = Auth::user();
+        $query = Subscription::where('user_id', $user->id)->with('category');
 
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
@@ -27,7 +28,6 @@ class SubscriptionController extends Controller
             $query->where('status', $request->status);
         }
 
-        // Fetch ALL without pagination for dashboard stats
         $subscriptions = $query->latest()->get();
         $categories = Category::all();
         
@@ -35,15 +35,13 @@ class SubscriptionController extends Controller
         $totalActiveCount = $activeSubs->count();
         $monthlySpending = $activeSubs->sum('amount');
         
-        // Tagihan jatuh tempo dalam 7 hari ke depan
         $upcomingCount = $activeSubs->filter(function($sub) {
             return $sub->days_until_payment <= 7;
         })->count();
 
-        // Data dummy: Total penghematan (misalnya dari patungan/tips hemat)
-        $totalSavings = 248000;
+        $analysis = $assistantService->analyze($user);
+        $totalSavings = $analysis['potential_savings'] ?? 0;
 
-        // Ambil semua kategori untuk dihitung statistik popularitas (Aktif)
         $popularCategories = $categories->map(function($cat) use ($activeSubs) {
             $cat->active_count = $activeSubs->where('category_id', $cat->id)->count();
             return $cat;
@@ -51,8 +49,18 @@ class SubscriptionController extends Controller
             return $cat->active_count > 0;
         })->sortByDesc('active_count')->values();
 
-        // Pembayaran mendatang diurutkan berdasarkan hari terdekat
         $upcomingPayments = $activeSubs->sortBy('days_until_payment')->take(5)->values();
+
+        $chartLabels = [];
+        $chartData = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $month = \Carbon\Carbon::now()->subMonths($i);
+            $chartLabels[] = $month->translatedFormat('M');
+            $chartData[] = \App\Models\PaymentHistory::where('user_id', Auth::id())
+                ->whereMonth('payment_date', $month->month)
+                ->whereYear('payment_date', $month->year)
+                ->sum('amount');
+        }
 
         return view('subscriptions.index', compact(
             'subscriptions', 
@@ -62,7 +70,9 @@ class SubscriptionController extends Controller
             'upcomingCount', 
             'totalSavings',
             'popularCategories',
-            'upcomingPayments'
+            'upcomingPayments',
+            'chartLabels',
+            'chartData'
         ));
     }
 
