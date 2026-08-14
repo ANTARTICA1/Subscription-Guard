@@ -84,7 +84,14 @@
                             </div>
                         </template>
                         <template x-if="filteredSubs.length === 0">
-                            <p class="text-center text-xs text-[#4b5e78] py-4">Tidak ada subscription.</p>
+                            <div class="text-center py-6 px-4">
+                                <div class="w-12 h-12 rounded-full bg-[#192a42] flex items-center justify-center text-[#4b5e78] mx-auto mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                                </div>
+                                <p class="text-xs font-bold text-[#f1f5f9] mb-1">Belum ada subscription</p>
+                                <p class="text-[10px] text-[#4b5e78] mb-4 leading-relaxed">Anda harus menambahkan langganan baru terlebih dahulu sebelum bisa membagikan tagihannya.</p>
+                                <a href="{{ route('subscriptions.create') }}" class="inline-block px-4 py-2 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 hover:bg-indigo-500 hover:text-white transition-colors rounded-lg text-xs font-bold">Tambah Sekarang</a>
+                            </div>
                         </template>
                     </div>
                 </div>
@@ -357,13 +364,13 @@
                         </div>
                     @endforeach
 
-                    <div class="border border-dashed border-[#334155] rounded-[24px] flex flex-col items-center justify-center p-5 text-[#94a3b8] hover:bg-[#1e293b] hover:border-indigo-500 hover:text-indigo-400 transition-colors cursor-pointer min-h-[220px]" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <a href="{{ route('subscriptions.create') }}" class="border border-dashed border-[#334155] rounded-[24px] flex flex-col items-center justify-center p-5 text-[#94a3b8] hover:bg-[#1e293b] hover:border-indigo-500 hover:text-indigo-400 transition-colors cursor-pointer min-h-[220px]">
                         <div class="w-12 h-12 rounded-full border border-indigo-500/30 flex items-center justify-center mb-4 bg-indigo-500/10 text-indigo-400">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                         </div>
                         <span class="text-sm font-semibold text-[#f1f5f9] mb-1">Tambah Langganan Baru</span>
                         <p class="text-[10px] text-[#4b5e78] text-center px-4">Kelola semua subscription dalam satu tempat.</p>
-                    </div>
+                    </a>
                 </div>
             </div>
 

@@ -131,7 +131,7 @@
     </aside>
 
     {{-- Main Content --}}
-    <main class="admin-main">
+    <main class="admin-main flex flex-col min-h-screen">
         {{-- Header --}}
         <header class="admin-header">
             <div class="flex items-center gap-3">
@@ -188,13 +188,13 @@
         </header>
 
         {{-- Page Content --}}
-        <div class="p-5 md:p-7 max-w-7xl mx-auto w-full flex flex-col">
-            <div class="w-full">
+        <div class="flex-1 p-5 md:p-7 max-w-7xl mx-auto w-full flex flex-col">
+            <div class="w-full flex-1">
                 @yield('content')
             </div>
             
             {{-- Footer --}}
-            <div class="mt-0 pt-3 border-t border-[rgba(255,255,255,0.04)] text-center text-[10px] text-[#4b5e78]">
+            <div class="mt-auto pt-3 pb-2 border-t border-[rgba(255,255,255,0.04)] text-center text-[10px] text-[#4b5e78]">
                 © 2026 Tatagih. All rights reserved.
             </div>
         </div>

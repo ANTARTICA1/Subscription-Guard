@@ -13,4 +13,11 @@ class MoneyLeakController extends Controller
 
         return view('leaks.index', compact('result'));
     }
+
+    public function scan(MoneyLeakDetectorService $detector)
+    {
+        $result = $detector->detect(Auth::user());
+
+        return response()->json($result);
+    }
 }

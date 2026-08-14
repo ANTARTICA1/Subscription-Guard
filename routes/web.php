@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('/leaks', [MoneyLeakController::class, 'index'])->name('leaks.index');
+    Route::get('/leaks/scan', [MoneyLeakController::class, 'scan'])->name('leaks.scan');
 
     
     Route::get('/comparisons', [SubscriptionComparisonController::class, 'index'])->name('comparisons.index');
