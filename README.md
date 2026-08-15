@@ -16,7 +16,6 @@
 ## Live Demo & Deployment
 Anda dapat langsung mencoba aplikasi yang sudah online tanpa perlu melakukan instalasi apa pun pada tautan berikut:
 **[👉 AKSES TATAGIH WEB DI SINI 👈](https://tatagihxxxxxxxxxx.com)**
-*(Hapus bagian ini jika Anda belum memiliki link live)*
 
 ## Preview Aplikasi
 Berikut adalah beberapa tangkapan layar dari antarmuka Tatagih:
