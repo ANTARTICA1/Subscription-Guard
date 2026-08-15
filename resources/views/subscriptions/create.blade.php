@@ -426,11 +426,11 @@
                 
                 <div class="flex flex-col md:flex-row gap-4 sm:gap-6 h-[70vh] sm:h-[60vh]">
                     <!-- Sidebar -->
-                    <div class="w-full md:w-1/4 overflow-y-auto border-b md:border-b-0 md:border-r border-[rgba(255,255,255,0.06)] pb-4 md:pb-0 md:pr-4 flex md:flex-col flex-row gap-2" style="scrollbar-width: thin;">
+                    <div class="w-full md:w-1/4 flex-shrink-0 overflow-x-auto overflow-y-hidden md:overflow-x-hidden md:overflow-y-auto border-b md:border-b-0 md:border-r border-[rgba(255,255,255,0.06)] pb-4 md:pb-0 md:pr-4 flex md:flex-col flex-row gap-2 custom-scrollbar" style="scrollbar-width: thin;">
                         <template x-for="(items, categoryName) in templates" :key="categoryName">
                             <button type="button" @click="activeCategory = categoryName; selectedTemplate = null;"
                                     :class="activeCategory === categoryName ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg' : 'text-[#94a3b8] hover:bg-[#111c2e] hover:text-[#f1f5f9]'"
-                                    class="flex-shrink-0 w-auto md:w-full text-left px-4 py-2.5 rounded-xl mb-1 text-sm font-semibold transition-all whitespace-nowrap md:whitespace-normal"
+                                    class="flex-shrink-0 w-auto md:w-full text-left px-4 py-2.5 rounded-xl mb-1 text-sm font-semibold transition-all whitespace-nowrap"
                                     x-text="categoryName">
                             </button>
                         </template>
@@ -663,4 +663,22 @@
         };
     }
 </script>
+
+<style>
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1); 
+    border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1); 
+    border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.2); 
+}
+</style>
 @endsection
