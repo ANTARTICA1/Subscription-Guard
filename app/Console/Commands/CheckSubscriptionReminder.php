@@ -27,10 +27,11 @@ class CheckSubscriptionReminder extends Command
             $daysUntil = $subscription->days_until_payment;
             $type = null;
 
-            if ($daysUntil === 7) $type = 'H-7';
-            elseif ($daysUntil === 3) $type = 'H-3';
-            elseif ($daysUntil === 1) $type = 'H-1';
-            elseif ($daysUntil === 0) $type = 'due_date';
+            if ($daysUntil === $subscription->reminder_days) {
+                $type = 'H-' . $daysUntil;
+            } elseif ($daysUntil === 0) {
+                $type = 'due_date';
+            }
 
             if (!$type) continue;
 

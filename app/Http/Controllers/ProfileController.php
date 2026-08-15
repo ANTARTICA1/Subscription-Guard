@@ -41,7 +41,9 @@ class ProfileController extends Controller
     {
         $request->validate([
             'current_password' => 'required',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:8|confirmed|different:current_password',
+        ], [
+            'password.different' => 'Password baru tidak boleh sama dengan password saat ini.'
         ]);
 
         $user = Auth::user();

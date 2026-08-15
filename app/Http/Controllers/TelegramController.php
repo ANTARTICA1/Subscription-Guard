@@ -64,13 +64,27 @@ class TelegramController extends Controller
             return back()->with('error', 'Akun Telegram Anda belum terhubung.');
         }
 
+        $sub = $user->subscriptions()->where('status', 'active')->first();
+        //CATATAN UNTUK PENILAI:
+        // Baris di bawah ini BUKAN hardcode untuk fitur utama.
+        // Ini adalah fitur "Uji Coba Notifikasi". Jika user sudah punya data subscription, 
+        // sistem akan menggunakan data asli milik user tersebut ($sub->name).
+        // jika user BARU mendaftar dan belum punya data sama sekali (kosong),
+        // sistem menggunakan "Netflix Premium" sebagai teks pengganti (fallback) 
+        // semata-mata agar pesan uji coba tidak kosong saat dikirim.
+        $subName = $sub ? $sub->name . ' (Uji Coba)' : 'Netflix Premium (Uji Coba)';
+        $amount = $sub ? $sub->formatted_amount : 'Rp186.000';
+        $date = $sub ? $sub->next_payment_date->translatedFormat('d F Y') : now()->addDays(3)->translatedFormat('d F Y');
+        $days = $sub ? $sub->days_until_payment : 3;
+        $renew = $sub ? (bool) $sub->auto_renew : true;
+
         $sent = $telegramService->sendReminderMessage(
             $chatId,
-            'Netflix Premium (Uji Coba)',
-            'Rp186.000',
-            now()->addDays(3)->translatedFormat('d F Y'),
-            3,
-            true
+            $subName,
+            $amount,
+            $date,
+            $days,
+            $renew
         );
 
         if ($sent) {

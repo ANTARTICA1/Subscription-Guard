@@ -46,11 +46,11 @@
                 <ol class="space-y-3 text-xs text-[#94a3b8]">
                     <li class="flex items-start gap-3">
                         <span class="font-bold text-white px-2.5 py-0.5 rounded-lg text-[10px] flex-shrink-0 bg-emerald-500">1</span>
-                        <span>Buka Telegram dan cari Bot: <strong class="text-[#f1f5f9]">@TatagihBot</strong></span>
+                        <span>Buka Telegram dan cari Bot: <strong class="text-[#f1f5f9]">@TataReminderBot</strong></span>
                     </li>
                     <li class="flex items-start gap-3">
                         <span class="font-bold text-white px-2.5 py-0.5 rounded-lg text-[10px] flex-shrink-0 bg-emerald-500">2</span>
-                        <span>Tekan <strong class="text-[#f1f5f9]">Start</strong> atau kirim <code class="text-cyan-400">/start</code></span>
+                        <span>Ketik pesan <code class="text-cyan-400">/start</code> lalu kirimkan (atau tekan tombol Start jika ada)</span>
                     </li>
                     <li class="flex items-start gap-3">
                         <span class="font-bold text-white px-2.5 py-0.5 rounded-lg text-[10px] flex-shrink-0 bg-emerald-500">3</span>

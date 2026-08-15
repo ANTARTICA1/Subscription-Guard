@@ -18,6 +18,18 @@ Anda dapat langsung mencoba aplikasi yang sudah online tanpa perlu melakukan ins
 **[👉 AKSES TATAGIH WEB DI SINI 👈](https://tatagihxxxxxxxxxx.com)**
 *(Hapus bagian ini jika Anda belum memiliki link live)*
 
+## Preview Aplikasi
+Berikut adalah beberapa tangkapan layar dari antarmuka Tatagih:
+
+<div align="center">
+  <img src="https://via.placeholder.com/800x450.png?text=Dashboard+Utama" alt="Dashboard Utama" width="48%">
+  <img src="https://via.placeholder.com/800x450.png?text=Manajemen+Subscription" alt="Manajemen Subscription" width="48%">
+</div>
+<div align="center">
+  <img src="https://via.placeholder.com/800x450.png?text=Notifikasi+Telegram" alt="Notifikasi Telegram" width="48%">
+  <img src="https://via.placeholder.com/800x450.png?text=Tata+Asisten+(AI)" alt="Tata Asisten" width="48%">
+</div>
+
 ## Fitur Unggulan
 
 - **Social & Bill Splitting (Patungan Tagihan)**
@@ -122,7 +134,9 @@ php artisan serve
 ```
 Aplikasi kini dapat diakses melalui browser pada: **[http://localhost:8000](http://localhost:8000)**
 
-*(Penting: Karena aplikasi ini menggunakan `QUEUE_CONNECTION=database`, jika Anda ingin menguji fitur pengiriman Email Lupa Password atau Notifikasi Telegram secara langsung, Anda wajib membuka terminal baru dan menjalankan perintah: `php artisan queue:work`)*
+*Penting: Aplikasi ini menggunakan Job Scheduler dan Queue untuk fitur notifikasi otomatis ke Telegram dan pengiriman Email. Jika Anda ingin menguji fitur otomatis tersebut di lingkungan lokal, Anda **wajib** membuka 2 tab terminal baru dan menjalankan:*
+1. `php artisan schedule:work` *(Untuk menghidupkan mesin pengingat otomatis)*
+2. `php artisan queue:work` *(Untuk memproses antrean pesan yang akan dikirim)*
 
 ---
 
