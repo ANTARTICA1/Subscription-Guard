@@ -33,12 +33,9 @@
             
             {{-- Stepper Navigation --}}
             <div class="flex items-center justify-between mb-8 relative">
-                <!-- Line background -->
                 <div class="absolute top-4 left-0 w-full h-[1px] bg-[rgba(255,255,255,0.06)] z-0"></div>
-                <!-- Active Line -->
                 <div class="absolute top-4 left-0 h-[1px] bg-emerald-500 z-0 transition-all duration-300" :style="'width: ' + ((step - 1) / 3 * 100) + '%'"></div>
 
-                <!-- Step 1 -->
                 <div class="relative z-10 flex flex-col items-center">
                     <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-colors shadow-sm"
                          :class="step >= 1 ? 'bg-emerald-500 text-white' : 'bg-[#111c2e] border border-[rgba(255,255,255,0.06)] text-[#4b5e78]'">
@@ -50,7 +47,6 @@
                     </div>
                 </div>
 
-                <!-- Step 2 -->
                 <div class="relative z-10 flex flex-col items-center">
                     <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-colors shadow-sm"
                          :class="step >= 2 ? 'bg-emerald-500 text-white' : 'bg-[#111c2e] border border-[rgba(255,255,255,0.06)] text-[#4b5e78]'">
@@ -62,7 +58,6 @@
                     </div>
                 </div>
 
-                <!-- Step 3 -->
                 <div class="relative z-10 flex flex-col items-center">
                     <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-colors shadow-sm"
                          :class="step >= 3 ? 'bg-emerald-500 text-white' : 'bg-[#111c2e] border border-[rgba(255,255,255,0.06)] text-[#4b5e78]'">
@@ -74,7 +69,6 @@
                     </div>
                 </div>
 
-                <!-- Step 4 -->
                 <div class="relative z-10 flex flex-col items-center">
                     <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-colors shadow-sm"
                          :class="step >= 4 ? 'bg-emerald-500 text-white' : 'bg-[#111c2e] border border-[rgba(255,255,255,0.06)] text-[#4b5e78]'">
@@ -425,7 +419,6 @@
                 </div>
                 
                 <div class="flex flex-col md:flex-row gap-4 sm:gap-6 h-[70vh] sm:h-[60vh]">
-                    <!-- Sidebar -->
                     <div class="w-full md:w-1/4 flex-shrink-0 overflow-x-auto overflow-y-hidden md:overflow-x-hidden md:overflow-y-auto border-b md:border-b-0 md:border-r border-[rgba(255,255,255,0.06)] pb-4 md:pb-0 md:pr-4 flex md:flex-col flex-row gap-2 custom-scrollbar" style="scrollbar-width: thin;">
                         <template x-for="(items, categoryName) in templates" :key="categoryName">
                             <button type="button" @click="activeCategory = categoryName; selectedTemplate = null;"
@@ -436,7 +429,6 @@
                         </template>
                     </div>
                     
-                    <!-- Content -->
                     <div class="w-full md:w-3/4 overflow-y-auto pb-4 pr-1">
                         <div x-show="!selectedTemplate" class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
                             <template x-for="item in templates[activeCategory]" :key="item.name">
@@ -646,9 +638,8 @@
                 let y = date.getFullYear();
                 if(m > 11) { m = 0; y++; }
                 
-                // Simplified reminder date logic for display
                 if(remDate <= 0) {
-                    remDate += 30; // approx
+                    remDate += 30;
                     m--;
                     if(m < 0) { m = 11; y--; }
                 }

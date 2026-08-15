@@ -133,8 +133,9 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                             </div>
                             <input type="password" name="current_password" class="w-full bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-xl pl-10 pr-10 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors" placeholder="Masukkan password saat ini" required>
-                            <div class="absolute right-3 top-1/2 -translate-y-1/2 text-[#4b5e78] cursor-pointer hover:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                            <div onclick="let inp = this.previousElementSibling; if(inp.type === 'password'){inp.type = 'text'; this.children[0].classList.add('hidden'); this.children[1].classList.remove('hidden');}else{inp.type = 'password'; this.children[0].classList.remove('hidden'); this.children[1].classList.add('hidden');}" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#4b5e78] cursor-pointer hover:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>
                             </div>
                         </div>
                         @error('current_password')
@@ -150,8 +151,9 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                             </div>
                             <input type="password" name="password" class="w-full bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-xl pl-10 pr-10 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors" placeholder="Minimal 8 karakter" required>
-                            <div class="absolute right-3 top-1/2 -translate-y-1/2 text-[#4b5e78] cursor-pointer hover:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                            <div onclick="let inp = this.previousElementSibling; if(inp.type === 'password'){inp.type = 'text'; this.children[0].classList.add('hidden'); this.children[1].classList.remove('hidden');}else{inp.type = 'password'; this.children[0].classList.remove('hidden'); this.children[1].classList.add('hidden');}" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#4b5e78] cursor-pointer hover:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>
                             </div>
                         </div>
                     </div>
@@ -164,8 +166,9 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                             </div>
                             <input type="password" name="password_confirmation" class="w-full bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-xl pl-10 pr-10 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors" placeholder="Ulangi password baru" required>
-                            <div class="absolute right-3 top-1/2 -translate-y-1/2 text-[#4b5e78] cursor-pointer hover:text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                            <div onclick="let inp = this.previousElementSibling; if(inp.type === 'password'){inp.type = 'text'; this.children[0].classList.add('hidden'); this.children[1].classList.remove('hidden');}else{inp.type = 'password'; this.children[0].classList.remove('hidden'); this.children[1].classList.add('hidden');}" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#4b5e78] cursor-pointer hover:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" /></svg>
                             </div>
                         </div>
                     </div>
@@ -215,45 +218,13 @@
                 </div>
             </div>
             
-            <h3 class="text-emerald-400 font-bold text-base mb-1">Akun Anda Aman</h3>
-            <p class="text-[10px] text-[#4b5e78] mb-1">Terakhir login</p>
-            <p class="text-xs font-bold text-white mb-2">{{ now()->format('d M Y, H:i') }} WIB</p>
-            <p class="text-[10px] text-[#94a3b8] flex items-center justify-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                Jakarta, Indonesia
-            </p>
+            <h3 class="text-emerald-400 font-bold text-base mb-1">Status Akun Aktif</h3>
+            <p class="text-[10px] text-[#4b5e78] mb-1">Bergabung sejak</p>
+            <p class="text-xs font-bold text-white mb-2">{{ $user->created_at->format('d M Y, H:i') }}</p>
         </div>
 
         <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl overflow-hidden">
-            <a href="#" class="flex items-center justify-between p-4 border-b border-[rgba(255,255,255,0.04)] hover:bg-[#111c2e] transition-colors group">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-[#111c2e] border border-[rgba(255,255,255,0.06)] flex items-center justify-center text-[#94a3b8] group-hover:text-white transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <span class="text-[11px] font-bold text-[#f1f5f9]">Riwayat Aktivitas</span>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#4b5e78]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-            </a>
-            
-            <a href="#" class="flex items-center justify-between p-4 border-b border-[rgba(255,255,255,0.04)] hover:bg-[#111c2e] transition-colors group">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-[#111c2e] border border-[rgba(255,255,255,0.06)] flex items-center justify-center text-[#94a3b8] group-hover:text-white transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                    </div>
-                    <span class="text-[11px] font-bold text-[#f1f5f9]">Perangkat Terhubung</span>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#4b5e78]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-            </a>
-            
-            <a href="#" class="flex items-center justify-between p-4 border-b border-[rgba(255,255,255,0.04)] hover:bg-[#111c2e] transition-colors group">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-[#111c2e] border border-[rgba(255,255,255,0.06)] flex items-center justify-center text-[#94a3b8] group-hover:text-white transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                    </div>
-                    <span class="text-[11px] font-bold text-[#f1f5f9]">Notifikasi & Email</span>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#4b5e78]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-            </a>
+
 
             <form method="POST" action="#" class="block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun?');">
                 @csrf @method('DELETE')
@@ -273,4 +244,13 @@
 
 </div>
 
+@endsection
+
+@section('scripts')
+<style>
+    input[type="password"]::-ms-reveal,
+    input[type="password"]::-ms-clear {
+        display: none;
+    }
+</style>
 @endsection
