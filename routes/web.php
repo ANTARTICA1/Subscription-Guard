@@ -102,5 +102,6 @@ Route::middleware('auth')->group(function () {
     Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::get('/users', [AdminDashboardController::class, 'users'])->name('users');
+        Route::get('/subscriptions', [AdminDashboardController::class, 'subscriptions'])->name('subscriptions');
     });
 });

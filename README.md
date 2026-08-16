@@ -30,14 +30,14 @@ Berikut adalah beberapa tangkapan layar dari antarmuka Tatagih:
 
 ## Fitur Unggulan
 
-- **Social & Bill Splitting (Patungan Tagihan)**
+- **Patungan Tagihan**
   Berlangganan paket *Family* bersama teman? Fitur *Subscription Sharing* memungkinkan Anda untuk membagi tagihan dan melacak porsi bayaran masing-masing anggota.
 
 - **Notifikasi Terintegrasi Telegram**
   Hubungkan akun Anda dengan bot Telegram. Dapatkan peringatan cerdas dan pengingat otomatis sebelum tenggat waktu pembayaran tiba, langsung ke aplikasi pesan Anda.
 
-- **Money Leak Detector (Pendeteksi Kebocoran Dana)**
-  Sistem cerdas yang otomatis mendeteksi:
+- **Pendeteksi Kebocoran Dana**
+  Sistem yang otomatis mendeteksi:
   - *Overlapping Subscriptions*: Peringatan jika Anda berlangganan beberapa layanan dengan fungsi serupa (misal: memiliki Netflix, Disney+, dan HBO sekaligus).
   - *Vampire Spends*: Mendeteksi pengeluaran mikro bulanan yang tampak kecil, namun dikalkulasikan akan menguras dompet Anda secara masif dalam proyeksi 5 tahun ke depan.
 
@@ -48,7 +48,7 @@ Berikut adalah beberapa tangkapan layar dari antarmuka Tatagih:
   Dapatkan analisis mengenai profil pengeluaran Anda. Tata Asisten akan menghitung *Financial Health Score* Anda dan memberikan rekomendasi serta wawasan (*insights*) berbasis data mengenai kebiasaan berlangganan Anda.
 
 - **Dashboard Analitik & Autentikasi Keamanan**
-  Visualisasi data pengeluaran yang interaktif menggunakan Chart.js, dilengkapi dengan sistem registrasi, login, dan lupa kata sandi (*Reset Password*) yang dienkripsi dan aman.
+  Visualisasi data pengeluaran yang interaktif menggunakan Chart.js, dilengkapi dengan sistem registrasi, login, dan lupa kata sandi (*Reset Password*).
 
 ## Teknologi yang Digunakan
 - **Backend:** Laravel (v13.x), PHP (v8.3+)
@@ -57,8 +57,8 @@ Berikut adalah beberapa tangkapan layar dari antarmuka Tatagih:
 - **Integrasi API:** Telegram Bot API
 
 ## Struktur Database (ERD)
-Berikut adalah visualisasi *Entity Relationship Diagram* (ERD) dari aplikasi Tatagih. 
-*(Klik gambar di bawah untuk melihat ukuran penuh / resolusi tinggi)*
+Berikut adalah visualisasi *Entity Relationship Diagram* dari aplikasi Tatagih. 
+*Klik gambar di bawah untuk melihat*
 
 [![ERD Tatagih](./docs/ERD.jpg)](./docs/ERD.jpg)
 
@@ -146,13 +146,3 @@ MAIL_MAILER=log
 ```
 Sehingga link untuk simulasi *reset password* akan langsung dicetak dan dapat disalin dari file log lokal di:
 `storage/logs/laravel.log`
-
----
-
-## Kontribusi
-Kami menyambut baik segala bentuk kontribusi! Jika Anda ingin berkontribusi:
-1. *Fork* repository ini
-2. Buat *branch* fitur Anda (`git checkout -b fitur-keren`)
-3. *Commit* perubahan Anda (`git commit -m 'Menambahkan fitur keren'`)
-4. *Push* ke *branch* (`git push origin fitur-keren`)
-5. Buka **Pull Request**

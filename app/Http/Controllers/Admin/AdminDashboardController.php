@@ -63,4 +63,10 @@ class AdminDashboardController extends Controller
         $users = User::withCount('subscriptions')->latest()->paginate(20);
         return view('admin.users', compact('users'));
     }
+
+    public function subscriptions()
+    {
+        $subscriptions = Subscription::with(['user', 'category'])->latest()->paginate(20);
+        return view('admin.subscriptions', compact('subscriptions'));
+    }
 }
