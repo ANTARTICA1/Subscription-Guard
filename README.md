@@ -21,18 +21,17 @@ Anda dapat langsung mencoba aplikasi yang sudah online tanpa perlu melakukan ins
 Berikut adalah beberapa tangkapan layar dari antarmuka Tatagih:
 
 <div align="center">
-  <img src="https://via.placeholder.com/800x450.png?text=Dashboard+Utama" alt="Dashboard Utama" width="48%">
-  <img src="https://via.placeholder.com/800x450.png?text=Manajemen+Subscription" alt="Manajemen Subscription" width="48%">
+  <img src="./docs/dashboard.png" alt="Dashboard Utama" width="48%">
+  <img src="./docs/tambah.png" alt="Tambah Langganan" width="48%">
 </div>
 <div align="center">
-  <img src="https://via.placeholder.com/800x450.png?text=Notifikasi+Telegram" alt="Notifikasi Telegram" width="48%">
-  <img src="https://via.placeholder.com/800x450.png?text=Tata+Asisten+(AI)" alt="Tata Asisten" width="48%">
+  <img src="./docs/patungan.png" alt="Cari Teman Patungan" width="48%">
 </div>
 
 ## Fitur Unggulan
 
 - **Social & Bill Splitting (Patungan Tagihan)**
-  Berlangganan paket *Family* bersama teman? Fitur pertemanan (*Friendship*) dan *Subscription Sharing* memungkinkan Anda untuk membagi tagihan dan melacak porsi bayaran masing-masing anggota secara adil dan transparan.
+  Berlangganan paket *Family* bersama teman? Fitur *Subscription Sharing* memungkinkan Anda untuk membagi tagihan dan melacak porsi bayaran masing-masing anggota.
 
 - **Notifikasi Terintegrasi Telegram**
   Hubungkan akun Anda dengan bot Telegram. Dapatkan peringatan cerdas dan pengingat otomatis sebelum tenggat waktu pembayaran tiba, langsung ke aplikasi pesan Anda.
@@ -61,7 +60,7 @@ Berikut adalah beberapa tangkapan layar dari antarmuka Tatagih:
 Berikut adalah visualisasi *Entity Relationship Diagram* (ERD) dari aplikasi Tatagih. 
 *(Klik gambar di bawah untuk melihat ukuran penuh / resolusi tinggi)*
 
-[![ERD Tatagih](https:/xxxxxxxxxxx)](lilinkkkkkkkkkk)
+[![ERD Tatagih](./docs/ERD.jpg)](./docs/ERD.jpg)
 
 
 ## Persyaratan Sistem
