@@ -53,9 +53,14 @@ class SharedSubscriptionController extends Controller
             'subscription_id' => 'required|exists:subscriptions,id',
             'friend_user_ids' => 'required|array|min:1',
             'friend_user_ids.*' => 'exists:users,id',
+            'is_public' => 'nullable|boolean',
         ]);
 
         $sub = Subscription::where('id', $request->subscription_id)->where('user_id', Auth::id())->firstOrFail();
+
+        if ($request->has('is_public')) {
+            $sub->update(['is_public' => $request->boolean('is_public')]);
+        }
 
         if ($sub->is_personal) {
             return back()->with('error', 'Maaf, layanan ini bersifat personal/pribadi dan tidak dapat di-share/patungan dengan orang lain.');

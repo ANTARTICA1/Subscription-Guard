@@ -255,6 +255,17 @@
                     <template x-for="fid in selectedFriends" :key="fid">
                         <input type="hidden" name="friend_user_ids[]" :value="fid">
                     </template>
+
+                    <div class="mb-5 bg-[#080d19] border border-[rgba(255,255,255,0.04)] rounded-xl p-3 flex items-start gap-3">
+                        <div class="pt-0.5">
+                            <input type="checkbox" name="is_public" value="1" id="is_public" class="w-4 h-4 rounded border-[#334155] bg-[#111c2e] text-indigo-500 focus:ring-indigo-500 focus:ring-offset-[#0f172a]" checked>
+                        </div>
+                        <div class="flex-1">
+                            <label for="is_public" class="text-xs font-bold text-white cursor-pointer block mb-0.5">Tampilkan di Cari Teman Patungan</label>
+                            <p class="text-[9px] text-[#94a3b8] leading-tight">Orang lain bisa melihat dan mengajukan diri untuk bergabung ke grup ini.</p>
+                        </div>
+                    </div>
+
                     <button type="submit" :disabled="selectedFriends.length === 0" class="w-full bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(79,70,229,0.3)] text-sm flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
                         Kirim Undangan

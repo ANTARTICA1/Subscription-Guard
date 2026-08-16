@@ -97,6 +97,10 @@
             outline: none;
             transition: border-color 0.2s ease;
         }
+        input[type="password"]::-ms-reveal,
+        input[type="password"]::-ms-clear {
+            display: none;
+        }
         .auth-input-group input:focus {
             border-color: #10b981;
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.08);
