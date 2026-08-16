@@ -65,7 +65,6 @@ class SharedSubscriptionController extends Controller
         $addedCount = 0;
 
         foreach ($friendUsers as $friendUser) {
-            // Check if already shared
             $existing = SubscriptionShare::where('subscription_id', $sub->id)
                 ->where('friend_user_id', $friendUser->id)
                 ->exists();
@@ -86,7 +85,7 @@ class SharedSubscriptionController extends Controller
                 'owner_id' => Auth::id(),
                 'friend_user_id' => $friendUser->id,
                 'friend_name' => $friendUser->name,
-                'split_amount' => 0, // Will recalculate below
+                'split_amount' => 0,
                 'payment_status' => 'pending',
                 'due_date' => $sub->next_payment_date->format('Y-m-d'),
             ]);

@@ -307,12 +307,10 @@
 
 
 <div class="mt-4 p-6 flex flex-col md:flex-row items-center justify-between relative overflow-hidden" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
-    <!-- Background glowing effect for dark mode -->
     <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full pointer-events-none" style="background: var(--accent-primary); filter: blur(80px); opacity: 0.15;"></div>
     <div class="absolute -left-20 -bottom-20 w-64 h-64 rounded-full pointer-events-none" style="background: var(--info); filter: blur(80px); opacity: 0.15;"></div>
 
     <div class="flex flex-col sm:flex-row items-center gap-5 relative z-10 w-full md:w-auto text-center sm:text-left">
-        <!-- Dummy Profile Stack -->
         <div class="flex -space-x-3 flex-shrink-0">
             <img class="w-12 h-12 rounded-full object-cover" style="border: 2px solid var(--bg-card);" src="https://i.pravatar.cc/150?u=1" alt="Teman 1">
             <img class="w-12 h-12 rounded-full object-cover" style="border: 2px solid var(--bg-card);" src="https://i.pravatar.cc/150?u=2" alt="Teman 2">
@@ -325,7 +323,7 @@
         </div>
     </div>
     <div class="mt-5 md:mt-0 flex items-center justify-center w-full md:w-auto relative z-10" style="transform: translateY(-12px);">
-        <a href="#" class="btn-primary rounded-full text-xs font-bold" style="box-shadow: 0 0 15px var(--accent-glow);">
+        <a href="{{ route('shares.index') }}" class="btn-primary rounded-full text-xs font-bold" style="box-shadow: 0 0 15px var(--accent-glow);">
             Coba Share Subs
         </a>
     </div>

@@ -9,23 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ResetSubscriptionShares extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'shares:reset';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Reset subscription shares status for the new billing cycle';
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $this->info('Checking subscription shares for reset...');

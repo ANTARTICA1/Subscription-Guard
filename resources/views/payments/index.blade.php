@@ -6,27 +6,27 @@
 
 
 
-<div x-data="{ activeTab: 'validasi' }">
-    {{-- Tabs --}}
+<div x-data="{ activeTab: 'pengeluaran' }">
+    
     <div class="flex gap-2 mb-8">
-        <button @click="activeTab = 'validasi'; setTimeout(() => window.dispatchEvent(new Event('resize')), 50)" 
-                :class="activeTab === 'validasi' ? 'bg-[#111c2e] border-emerald-500 text-emerald-400' : 'bg-transparent border-[rgba(255,255,255,0.06)] text-[#94a3b8] hover:text-white'"
-                class="px-5 py-2.5 rounded-xl border flex items-center gap-2 transition-all text-sm font-bold shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            Validasi Patungan
-        </button>
         <button @click="activeTab = 'pengeluaran'; setTimeout(() => window.initBarChart(), 50)" 
                 :class="activeTab === 'pengeluaran' ? 'bg-[#111c2e] border-emerald-500 text-emerald-400' : 'bg-transparent border-[rgba(255,255,255,0.06)] text-[#94a3b8] hover:text-white'"
                 class="px-5 py-2.5 rounded-xl border flex items-center gap-2 transition-all text-sm font-bold shadow-sm">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             Pengeluaran Pribadi
         </button>
+        <button @click="activeTab = 'validasi'; setTimeout(() => window.dispatchEvent(new Event('resize')), 50)" 
+                :class="activeTab === 'validasi' ? 'bg-[#111c2e] border-emerald-500 text-emerald-400' : 'bg-transparent border-[rgba(255,255,255,0.06)] text-[#94a3b8] hover:text-white'"
+                class="px-5 py-2.5 rounded-xl border flex items-center gap-2 transition-all text-sm font-bold shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Validasi Patungan
+        </button>
     </div>
 
-    {{-- TAB: Validasi Patungan --}}
+    
     <div x-show="activeTab === 'validasi'" x-cloak>
         
-        {{-- Stat Cards --}}
+        
         @php
             $pendingTotal = $pendingVerifications->sum('split_amount');
             $pendingCount = $pendingVerifications->count();
@@ -37,7 +37,7 @@
             $activeFriendsCount = Auth::user()->subscriptionShares->unique('friend_user_id')->count();
         @endphp
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            {{-- Pending Card --}}
+            
             <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden shadow-sm">
                 <div class="flex items-start gap-4 mb-4">
                     <div class="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
@@ -56,7 +56,7 @@
                 </div>
             </div>
 
-            {{-- Approved Card --}}
+            
             <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden shadow-sm">
                 <div class="flex items-start gap-4 mb-4">
                     <div class="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            {{-- Rejected Card --}}
+            
             <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden shadow-sm">
                 <div class="flex items-start gap-4 mb-4">
                     <div class="w-10 h-10 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 shrink-0">
@@ -94,7 +94,7 @@
                 </div>
             </div>
 
-            {{-- Active Friends Card --}}
+            
             <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden shadow-sm">
                 <div class="flex items-start gap-4 mb-4">
                     <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
@@ -114,7 +114,7 @@
             </div>
         </div>
 
-        {{-- Filter Row --}}
+        
         <div class="flex flex-col sm:flex-row gap-3 mb-6">
             <div class="relative flex-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#4b5e78] absolute left-3 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
@@ -149,7 +149,7 @@
             </div>
         </div>
 
-        {{-- Pending List Title --}}
+        
         <div class="mb-4">
             <h3 class="text-[13px] font-bold text-white flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -158,12 +158,12 @@
             <p class="text-[10px] text-[#4b5e78] mt-1 ml-6">Validasi bukti transfer dari teman Anda.</p>
         </div>
 
-        {{-- Pending List Items --}}
+        
         <div class="space-y-3 mb-10">
             @forelse($pendingVerifications as $share)
             <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4 transition-all hover:bg-[#111c2e]" x-data="{ showBukti: false }">
                 
-                {{-- User Info --}}
+                
                 <div class="flex items-center gap-3 min-w-[200px]">
                     <div class="relative">
                         <div class="w-10 h-10 rounded-full bg-[#192a42] flex items-center justify-center font-bold text-[#f1f5f9] text-sm overflow-hidden border border-[rgba(255,255,255,0.06)]">
@@ -181,7 +181,7 @@
                     </div>
                 </div>
 
-                {{-- Service Info --}}
+                
                 <div class="flex items-center gap-3 min-w-[180px]">
                     @if($share->subscription->logo)
                         <div class="w-7 h-7 bg-[#080d19] border border-[rgba(255,255,255,0.03)] rounded-full p-1 flex items-center justify-center shrink-0">
@@ -198,22 +198,22 @@
                     </div>
                 </div>
 
-                {{-- Nominal Info --}}
+                
                 <div class="min-w-[120px]">
                     <p class="text-[9px] text-[#4b5e78] uppercase tracking-wider mb-0.5">Nominal Dibayar</p>
                     <p class="font-bold text-white text-sm">{{ $share->formatted_split_amount }}</p>
                 </div>
 
-                {{-- Date Info --}}
+                
                 <div class="min-w-[140px]">
                     <p class="text-[9px] text-[#4b5e78] uppercase tracking-wider mb-0.5">Dikirim pada</p>
                     <p class="text-xs text-[#f1f5f9]">{{ $share->updated_at->translatedFormat('d M Y, H:i') }}</p>
                 </div>
 
-                {{-- Proof Thumbnail & Actions --}}
+                
                 <div class="flex items-center gap-4 border-t lg:border-t-0 border-[rgba(255,255,255,0.06)] pt-4 lg:pt-0 mt-2 lg:mt-0 w-full lg:w-auto justify-end">
                     
-                    {{-- Thumbnail --}}
+                    
                     <div @click="showBukti = true" class="relative w-12 h-14 bg-[#192a42] rounded-lg border border-[rgba(255,255,255,0.06)] overflow-hidden cursor-pointer group shrink-0 shadow-sm">
                         <img src="{{ Storage::url($share->payment_proof_path) }}" alt="Bukti" class="w-full h-full object-cover opacity-80 group-hover:opacity-50 transition-opacity">
                         <div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -221,7 +221,7 @@
                         </div>
                     </div>
 
-                    {{-- Action Buttons --}}
+                    
                     <div class="flex items-center gap-2">
                         <form method="POST" action="{{ route('shares.reject-proof', $share->id) }}" onsubmit="return confirm('Apakah Anda yakin ingin MENOLAK bukti transfer ini?');">
                             @csrf
@@ -237,7 +237,7 @@
                     </div>
                 </div>
 
-                {{-- Modal Bukti --}}
+                
                 <div x-show="showBukti" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-[#03060D]/90 backdrop-blur-sm" @click.away="showBukti = false">
                     <div class="bg-[#0b121f] p-5 rounded-2xl max-w-sm w-full border border-[rgba(255,255,255,0.06)] text-center relative shadow-2xl">
                         <div class="flex items-center justify-between mb-4">
@@ -274,7 +274,7 @@
             @endforelse
         </div>
 
-        {{-- History Section --}}
+        
         <div>
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-[13px] font-bold text-white flex items-center gap-2">
@@ -339,12 +339,12 @@
         </div>
     </div>
 
-    {{-- TAB: Pengeluaran Pribadi --}}
+    
     <div x-show="activeTab === 'pengeluaran'" x-cloak>
         
-        {{-- Stat Cards (3 Columns) --}}
+        
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            {{-- Total Pengeluaran --}}
+            
             <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 relative overflow-hidden shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-4">
                 <div class="flex items-start gap-4">
                     <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 shrink-0 mt-1">
@@ -362,13 +362,13 @@
                         </p>
                     </div>
                 </div>
-                {{-- Decorative mini sparkline --}}
+                
                 <div class="w-24 h-12 opacity-50 shrink-0 self-end xl:self-center">
                     <svg viewBox="0 0 100 30" class="w-full h-full stroke-emerald-500" fill="none" stroke-width="2"><path d="{{ $totalPaidSparkline }}" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
             </div>
 
-            {{-- Transaksi Bulan Ini --}}
+            
             <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 relative overflow-hidden shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-4">
                 <div class="flex items-start gap-4">
                     <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0 mt-1">
@@ -389,13 +389,13 @@
                         </p>
                     </div>
                 </div>
-                {{-- Decorative mini sparkline --}}
+                
                 <div class="w-24 h-12 opacity-50 shrink-0 self-end xl:self-center">
                     <svg viewBox="0 0 100 30" class="w-full h-full stroke-purple-500" fill="none" stroke-width="2"><path d="{{ $transactionCountSparkline }}" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
             </div>
 
-            {{-- Subscription Aktif --}}
+            
             <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 relative overflow-hidden shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-4">
                 <div class="flex items-start gap-4">
                     <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 shrink-0 mt-1">
@@ -403,26 +403,32 @@
                     </div>
                     <div>
                         <p class="text-xs text-[#94a3b8] font-medium tracking-wide mb-1">Subscription Aktif</p>
-                        <h2 class="text-3xl font-black text-white mb-2 leading-none">{{ $subscriptions->count() }}</h2>
+                        <h2 class="text-3xl font-black text-white mb-2 leading-none">{{ $activeSubCount }}</h2>
                         <p class="text-[10px] text-[#4b5e78]">
-                            Layanan terhubung, sama seperti bulan lalu
+                            @if($activeSubDiff > 0)
+                                <span class="text-emerald-400">Naik {{ $activeSubDiff }}</span> dari bulan lalu
+                            @elseif($activeSubDiff < 0)
+                                <span class="text-red-400">Turun {{ abs($activeSubDiff) }}</span> dari bulan lalu
+                            @else
+                                Layanan terhubung, sama seperti bulan lalu
+                            @endif
                         </p>
                     </div>
                 </div>
-                {{-- Decorative mini sparkline --}}
+                
                 <div class="w-24 h-12 opacity-50 shrink-0 self-end xl:self-center">
                     <svg viewBox="0 0 100 30" class="w-full h-full stroke-amber-500" fill="none" stroke-width="2"><path d="{{ $activeSubSparkline }}" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
             </div>
         </div>
 
-        {{-- Main Layout (2 Columns: Left 2/3, Right 1/3) --}}
+        
         <div class="flex flex-col lg:flex-row gap-6">
             
-            {{-- Left Column (Charts & Table) --}}
+            
             <div class="w-full lg:w-2/3 flex flex-col gap-6">
                 
-                {{-- Bar Chart Card --}}
+                
                 <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 shadow-sm">
                     <div class="flex items-center justify-between mb-6">
                         <h4 class="font-bold text-[#f1f5f9] flex items-center gap-2">
@@ -439,7 +445,7 @@
                     </div>
                 </div>
 
-                {{-- Recent Expenses Table --}}
+                
                 <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl shadow-sm overflow-hidden">
                     <div class="p-5 border-b border-[rgba(255,255,255,0.04)] flex items-center justify-between">
                         <h4 class="font-bold text-[#f1f5f9] flex items-center gap-2">
@@ -512,10 +518,10 @@
 
             </div>
 
-            {{-- Right Column (Form & Doughnut) --}}
+            
             <div class="w-full lg:w-1/3 flex flex-col gap-6">
                 
-                {{-- Form Catat Pengeluaran --}}
+                
                 <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 shadow-sm flex-1">
                     <h4 class="font-bold text-[#f1f5f9] flex items-center gap-2 mb-6">
                         <div class="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
@@ -566,7 +572,7 @@
                     </form>
                 </div>
 
-                {{-- Ringkasan Kategori Layanan (Doughnut) --}}
+                
                 <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 shadow-sm relative overflow-hidden">
                     <h4 class="font-bold text-[#f1f5f9] mb-4 text-sm">Ringkasan Kategori Layanan</h4>
                     
@@ -605,7 +611,6 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Auto-fill amount based on selected subscription in Inline Form
         const subSelect = document.querySelector('select[name="subscription_id"]');
         const amountInput = document.getElementById('inline_amount');
         
@@ -618,11 +623,9 @@
             });
         }
 
-        // Common Chart Defaults
         Chart.defaults.color = '#4b5e78';
         Chart.defaults.font.family = 'Instrument Sans, sans-serif';
 
-        // 1. Bar Chart Setup (6 Months)
         window.initBarChart = function() {
             if (window.barChartInitialized) return;
             const ctxBar = document.getElementById('paymentBarChart');
@@ -630,7 +633,7 @@
                 window.barChartInitialized = true;
                 const barCtx = ctxBar.getContext('2d');
                 const gradient = barCtx.createLinearGradient(0, 0, 0, 300);
-                gradient.addColorStop(0, '#10b981'); // emerald-500
+                gradient.addColorStop(0, '#10b981'); 
                 gradient.addColorStop(1, 'rgba(16, 185, 129, 0.1)');
 
                 new Chart(ctxBar, {
@@ -699,10 +702,8 @@
             }
         };
 
-        // Initialize if already visible (e.g., if it becomes the default tab)
         setTimeout(() => window.initBarChart(), 100);
 
-        // 2. Donut Chart Setup (Category Propotion - Demo Data)
         const ctxDonut = document.getElementById('categoryDonutChart');
         if (ctxDonut) {
             new Chart(ctxDonut, {

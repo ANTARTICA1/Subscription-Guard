@@ -51,7 +51,6 @@ class PaymentHistoryController extends Controller
             ->where('status', 'paid')
             ->sum('amount');
 
-        // Category distribution
         $categoryData = PaymentHistory::where('payment_histories.user_id', Auth::id())
             ->where('payment_histories.status', 'paid')
             ->join('subscriptions', 'payment_histories.subscription_id', '=', 'subscriptions.id')
@@ -74,11 +73,30 @@ class PaymentHistoryController extends Controller
 
         $totalPaidSparkline = $this->generateSparklinePath($chartData);
         $transactionCountSparkline = $this->generateSparklinePath($chartCountData);
-        // For active subscriptions, just make a flat line if we can't reliably get history, or just use current count
-        $activeSubCount = $subscriptions->count();
-        $activeSubSparkline = $this->generateSparklinePath(array_fill(0, 6, $activeSubCount));
+        $activeSubCountData = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $monthStart = Carbon::now()->subMonths($i)->startOfMonth();
+            $monthEnd = Carbon::now()->subMonths($i)->endOfMonth();
+            
+            $count = $subscriptions->filter(function($sub) use ($monthStart, $monthEnd) {
+                $start = $sub->start_date ? Carbon::parse($sub->start_date) : $sub->created_at;
+                if ($start > $monthEnd) return false;
+                
+                if ($sub->status !== 'active') {
+                   $end = $sub->end_date ? Carbon::parse($sub->end_date) : $sub->updated_at;
+                   if ($end < $monthStart) return false;
+                }
+                return true;
+            })->count();
+            
+            $activeSubCountData[] = $count;
+        }
 
-        // Calculate % diff for Total Pengeluaran
+        $activeSubCount = $activeSubCountData[5] ?? 0;
+        $lastMonthActiveSubCount = $activeSubCountData[4] ?? 0;
+        $activeSubDiff = $activeSubCount - $lastMonthActiveSubCount;
+        $activeSubSparkline = $this->generateSparklinePath($activeSubCountData);
+
         $thisMonthSum = $chartData[5] ?? 0;
         $lastMonthSum = $chartData[4] ?? 0;
         $totalPaidDiffPct = 0;
@@ -88,12 +106,10 @@ class PaymentHistoryController extends Controller
             $totalPaidDiffPct = 100;
         }
 
-        // Calculate diff for Transaksi
         $thisMonthCount = $chartCountData[5] ?? 0;
         $lastMonthCount = $chartCountData[4] ?? 0;
         $trxCountDiff = $thisMonthCount - $lastMonthCount;
 
-        // Fetch Split Bill Validations
         $pendingVerifications = \App\Models\SubscriptionShare::where('owner_id', Auth::id())
             ->whereNotNull('payment_proof_path')
             ->where('payment_status', 'pending')
@@ -114,7 +130,7 @@ class PaymentHistoryController extends Controller
             'pendingVerifications', 'historyValidations',
             'donutLabels', 'donutData', 'donutColors', 'donutPercentages', 'totalCategorySum',
             'totalPaidSparkline', 'transactionCountSparkline', 'activeSubSparkline',
-            'totalPaidDiffPct', 'thisMonthCount', 'trxCountDiff'
+            'totalPaidDiffPct', 'thisMonthCount', 'trxCountDiff', 'activeSubCount', 'activeSubDiff'
         ));
     }
 

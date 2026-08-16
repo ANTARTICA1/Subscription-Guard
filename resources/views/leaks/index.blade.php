@@ -5,7 +5,7 @@
 
 <div x-data="leaksPage()" x-cloak class="space-y-6 pb-12">
 
-{{-- Header --}}
+
 <div class="mb-6">
     <h2 class="text-2xl font-bold text-white flex items-center gap-2">
         Halo, {{ explode(' ', Auth::user()->name)[0] }}!
@@ -28,16 +28,16 @@
     </div>
 </div>
 
-    {{-- Top Threat Card --}}
+    
     <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl relative overflow-hidden flex flex-col md:flex-row">
         
-        {{-- Left Accent --}}
+        
         <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b to-transparent" :class="threatColorClass.gradient"></div>
-        {{-- Inner Glow --}}
+        
         <div class="absolute -left-32 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[100px] opacity-[0.08] pointer-events-none" :class="threatColorClass.bg"></div>
 
         <div class="flex-1 p-6 md:p-8 flex flex-col md:flex-row items-center gap-8 border-b md:border-b-0 md:border-r border-[rgba(255,255,255,0.04)] relative z-10">
-            {{-- Radar --}}
+            
             <div class="relative w-28 h-28 flex items-center justify-center flex-shrink-0">
                 <div class="absolute inset-0 rounded-full border" :class="threatColorClass.border20"></div>
                 <div class="absolute inset-2 rounded-full border" :class="threatColorClass.border40"></div>
@@ -80,49 +80,38 @@
         </div>
     </div>
 
-    {{-- Filter Bar --}}
-    <div class="flex items-center justify-between gap-4 py-2 border-b border-[rgba(255,255,255,0.04)] overflow-x-auto pb-4">
-        <div class="flex gap-2 min-w-max">
-            <button @click="filter = 'all'" :class="filter === 'all' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-transparent text-[#94a3b8] hover:bg-[#111c2e] border-transparent'" class="px-4 py-1.5 text-xs font-semibold rounded-full border transition-colors">
-                Semua
-            </button>
-            <button @click="filter = 'high'" :class="filter === 'high' ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-transparent text-[#94a3b8] hover:bg-[#111c2e] border-transparent'" class="px-4 py-1.5 text-xs font-semibold rounded-full border transition-colors flex items-center gap-1.5">
-                Risiko Tinggi <span class="bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-full" x-text="highLeaksCount"></span>
-            </button>
-            <button @click="filter = 'medium'" :class="filter === 'medium' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-transparent text-[#94a3b8] hover:bg-[#111c2e] border-transparent'" class="px-4 py-1.5 text-xs font-semibold rounded-full border transition-colors flex items-center gap-1.5">
-                Risiko Sedang <span class="bg-amber-500 text-white text-[9px] px-1.5 py-0.5 rounded-full" x-text="medLeaksCount"></span>
-            </button>
-            <button @click="filter = 'low'" :class="filter === 'low' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 'bg-transparent text-[#94a3b8] hover:bg-[#111c2e] border-transparent'" class="px-4 py-1.5 text-xs font-semibold rounded-full border transition-colors flex items-center gap-1.5">
-                Risiko Rendah <span class="bg-blue-500 text-white text-[9px] px-1.5 py-0.5 rounded-full" x-text="lowLeaksCount"></span>
-            </button>
-            <button @click="filter = 'safe'" :class="filter === 'safe' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-transparent text-[#94a3b8] hover:bg-[#111c2e] border-transparent'" class="px-4 py-1.5 text-xs font-semibold rounded-full border transition-colors flex items-center gap-1.5">
-                Aman <span class="bg-emerald-500 text-white text-[9px] px-1.5 py-0.5 rounded-full">0</span>
-            </button>
-        </div>
+    
+    <div style="width: 100%; overflow-x: auto; white-space: nowrap; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.04); -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none;">
+        <style>div[style*="overflow-x: auto"]::-webkit-scrollbar { display: none; }</style>
         
-        <div class="flex items-center gap-3">
-            <div class="relative">
-                <select x-model="sortMethod" class="appearance-none bg-[#111c2e] border border-[rgba(255,255,255,0.06)] text-white text-xs font-semibold rounded-lg pl-3 pr-8 py-1.5 focus:outline-none cursor-pointer hover:border-indigo-500 transition-colors">
-                    <option value="newest">Terbaru</option>
-                    <option value="highest_risk">Risiko Tertinggi</option>
-                    <option value="largest_saving">Hemat Terbesar</option>
-                </select>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-[#94a3b8] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-            </div>
-        </div>
+        <button @click="filter = 'all'" :class="filter === 'all' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-transparent text-[#94a3b8] hover:bg-[#111c2e] border-transparent'" class="px-4 py-1.5 text-xs font-semibold rounded-full border transition-colors" style="display: inline-block; margin-right: 8px;">
+            Semua
+        </button>
+        <button @click="filter = 'high'" :class="filter === 'high' ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-transparent text-[#94a3b8] hover:bg-[#111c2e] border-transparent'" class="px-4 py-1.5 text-xs font-semibold rounded-full border transition-colors" style="display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; vertical-align: top;">
+            Risiko Tinggi <span class="bg-red-500 text-white text-[9px] px-1.5 py-0.5 rounded-full" x-text="highLeaksCount"></span>
+        </button>
+        <button @click="filter = 'medium'" :class="filter === 'medium' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-transparent text-[#94a3b8] hover:bg-[#111c2e] border-transparent'" class="px-4 py-1.5 text-xs font-semibold rounded-full border transition-colors" style="display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; vertical-align: top;">
+            Risiko Sedang <span class="bg-amber-500 text-white text-[9px] px-1.5 py-0.5 rounded-full" x-text="medLeaksCount"></span>
+        </button>
+        <button @click="filter = 'low'" :class="filter === 'low' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 'bg-transparent text-[#94a3b8] hover:bg-[#111c2e] border-transparent'" class="px-4 py-1.5 text-xs font-semibold rounded-full border transition-colors" style="display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; vertical-align: top;">
+            Risiko Rendah <span class="bg-blue-500 text-white text-[9px] px-1.5 py-0.5 rounded-full" x-text="lowLeaksCount"></span>
+        </button>
+        <button @click="filter = 'safe'" :class="filter === 'safe' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-transparent text-[#94a3b8] hover:bg-[#111c2e] border-transparent'" class="px-4 py-1.5 text-xs font-semibold rounded-full border transition-colors" style="display: inline-flex; align-items: center; gap: 6px; vertical-align: top;">
+            Aman <span class="bg-emerald-500 text-white text-[9px] px-1.5 py-0.5 rounded-full">0</span>
+        </button>
     </div>
 
-    {{-- Leak Cards List --}}
+    
     <div class="space-y-4">
         <template x-for="leak in sortedAndFilteredLeaks" :key="leak.id">
             <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.03)] rounded-2xl p-6 relative overflow-hidden group transition-colors" :class="leak.severity === 'high' ? 'hover:border-[#ef4444]/30' : (leak.severity === 'medium' ? 'hover:border-[#f59e0b]/30' : 'hover:border-blue-500/30')">
                 
-                {{-- Left Glowing Line --}}
+                
                 <div x-show="leak.severity !== 'low'" class="absolute left-0 top-6 bottom-6 w-[3px] rounded-r-full" :class="leak.severity === 'high' ? 'bg-[#ef4444] shadow-[0_0_10px_rgba(239,68,68,0.8)]' : 'bg-[#f59e0b] shadow-[0_0_10px_rgba(245,158,11,0.8)]'"></div>
                 
                 <div class="flex flex-col lg:flex-row gap-6 pl-2 relative z-10">
                     
-                    {{-- Identity --}}
+                    
                     <div class="flex items-start gap-4 lg:w-1/3">
                         <div class="w-12 h-12 rounded-xl border flex items-center justify-center flex-shrink-0" :class="leak.severity === 'high' ? 'border-[#ef4444]/20 bg-[#ef4444]/5 text-[#ef4444]' : (leak.severity === 'medium' ? 'border-[#f59e0b]/20 bg-[#f59e0b]/5 text-[#f59e0b]' : 'border-blue-500/20 bg-blue-500/5 text-blue-500')">
                             <template x-if="leak.severity === 'high'">
@@ -132,16 +121,16 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             </template>
                         </div>
-                        <div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <h4 class="font-bold text-white text-base truncate max-w-[200px]" x-text="leak.title"></h4>
-                                <span class="text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider" :class="leak.severity === 'high' ? 'bg-[#ef4444]/10 text-[#ef4444]' : (leak.severity === 'medium' ? 'bg-[#f59e0b]/10 text-[#f59e0b]' : 'bg-blue-500/10 text-blue-500')" x-text="leak.severity === 'high' ? 'TINGGI' : (leak.severity === 'medium' ? 'SEDANG' : 'RENDAH')"></span>
+                        <div class="flex-1" style="min-width: 0;">
+                            <div class="flex items-center gap-2 mb-1" style="min-width: 0;">
+                                <h4 class="font-bold text-white text-base truncate" style="flex: 1; min-width: 0;" x-text="leak.title"></h4>
+                                <span class="text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider whitespace-nowrap" style="flex-shrink: 0;" :class="leak.severity === 'high' ? 'bg-[#ef4444]/10 text-[#ef4444]' : (leak.severity === 'medium' ? 'bg-[#f59e0b]/10 text-[#f59e0b]' : 'bg-blue-500/10 text-blue-500')" x-text="leak.severity === 'high' ? 'TINGGI' : (leak.severity === 'medium' ? 'SEDANG' : 'RENDAH')"></span>
                             </div>
-                            <p class="text-[11px] text-[#4b5e78]">Rp<span x-text="formatMoney(leak.potential_savings)"></span> / Monthly</p>
+                            <p class="text-[11px] text-[#4b5e78] truncate">Rp<span x-text="formatMoney(leak.potential_savings)"></span> / Monthly</p>
                         </div>
                     </div>
                     
-                    {{-- Details & Recommendation --}}
+                    
                     <div class="lg:w-2/3 flex flex-col justify-between">
                         <div class="flex items-start justify-between gap-4 mb-4">
                             <div>
@@ -172,9 +161,9 @@
         </template>
     </div>
 
-    {{-- Bottom Mini Stats --}}
+    
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-        {{-- Stat 1 --}}
+        
         <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 flex flex-col justify-center items-start gap-4 hover:border-emerald-500/20 transition-colors">
             <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center flex-shrink-0 border border-emerald-500/20">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
@@ -186,7 +175,7 @@
             </div>
         </div>
 
-        {{-- Stat 2 --}}
+        
         <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 flex flex-col justify-center items-start gap-4 hover:border-indigo-500/20 transition-colors">
             <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center flex-shrink-0 border border-indigo-500/20">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>
@@ -198,7 +187,7 @@
             </div>
         </div>
 
-        {{-- Stat 3 --}}
+        
         <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 flex flex-col justify-center items-start gap-4 hover:border-blue-500/20 transition-colors">
             <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center flex-shrink-0 border border-blue-500/20">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
