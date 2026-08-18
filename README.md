@@ -13,9 +13,6 @@
 ## Tentang Proyek
 **Tatagih** adalah *Smart Subscription Manager* yang dilengkapi dengan Tata Asisten. Tatagih melacak tagihan langganan dan menganalisis kesehatan keuangan Anda kemudian mendeteksi pemborosan. Terdapat fitur sharing untuk manajemen patungan tagihan dengan teman dan mengirim notifikasi cerdas langsung ke Telegram Anda.
 
-## Live Demo & Deployment
-Anda dapat langsung mencoba aplikasi yang sudah online tanpa perlu melakukan instalasi apa pun pada tautan berikut:
-**[👉 AKSES TATAGIH WEB DI SINI 👈](https://tatagihxxxxxxxxxx.com)**
 
 ## Preview Aplikasi
 Berikut adalah beberapa tangkapan layar dari antarmuka Tatagih:
