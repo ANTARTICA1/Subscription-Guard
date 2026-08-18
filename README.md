@@ -133,6 +133,10 @@ Aplikasi kini dapat diakses melalui browser pada: **[http://localhost:8000](http
 1. `php artisan schedule:work` *(Untuk menghidupkan mesin pengingat otomatis)*
 2. `php artisan queue:work` *(Untuk memproses antrean pesan yang akan dikirim)*
 
+> [!NOTE]
+> **Catatan Telegram di Localhost:**
+> Fitur **pengiriman notifikasi** ke telegram tetap berjalan normal di komputer lokal selama komputer terkoneksi ke internet. Namun jika ingin menguji fitur **Webhook** secara dua arah (menerima perintah balasan dari user ke Bot Telegram), Anda perlu menggunakan bantuan tunneling seperti [Ngrok](https://ngrok.com/) agar `localhost:8000` Anda mendapatkan URL publik yang bisa diakses oleh server Telegram.
+
 ---
 
 ## Catatan Khusus untuk Penilai
