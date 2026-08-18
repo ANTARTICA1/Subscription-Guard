@@ -45,6 +45,7 @@
 
         {{-- Navigation --}}
         <div class="flex-1 overflow-y-auto py-4 px-3 hide-scrollbar">
+            @if(auth()->check() && !auth()->user()->isAdmin())
             <p class="section-label">Main Menu</p>
 
             <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -108,6 +109,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
                 Integrasi Telegram
             </a>
+            @endif
 
             @if(auth()->check() && auth()->user()->isAdmin())
             <div class="flex items-center gap-2 mt-4 px-3 mb-2">
