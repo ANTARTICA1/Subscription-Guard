@@ -6,12 +6,7 @@
 <div x-data="leaksPage()" x-cloak class="space-y-6 pb-12">
 
 
-<div class="mb-6">
-    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-        Halo, {{ explode(' ', Auth::user()->name)[0] }}!
-    </h2>
-    <p class="text-[13px] text-[#94a3b8] mt-1">Kami memindai keuanganmu untuk menemukan potensi kebocoran.</p>
-</div>
+
 
 <div class="flex items-center justify-between mb-8">
     <h1 class="text-2xl font-bold text-white tracking-tight">Deteksi Kebocoran</h1>

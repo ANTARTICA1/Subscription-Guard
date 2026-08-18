@@ -154,12 +154,21 @@ class FinancialAssistantService
 
         $redundancyCount = 0;
         
-        $videoStreamers = $subscriptions->filter(fn($s) => preg_match('/netflix|disney|prime|hbo|vidio|viu/i', $s->name));
+        $videoStreamers = $subscriptions->filter(fn($s) => preg_match('/netflix|disney|prime|hbo|vidio|viu|apple tv|wetv|iqiyi|catchplay|crunchyroll/i', $s->name));
         if ($videoStreamers->count() > 1) {
             $redundancyCount++;
             $names = $videoStreamers->pluck('name')->implode(' & ');
             $recommendations[] = "Redundansi Streaming Video: <b>{$names}</b>. Sebaiknya Anda berlangganan bergilir (ganti-ganti aplikasi tiap bulan) daripada berlangganan semuanya sekaligus.";
             $cheapest = $videoStreamers->sortBy('monthly_amount')->first();
+            $potentialSavings += $cheapest->monthly_amount;
+        }
+
+        $aiTools = $subscriptions->filter(fn($s) => preg_match('/chatgpt|claude|gemini|perplexity|copilot|openai|midjourney/i', $s->name));
+        if ($aiTools->count() > 1) {
+            $redundancyCount++;
+            $names = $aiTools->pluck('name')->implode(' & ');
+            $recommendations[] = "Tumpang tindih Layanan AI: <b>{$names}</b>. Sebagian besar AI pintar memiliki kemampuan yang mirip. Pilih satu yang paling sesuai untuk alur kerja Anda.";
+            $cheapest = $aiTools->sortBy('monthly_amount')->first();
             $potentialSavings += $cheapest->monthly_amount;
         }
 

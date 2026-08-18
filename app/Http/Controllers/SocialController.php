@@ -28,6 +28,7 @@ class SocialController extends Controller
         $friends = User::whereIn('id', $friendIds)->get();
 
         $suggestedFriends = User::where('id', '!=', $user->id)
+            ->where('role', '!=', 'admin')
             ->whereNotIn('id', $friendIds)
             ->inRandomOrder()
             ->limit(5)
@@ -51,6 +52,10 @@ class SocialController extends Controller
 
         if ($friend->id === Auth::id()) {
             return back()->with('error', 'Anda tidak dapat menambahkan diri sendiri sebagai teman.');
+        }
+
+        if ($friend->isAdmin()) {
+            return back()->with('error', 'Anda tidak dapat menambahkan Admin sebagai teman.');
         }
 
         $existing = Friendship::where(function ($q) use ($friend) {
@@ -86,6 +91,10 @@ class SocialController extends Controller
 
         if ($friend->id === Auth::id()) {
             return redirect()->route('social.index')->with('error', 'Anda tidak dapat menambahkan diri sendiri sebagai teman.');
+        }
+
+        if ($friend->isAdmin()) {
+            return redirect()->route('social.index')->with('error', 'Anda tidak dapat menambahkan Admin sebagai teman.');
         }
 
         $existing = Friendship::where(function ($q) use ($friend) {

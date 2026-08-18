@@ -199,39 +199,6 @@
             </button>
         </div>
 
-        {{-- Kategori Populer --}}
-        <div>
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-base font-bold text-white">Kategori Populer</h3>
-                <a href="#" class="text-xs text-indigo-400 hover:text-indigo-300">Lihat semua</a>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                @foreach($popularCategories->take(5) as $cat)
-                <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-xl p-4 flex items-center gap-3 hover:border-[rgba(255,255,255,0.15)] transition-colors cursor-pointer">
-                    <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-extrabold uppercase" style="background: {{ $cat->color }}15; color: {{ $cat->color }}">
-                        {{ substr($cat->name, 0, 1) }}
-                    </div>
-                    <div>
-                        <p class="text-xs font-bold text-white">{{ $cat->name }}</p>
-                        <p class="text-[10px] text-[#94a3b8]">{{ $cat->active_count }} aktif</p>
-                    </div>
-                </div>
-                @endforeach
-                {{-- If less than 5, we can show a placeholder or let it be --}}
-                @if($popularCategories->count() < 5)
-                <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-xl p-4 flex items-center gap-3 opacity-50 cursor-not-allowed">
-                    <div class="w-8 h-8 rounded-lg bg-[#192a42] text-[#4b5e78] flex items-center justify-center text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                    </div>
-                    <div>
-                        <p class="text-xs font-bold text-white">Lainnya</p>
-                        <p class="text-[10px] text-[#94a3b8]">-</p>
-                    </div>
-                </div>
-                @endif
-            </div>
-        </div>
 
     </div>
 

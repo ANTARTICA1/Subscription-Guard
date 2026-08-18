@@ -29,6 +29,10 @@ class Subscription extends Model
         'is_public',
     ];
 
+    protected $appends = [
+        'join_url',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -209,5 +213,46 @@ class Subscription extends Model
         }
         
         return false;
+    }
+
+    public function getLogoAttribute($value)
+    {
+        if ($value) {
+            return $value;
+        }
+
+        $name = strtolower($this->name);
+        
+        $logos = [
+            'netflix' => 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg',
+            'spotify' => 'https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png',
+            'disney' => 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg',
+            'youtube' => 'https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg',
+            'xbox' => 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Xbox_logo_%282019%29.svg',
+            'game pass' => 'https://upload.wikimedia.org/wikipedia/commons/d/d7/Xbox_logo_%282019%29.svg',
+            'apple' => 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg',
+            'amazon' => 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
+            'prime' => 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png',
+            'canva' => 'https://upload.wikimedia.org/wikipedia/commons/0/08/Canva_icon_2021.svg',
+            'chatgpt' => 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg',
+            'openai' => 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg',
+            'adobe' => 'https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_Creative_Cloud_Logo.svg',
+            'zoom' => 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Zoom_Icon.png',
+            'playstation' => 'https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg',
+            'ps plus' => 'https://upload.wikimedia.org/wikipedia/commons/0/00/PlayStation_logo.svg',
+            'google' => 'https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg',
+            'github' => 'https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg',
+            'figma' => 'https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg',
+            'coursera' => 'https://upload.wikimedia.org/wikipedia/commons/9/97/Coursera-Logo_600x600.svg',
+            'indihome' => 'https://upload.wikimedia.org/wikipedia/commons/8/83/IndiHome_logo.svg',
+        ];
+
+        foreach ($logos as $keyword => $url) {
+            if (str_contains($name, $keyword)) {
+                return $url;
+            }
+        }
+
+        return null;
     }
 }

@@ -84,9 +84,19 @@
 
                         {{-- Right: Button (Desktop) --}}
                         <div class="hidden md:block">
-                            <a :href="group.join_url" class="px-8 py-3 bg-gradient-to-r from-indigo-500 to-cyan-500 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-indigo-500/25 hover:scale-105 inline-block text-sm">
-                                Minta Bergabung
-                            </a>
+                            <template x-if="!group.shares.find(s => s.friend_user_id === userId)">
+                                <form :action="`/shares/join/${group.invite_code}`" method="POST" class="inline">
+                                    @csrf
+                                    <button type="submit" class="px-8 py-3 bg-gradient-to-r from-indigo-500 to-cyan-500 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-indigo-500/25 hover:scale-105 inline-block text-sm">
+                                        Minta Bergabung
+                                    </button>
+                                </form>
+                            </template>
+                            <template x-if="group.shares.find(s => s.friend_user_id === userId)">
+                                <span class="px-8 py-3 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-bold rounded-xl inline-block text-sm shadow-lg shadow-emerald-500/10 cursor-default">
+                                    <span x-text="group.shares.find(s => s.friend_user_id === userId).payment_status === 'pending' ? 'Tergabung (Belum Bayar)' : 'Tergabung (Lunas)'"></span>
+                                </span>
+                            </template>
                         </div>
                     </div>
 
@@ -158,9 +168,19 @@
 
                         {{-- Mobile button --}}
                         <div class="md:hidden w-full mt-4">
-                            <a :href="group.join_url" class="w-full text-center px-8 py-3 bg-gradient-to-r from-indigo-500 to-cyan-500 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-indigo-500/25 block text-sm">
-                                Minta Bergabung
-                            </a>
+                            <template x-if="!group.shares.find(s => s.friend_user_id === userId)">
+                                <form :action="`/shares/join/${group.invite_code}`" method="POST" class="w-full mt-2">
+                                    @csrf
+                                    <button type="submit" class="w-full text-center px-8 py-3 bg-gradient-to-r from-indigo-500 to-cyan-500 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-indigo-500/25 block text-sm">
+                                        Minta Bergabung
+                                    </button>
+                                </form>
+                            </template>
+                            <template x-if="group.shares.find(s => s.friend_user_id === userId)">
+                                <div class="w-full text-center px-8 py-3 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 font-bold rounded-xl text-sm shadow-lg shadow-emerald-500/10">
+                                    <span x-text="group.shares.find(s => s.friend_user_id === userId).payment_status === 'pending' ? 'Tergabung (Belum Bayar)' : 'Tergabung (Lunas)'"></span>
+                                </div>
+                            </template>
                         </div>
                     </div>
 
@@ -261,6 +281,7 @@ function discoverPage() {
     return {
         search: '',
         groups: @json($publicSubscriptions),
+        userId: {{ auth()->id() ?? 'null' }},
         
         get filteredGroups() {
             if (!this.search) return this.groups;

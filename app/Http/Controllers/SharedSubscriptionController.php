@@ -194,7 +194,7 @@ class SharedSubscriptionController extends Controller
         $user = Auth::user();
 
         if ($subscription->user_id === $user->id) {
-            return redirect()->route('shares.index')->with('error', 'Anda adalah pemilik/ketua dari subscription ini.');
+            return back()->with('error', 'Anda adalah pemilik/ketua dari subscription ini.');
         }
 
         $existing = SubscriptionShare::where('subscription_id', $subscription->id)
@@ -202,11 +202,11 @@ class SharedSubscriptionController extends Controller
             ->first();
 
         if ($existing) {
-            return redirect()->route('shares.index')->with('error', 'Anda sudah bergabung dalam grup patungan ini.');
+            return back()->with('error', 'Anda sudah bergabung dalam grup patungan ini.');
         }
 
         if ($subscription->is_personal) {
-            return redirect()->route('shares.index')->with('error', 'Maaf, layanan ini bersifat personal/pribadi (seperti BPJS atau Asuransi) dan tidak dapat di-share/patungan dengan orang lain.');
+            return back()->with('error', 'Maaf, layanan ini bersifat personal/pribadi (seperti BPJS atau Asuransi) dan tidak dapat di-share/patungan dengan orang lain.');
         }
 
         $totalMembers = $subscription->shares()->count() + 2;
@@ -224,7 +224,7 @@ class SharedSubscriptionController extends Controller
 
         $this->recalculateAutoSplits($subscription);
 
-        return redirect()->route('shares.index')->with('success', "Selamat! Anda berhasil bergabung dalam grup patungan {$subscription->name}! Porsi patungan: Rp" . number_format($splitAmount, 0, ',', '.') . " ({$totalMembers} anggota termasuk Ketua).");
+        return back()->with('success', "Selamat! Anda berhasil bergabung dalam grup patungan {$subscription->name}! Porsi patungan: Rp" . number_format($splitAmount, 0, ',', '.') . " ({$totalMembers} anggota termasuk Ketua).");
     }
 
     public function destroy($id)

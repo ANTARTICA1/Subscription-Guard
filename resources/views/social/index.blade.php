@@ -125,9 +125,7 @@
                 @endforelse
             </div>
             
-            <div class="p-4 border-t border-[rgba(255,255,255,0.04)] text-center mt-auto">
-                <a href="#" class="text-[11px] text-[#94a3b8] hover:text-white transition-colors">Muat lebih banyak ↓</a>
-            </div>
+            
         </div>
 
         {{-- Column 3: Teman Terhubung --}}

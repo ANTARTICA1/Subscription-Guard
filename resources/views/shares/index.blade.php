@@ -389,7 +389,7 @@
             <div x-show="activeTab === 'bergabung'" x-cloak>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @forelse($sharedWithMe as $share)
-                        <div class="bg-[#0f172a] border border-[#1e293b] rounded-xl p-5 hover:border-[rgba(255,255,255,0.1)] transition-colors">
+                        <div x-data="{ showModal: false }" class="bg-[#0f172a] border border-[#1e293b] rounded-xl p-5 hover:border-[rgba(255,255,255,0.1)] transition-colors">
                             <div class="flex items-center gap-3 mb-4">
                                 <div class="w-10 h-10 rounded-lg bg-[#080d19] flex items-center justify-center p-1.5 border border-[#1e293b]">
                                     @if($share->subscription->logo)
@@ -418,11 +418,70 @@
                                     <span class="text-[9px] font-bold text-red-400 bg-red-500/10 px-2 py-1 rounded">BELUM BAYAR</span>
                                 @endif
                                 
-                                <button class="px-3 py-1.5 rounded-lg bg-[#1e293b] hover:bg-[#334155] text-[10px] font-bold text-[#f1f5f9] transition-colors">Detail</button>
+                                <button @click="showModal = true" class="px-3 py-1.5 rounded-lg bg-[#1e293b] hover:bg-[#334155] text-[10px] font-bold text-[#f1f5f9] transition-colors">Detail</button>
                             </div>
                             {{-- Progress --}}
                             <div class="mt-2 w-full h-1 bg-[#1e293b] rounded-full overflow-hidden">
                                 <div class="h-full {{ $share->subscription->days_until_payment <= 3 ? 'bg-amber-500' : 'bg-emerald-500' }}" style="width: {{ max(0, min(100, 100 - ($share->subscription->days_until_payment * 3.3))) }}%"></div>
+                            </div>
+
+                            {{-- Modal Detail --}}
+                            <div x-show="showModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" x-cloak x-transition>
+                                <div @click.away="showModal = false" class="bg-[#0f172a] border border-[#1e293b] rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden flex flex-col">
+                                    <div class="p-5 border-b border-[#1e293b] flex items-center justify-between">
+                                        <h3 class="font-bold text-white">Detail Patungan</h3>
+                                        <button @click="showModal = false" class="text-[#94a3b8] hover:text-white">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                        </button>
+                                    </div>
+                                    <div class="p-5 flex-1 overflow-y-auto">
+                                        <div class="flex items-center gap-3 mb-6">
+                                            <div class="w-12 h-12 rounded-xl bg-[#080d19] flex items-center justify-center p-2 border border-[#1e293b]">
+                                                @if($share->subscription->logo)
+                                                    <img src="{{ $share->subscription->logo }}" class="w-full h-full object-contain">
+                                                @else
+                                                    <span style="color: {{ $share->subscription->category->color }}">{!! $share->subscription->category->icon !!}</span>
+                                                @endif
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-[#f1f5f9] text-base leading-tight">{{ $share->subscription->name }}</h4>
+                                                <p class="text-xs text-[#94a3b8]">Ketua: {{ $share->owner->name }}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="bg-[#080d19] rounded-xl p-4 mb-6 border border-[#1e293b]">
+                                            <p class="text-[10px] text-[#4b5e78] mb-1">Total Tagihan Anda</p>
+                                            <p class="text-xl font-bold text-emerald-400 mb-3">{{ $share->formatted_split_amount }}</p>
+                                            
+                                            <div class="flex items-center justify-between border-t border-[#1e293b] pt-3">
+                                                <span class="text-xs text-[#94a3b8]">Status Pembayaran</span>
+                                                @if($share->payment_status === 'paid')
+                                                    <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded">LUNAS</span>
+                                                @elseif($share->payment_proof_path)
+                                                    <span class="text-[10px] font-bold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded">PROSES</span>
+                                                @else
+                                                    <span class="text-[10px] font-bold text-red-400 bg-red-500/10 px-2.5 py-1 rounded">BELUM BAYAR</span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        @if($share->payment_status !== 'paid')
+                                            <form action="{{ route('shares.upload-proof', $share->id) }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="mb-4">
+                                                    <label class="block text-xs font-bold text-[#f1f5f9] mb-2">Upload Bukti Transfer</label>
+                                                    <div class="relative">
+                                                        <input type="file" name="proof" required accept="image/*" class="block w-full text-xs text-[#94a3b8] file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-500/10 file:text-indigo-400 hover:file:bg-indigo-500/20 bg-[#080d19] border border-[#1e293b] rounded-xl cursor-pointer">
+                                                    </div>
+                                                    <p class="text-[10px] text-[#4b5e78] mt-1.5">Format: JPG, PNG. Maks 2MB.</p>
+                                                </div>
+                                                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl transition-all text-xs">
+                                                    Kirim Bukti Pembayaran
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @empty

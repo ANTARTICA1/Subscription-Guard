@@ -17,9 +17,6 @@ class DiscoverController extends Controller
             ->active()
             ->where('user_id', '!=', $user->id)
             ->with(['user', 'category', 'shares'])
-            ->whereDoesntHave('shares', function ($query) use ($user) {
-                $query->where('friend_user_id', $user->id);
-            })
             ->latest()
             ->get();
 
