@@ -127,7 +127,6 @@ Jalankan server lokal pengembangan Laravel:
 ```bash
 php artisan serve
 ```
-Aplikasi kini dapat diakses melalui browser pada: **[http://localhost:8000](http://localhost:8000)**
 
 *Penting: Aplikasi ini menggunakan Job Scheduler dan Queue untuk fitur notifikasi otomatis ke Telegram dan pengiriman Email. Jika Anda ingin menguji fitur otomatis tersebut di lingkungan lokal, Anda **wajib** membuka 2 tab terminal baru dan menjalankan:*
 1. `php artisan schedule:work` *(Untuk menghidupkan mesin pengingat otomatis)*
