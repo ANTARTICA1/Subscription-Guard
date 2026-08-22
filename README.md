@@ -119,8 +119,8 @@ php artisan migrate --seed
 *(Perintah `--seed` akan otomatis membuat akun default dan data contoh agar aplikasi tidak kosong saat pertama kali dijalankan).*
 
 **Akun Default untuk Login (Hasil Seeding):**
-- **Admin**: `admin@tatagih.app` | Password: `password`
-- **User Biasa**: `user@tatagih.app` | Password: `password`
+- **User Biasa** *(Rekomendasi Utama)*: `user@tatagih.app` | Password: `password`
+- **Admin** *(Hanya fitur pendukung)*: `admin@tatagih.app` | Password: `password`
 
 ### 8. Jalankan Aplikasi
 Jalankan server lokal pengembangan Laravel:
@@ -132,13 +132,18 @@ php artisan serve
 1. `php artisan schedule:work` *(Untuk menghidupkan mesin pengingat otomatis)*
 2. `php artisan queue:work` *(Untuk memproses antrean pesan yang akan dikirim)*
 
-> [!NOTE]
+> [!CATATAN]
 > **Catatan Telegram di Localhost:**
 > Fitur **pengiriman notifikasi** ke telegram tetap berjalan normal di komputer lokal selama komputer terkoneksi ke internet. Namun jika ingin menguji fitur **Webhook** secara dua arah (menerima perintah balasan dari user ke Bot Telegram), Anda perlu menggunakan bantuan tunneling seperti [Ngrok](https://ngrok.com/) agar `localhost:8000` Anda mendapatkan URL publik yang bisa diakses oleh server Telegram.
 
 ---
 
 ## Catatan Khusus untuk Penilai
+
+> [!CATATAN]  
+> **Fokus Pengujian Aplikasi**  
+> Fitur-fitur utama dari aplikasi ini (seperti Tata Asisten, Pendeteksi Kebocoran Dana, dan Patungan) berada pada **sisi Pengguna (User)**. Halaman Admin hanyalah fitur pendukung/dashboard ringkasan. **sangat disarankan untuk login menggunakan akun "User Biasa"** untuk melihat fungsionalitas utama aplikasi ini.
+
 File `.env.example` disiapkan menggunakan pengaturan **Gmail SMTP**.
 Jika Anda tidak ingin repot mengatur *App Password* Google untuk menguji aplikasi ini secara lokal, Anda dapat mengubah mode pengiriman email di file `.env` menjadi mode **log**:
 ```env
