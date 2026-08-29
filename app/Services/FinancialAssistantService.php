@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\User;
-use Carbon\Carbon;
 
 class FinancialAssistantService
 {
@@ -12,6 +11,40 @@ class FinancialAssistantService
     public function __construct(HealthScoreService $healthScoreService)
     {
         $this->healthScoreService = $healthScoreService;
+    }
+
+    public function calculateSubscriptionHash(User $user): string
+    {
+        $subs = $user->activeSubscriptions()->orderBy('id')->get();
+        if ($subs->isEmpty()) {
+            return 'empty';
+        }
+
+        $serialized = $subs->map(function ($s) {
+            $updatedAt = $s->updated_at ? $s->updated_at->timestamp : 0;
+            return "{$s->id}:{$s->name}:{$s->amount}:{$s->billing_cycle}:{$s->status}:{$updatedAt}";
+        })->join('|');
+
+        return md5($serialized);
+    }
+
+    public function checkSyncStatus(User $user): array
+    {
+        $currentHash = $this->calculateSubscriptionHash($user);
+        $cachedData = $user->tata_assistant_data;
+        $scannedAt = $user->tata_assistant_scanned_at;
+        $savedHash = $user->tata_assistant_hash;
+
+        $hasNeverScanned = empty($cachedData);
+        $isSynced = !$hasNeverScanned && ($savedHash === $currentHash);
+
+        return [
+            'is_synced' => $isSynced,
+            'has_never_scanned' => $hasNeverScanned,
+            'scanned_at' => $scannedAt,
+            'current_hash' => $currentHash,
+            'saved_hash' => $savedHash,
+        ];
     }
 
     public function analyze(User $user): array
@@ -39,7 +72,6 @@ class FinancialAssistantService
         $healthData = $this->healthScoreService->calculateUnifiedScore($user, 0);
         $healthScore = $healthData['score'];
 
-        $categoryGroups = $subscriptions->groupBy('category_id');
         $maxCategoryConcentration = 0;
         
         $categoryBreakdown = $subscriptions->groupBy('category.name')->map(function ($items, $category) use (&$maxCategoryConcentration, $totalMonthly) {
@@ -72,7 +104,6 @@ class FinancialAssistantService
             $personality = 'Minimalist';
         }
 
-        
         $insights = [];
 
         $fiveYearProjection = $totalYearly * 5;

@@ -24,6 +24,9 @@ class User extends Authenticatable
         'timezone',
         'role',
         'user_tag',
+        'tata_assistant_data',
+        'tata_assistant_scanned_at',
+        'tata_assistant_hash',
     ];
 
     protected $hidden = [
@@ -47,6 +50,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'tata_assistant_data' => 'array',
+            'tata_assistant_scanned_at' => 'datetime',
         ];
     }
 

@@ -206,7 +206,7 @@ class SharedSubscriptionController extends Controller
         }
 
         if ($subscription->is_personal) {
-            return back()->with('error', 'Maaf, layanan ini bersifat personal/pribadi (seperti BPJS atau Asuransi) dan tidak dapat di-share/patungan dengan orang lain.');
+            return back()->with('error', 'Maaf, layanan ini bersifat personal dan tidak dapat di-share/patungan dengan orang lain.');
         }
 
         $totalMembers = $subscription->shares()->count() + 2;

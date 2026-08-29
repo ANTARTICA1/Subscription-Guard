@@ -92,6 +92,7 @@ Route::middleware('auth')->group(function () {
 
     
     Route::get('/assistant', [FinancialAssistantController::class, 'index'])->name('assistant');
+    Route::post('/assistant/scan', [FinancialAssistantController::class, 'scan'])->name('assistant.scan');
 
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
