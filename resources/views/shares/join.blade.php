@@ -1,41 +1,52 @@
 @extends('layouts.app')
 @section('title', 'Gabung Grup Patungan')
-@section('heading', '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg> Undangan Gabung Grup Patungan')
-@section('subheading', 'Anda diundang untuk bergabung dalam grup patungan subscription.')
 
 @section('content')
-<div class="max-w-md mx-auto">
-    <div class="card text-center py-8">
-        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4" style="background: rgba(99, 102, 241, 0.15);">
-            {{ $subscription->category->icon ?? '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>' }}
+<div class="max-w-md mx-auto py-6">
+    <div class="bg-[#0f172a] border border-[#1e293b] rounded-2xl p-8 text-center shadow-2xl relative overflow-hidden">
+        <div class="w-14 h-14 rounded-xl bg-[#0b1120] border border-[#1e293b] flex items-center justify-center mx-auto mb-5 p-2.5">
+            @if($subscription->logo)
+                <img src="{{ $subscription->logo }}" class="w-full h-full object-contain">
+            @else
+                <span style="color: {{ $subscription->category->color ?? '#6366f1' }}; font-size: 22px;">{!! $subscription->category->icon ?? '' !!}</span>
+            @endif
         </div>
 
-        <h3 class="text-xl font-extrabold mb-1" style="color: var(--text-primary);">{{ $subscription->name }}</h3>
-        <p class="text-xs mb-4" style="color: var(--text-muted);">Diprakarsai oleh: <strong>{{ $subscription->user->name }}</strong> ({{ $subscription->user->user_tag }})</p>
+        <h3 class="text-xl font-bold text-white mb-1">{{ $subscription->name }}</h3>
+        <p class="text-xs text-[#64748b] mb-6">Diprakarsai oleh <strong class="text-white">{{ $subscription->user->name }}</strong> ({{ $subscription->user->user_tag }})</p>
 
-        <div class="p-4 rounded-xl border mb-6 text-left space-y-2" style="background: var(--bg-primary); border-color: var(--border-color);">
-            <div class="flex justify-between text-xs">
-                <span style="color: var(--text-muted);">Total Biaya Layanan:</span>
-                <span class="font-bold" style="color: var(--text-primary);">{{ $subscription->formatted_amount }}/{{ $subscription->billing_cycle }}</span>
+        <div class="p-4 rounded-xl bg-[#0b1120] border border-[#1e293b] mb-6 text-left space-y-2.5">
+            <div class="flex justify-between items-center text-xs">
+                <span class="text-[#64748b]">Total Biaya Layanan</span>
+                <span class="font-semibold text-white">{{ $subscription->formatted_amount }} / {{ $subscription->billing_cycle }}</span>
             </div>
-            <div class="flex justify-between text-xs">
-                <span style="color: var(--text-muted);">Anggota Grup Saat Ini:</span>
-                <span class="font-bold" style="color: var(--accent-primary);">{{ $subscription->shares->count() + 1 }} Orang</span>
+            <div class="flex justify-between items-center text-xs">
+                <span class="text-[#64748b]">Anggota Saat Ini</span>
+                <span class="font-semibold text-[#94a3b8]">{{ $subscription->shares->count() + 1 }} Orang</span>
             </div>
-            <div class="flex justify-between text-xs pt-2 border-t" style="border-color: var(--border-color);">
-                <span class="font-bold" style="color: var(--text-primary);">Bagian Anda jika Bergabung:</span>
-                <span class="font-extrabold text-sm" style="color: #34d399;">Rp{{ number_format($splitAmount, 0, ',', '.') }}/bln</span>
+            <div class="flex justify-between items-center text-xs pt-2.5 border-t border-[#1e293b]">
+                <span class="font-semibold text-white">Bagian Anda</span>
+                <span class="font-extrabold text-base text-emerald-400">Rp{{ number_format($splitAmount, 0, ',', '.') }}/bulan</span>
             </div>
         </div>
+
+        @if($subscription->user->bank_name)
+            <div class="p-3.5 rounded-xl bg-[#0b1120] border border-[#1e293b] mb-6 text-left text-xs space-y-1">
+                <p class="text-[10px] text-[#64748b] font-bold uppercase tracking-wider">Rekening Pembayaran Host</p>
+                <p class="text-white font-semibold">{{ $subscription->user->bank_name }} - {{ $subscription->user->account_number }}</p>
+                <p class="text-[11px] text-[#64748b]">a.n {{ $subscription->user->account_holder ?? $subscription->user->name }}</p>
+            </div>
+        @endif
 
         <form method="POST" action="{{ route('shares.confirm-join', $subscription->invite_code) }}">
             @csrf
-            <button type="submit" class="btn-primary w-full justify-center text-sm py-3 mb-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg> Konfirmasi & Gabung Grup Patungan
+            <button type="submit" class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs transition-colors flex items-center justify-center gap-2 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                Konfirmasi & Gabung Grup
             </button>
         </form>
 
-        <a href="{{ route('shares.index') }}" class="btn-secondary w-full justify-center text-xs">
+        <a href="{{ route('shares.index') }}" class="block w-full py-2 text-xs text-[#64748b] hover:text-white font-medium transition-colors">
             Batal
         </a>
     </div>

@@ -31,6 +31,8 @@ class Subscription extends Model
 
     protected $appends = [
         'join_url',
+        'next_payment_date',
+        'days_until_payment',
     ];
 
     protected static function boot()

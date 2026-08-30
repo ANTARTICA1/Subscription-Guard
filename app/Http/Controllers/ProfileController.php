@@ -23,6 +23,9 @@ class ProfileController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
             'avatar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'telegram_chat_id' => 'nullable|string|max:255',
+            'bank_name' => 'nullable|string|max:50',
+            'account_number' => 'nullable|string|max:50',
+            'account_holder' => 'nullable|string|max:100',
         ]);
 
         if ($request->hasFile('avatar')) {

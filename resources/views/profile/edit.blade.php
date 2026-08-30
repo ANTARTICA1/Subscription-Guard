@@ -89,9 +89,31 @@
                         @endif
                     </div>
                     <p class="text-[10px] mt-2 text-[#4b5e78] leading-relaxed">
-                        Chat ID digunakan untuk menerima tagihan patungan (Split Bill) secara otomatis via Telegram. 
-                        <br>Cara mengetahui Chat ID: Cari bot <span class="text-purple-400">@userinfobot</span> di Telegram, klik Start, lalu salin angka `Id` yang diberikan.
+                        Chat ID digunakan untuk menerima tagihan patungan secara otomatis via Telegram.
                     </p>
+                </div>
+
+                <div class="border-t border-[rgba(255,255,255,0.06)] pt-6 mb-6">
+                    <h4 class="text-xs font-bold text-white mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
+                        Rekening / E-Wallet Pembayaran Patungan
+                    </h4>
+                    <p class="text-[10px] text-[#94a3b8] mb-4">Informasi ini akan ditampilkan ke anggota saat mereka melakukan transfer patungan kepada Anda.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-[#f1f5f9] mb-1.5">Nama Bank / E-Wallet</label>
+                            <input type="text" name="bank_name" value="{{ old('bank_name', $user->bank_name) }}" placeholder="Contoh: BCA / GoPay / Dana" class="w-full bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-500 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-[#f1f5f9] mb-1.5">Nomor Rekening / No. HP</label>
+                            <input type="text" name="account_number" value="{{ old('account_number', $user->account_number) }}" placeholder="Contoh: 1234567890" class="w-full bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-purple-500 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-[#f1f5f9] mb-1.5">Atas Nama (Pemilik)</label>
+                            <input type="text" name="account_holder" value="{{ old('account_holder', $user->account_holder) }}" placeholder="Contoh: {{ $user->name }}" class="w-full bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-purple-500 transition-colors">
+                        </div>
+                    </div>
                 </div>
                 
                 {{-- Action Buttons --}}
