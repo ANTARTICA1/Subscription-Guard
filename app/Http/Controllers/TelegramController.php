@@ -65,13 +65,7 @@ class TelegramController extends Controller
         }
 
         $sub = $user->subscriptions()->where('status', 'active')->first();
-        //CATATAN UNTUK PENILAI:
-        // Baris di bawah ini BUKAN hardcode untuk fitur utama.
-        // Ini adalah fitur "Uji Coba Notifikasi". Jika user sudah punya data subscription, 
-        // sistem akan menggunakan data asli milik user tersebut ($sub->name).
-        // jika user BARU mendaftar dan belum punya data sama sekali (kosong),
-        // sistem menggunakan "Netflix Premium" sebagai teks pengganti (fallback) 
-        // semata-mata agar pesan uji coba tidak kosong saat dikirim.
+
         $subName = $sub ? $sub->name . ' (Uji Coba)' : 'Netflix Premium (Uji Coba)';
         $amount = $sub ? $sub->formatted_amount : 'Rp186.000';
         $date = $sub ? $sub->next_payment_date->translatedFormat('d F Y') : now()->addDays(3)->translatedFormat('d F Y');
@@ -94,9 +88,6 @@ class TelegramController extends Controller
         return back()->with('error', 'Gagal mengirim pesan ke Telegram. Pastikan TELEGRAM_BOT_TOKEN valid di file .env.');
     }
 
-    
-
-
     public function webhook(Request $request)
     {
         $data = $request->all();
@@ -108,7 +99,6 @@ class TelegramController extends Controller
         $text = $data['message']['text'];
         $chatId = $data['message']['chat']['id'];
 
-        
         if (str_starts_with($text, '/connect ')) {
             $code = trim(str_replace('/connect ', '', $text));
 
@@ -138,7 +128,6 @@ class TelegramController extends Controller
             ]);
         }
 
-        
         if ($text === '/start') {
             return response()->json([
                 'method' => 'sendMessage',

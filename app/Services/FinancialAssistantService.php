@@ -6,13 +6,6 @@ use App\Models\User;
 
 class FinancialAssistantService
 {
-    private HealthScoreService $healthScoreService;
-
-    public function __construct(HealthScoreService $healthScoreService)
-    {
-        $this->healthScoreService = $healthScoreService;
-    }
-
     public function calculateSubscriptionHash(User $user): string
     {
         $subs = $user->activeSubscriptions()->orderBy('id')->get();
@@ -60,7 +53,12 @@ class FinancialAssistantService
                 'total_monthly' => 0,
                 'total_yearly' => 0,
                 'health_score' => 0,
-                'health_data' => $this->healthScoreService->calculateUnifiedScore($user, 0),
+                'health_data' => [
+                    'score' => 0,
+                    'label' => 'Belum Ada Data',
+                    'color' => '#64748b',
+                    'breakdown' => []
+                ],
                 'personality' => 'Belum Ada Data',
                 'potential_savings' => 0,
                 'insights' => [],
@@ -69,11 +67,8 @@ class FinancialAssistantService
             ];
         }
 
-        $healthData = $this->healthScoreService->calculateUnifiedScore($user, 0);
-        $healthScore = $healthData['score'];
-
         $maxCategoryConcentration = 0;
-        
+
         $categoryBreakdown = $subscriptions->groupBy('category.name')->map(function ($items, $category) use (&$maxCategoryConcentration, $totalMonthly) {
             $total = $items->sum(fn($s) => $s->monthly_amount);
             $ratio = $totalMonthly > 0 ? ($total / $totalMonthly) : 0;
@@ -146,13 +141,13 @@ class FinancialAssistantService
         $expensiveSubs = $subscriptions->filter(fn($s) => $s->monthly_amount > 150000)->sortByDesc('monthly_amount');
         if ($expensiveSubs->count() > 0) {
             $recommendations[] = "Beberapa langganan Anda (seperti {$expensiveSubs->first()->name}) berada di tier Premium. Pastikan tingkat utilitas (penggunaan) Anda harian. Jika jarang dipakai, segera batalkan.";
-            $potentialSavings += $expensiveSubs->first()->monthly_amount * 0.3; 
+            $potentialSavings += $expensiveSubs->first()->monthly_amount * 0.3;
         }
 
         $monthlySubs = $subscriptions->where('billing_cycle', 'monthly');
         $yearlySavings = 0;
         foreach ($monthlySubs as $sub) {
-            $yearlyEstimate = $sub->amount * 12 * 0.15; 
+            $yearlyEstimate = $sub->amount * 12 * 0.15;
             $yearlySavings += $yearlyEstimate;
         }
         if ($yearlySavings > 50000) {
@@ -184,7 +179,7 @@ class FinancialAssistantService
         }
 
         $redundancyCount = 0;
-        
+
         $videoStreamers = $subscriptions->filter(fn($s) => preg_match('/netflix|disney|prime|hbo|vidio|viu|apple tv|wetv|iqiyi|catchplay|crunchyroll/i', $s->name));
         if ($videoStreamers->count() > 1) {
             $redundancyCount++;
@@ -213,20 +208,20 @@ class FinancialAssistantService
         }
 
         if (empty($recommendations)) {
-            $recommendations[] = 'Skor kesehatan finansial Anda luar biasa. Tidak ada anomali atau pemborosan yang terdeteksi.';
+            $recommendations[] = 'Portofolio langganan Anda rapi. Pindai Tata Asisten untuk evaluasi mendalam oleh AI.';
         }
-
-        $healthData = $this->healthScoreService->calculateUnifiedScore($user, $potentialSavings, [
-            'redundancy_count' => $redundancyCount,
-            'has_cashflow_risk' => $hasCashflowRisk
-        ]);
 
         return [
             'summary' => "Anda mengelola {$subCount} langganan dengan akumulasi beban Rp" . number_format($totalMonthly, 0, ',', '.') . '/bulan.',
             'total_monthly' => $totalMonthly,
             'total_yearly' => $totalYearly,
-            'health_score' => $healthData['score'],
-            'health_data' => $healthData,
+            'health_score' => 0,
+            'health_data' => [
+                'score' => 0,
+                'label' => 'Belum Dipindai',
+                'color' => '#64748b',
+                'breakdown' => []
+            ],
             'personality' => $personality,
             'potential_savings' => round($potentialSavings),
             'insights' => $insights,

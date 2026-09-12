@@ -3,24 +3,19 @@
 
 @section('content')
 
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pb-12 min-w-0">
 
+    <div class="lg:col-span-7 xl:col-span-8 space-y-6 min-w-0">
 
-<div class="grid grid-cols-1 xl:grid-cols-12 gap-6 pb-12">
-
-    {{-- Main Content (Left Column) --}}
-    <div class="xl:col-span-8 space-y-6">
-        
-        {{-- Informasi Profil Card --}}
         <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 md:p-8 relative overflow-hidden">
             <h3 class="text-[15px] font-bold text-white mb-6 flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                 Informasi Profil
             </h3>
-            
+
             <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                 @csrf @method('PUT')
-                
-                {{-- Avatar Upload Section --}}
+
                 <div class="flex items-center gap-6 mb-8">
                     <div class="relative group">
                         <div class="w-20 h-20 rounded-full border border-[rgba(255,255,255,0.1)] bg-[#111c2e] overflow-hidden">
@@ -43,9 +38,9 @@
                         <p class="text-[10px] text-[#4b5e78] mt-2">JPG, PNG, WebP. Maks 2MB.</p>
                     </div>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    {{-- Nama Lengkap --}}
+
                     <div>
                         <label class="block text-[11px] font-bold text-[#f1f5f9] mb-2">Nama Lengkap</label>
                         <div class="relative">
@@ -55,8 +50,7 @@
                             <input type="text" name="name" value="{{ old('name', $user->name) }}" class="w-full bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors" required>
                         </div>
                     </div>
-                    
-                    {{-- Email --}}
+
                     <div>
                         <label class="block text-[11px] font-bold text-[#f1f5f9] mb-2">Email</label>
                         <div class="relative">
@@ -70,8 +64,7 @@
                         </div>
                     </div>
                 </div>
-                
-                {{-- Telegram Chat ID --}}
+
                 <div class="mb-6">
                     <label class="block text-[11px] font-bold text-[#f1f5f9] mb-2 flex items-center gap-1.5">
                         Telegram Chat ID
@@ -115,10 +108,9 @@
                         </div>
                     </div>
                 </div>
-                
-                {{-- Action Buttons --}}
+
                 <div class="flex flex-col sm:flex-row gap-4 pt-2">
-                    <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 px-6 rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(147,51,234,0.2)]">
+                    <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 px-6 rounded-xl transition-colors text-sm flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" /></svg>
                         Simpan Profil
                     </button>
@@ -136,7 +128,6 @@
                 </div>
         </div>
 
-        {{-- Ubah Password Card --}}
         <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 md:p-8 relative overflow-hidden">
             <h3 class="text-[15px] font-bold text-white mb-6 flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
@@ -145,9 +136,9 @@
 
             <form method="POST" action="{{ route('profile.password') }}">
                 @csrf @method('PUT')
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    {{-- Password Saat Ini --}}
+
                     <div>
                         <label class="block text-[11px] font-bold text-[#f1f5f9] mb-2">Password Saat Ini</label>
                         <div class="relative">
@@ -165,7 +156,6 @@
                         @enderror
                     </div>
 
-                    {{-- Password Baru --}}
                     <div>
                         <label class="block text-[11px] font-bold text-[#f1f5f9] mb-2">Password Baru</label>
                         <div class="relative">
@@ -180,7 +170,6 @@
                         </div>
                     </div>
 
-                    {{-- Konfirmasi Password --}}
                     <div>
                         <label class="block text-[11px] font-bold text-[#f1f5f9] mb-2">Konfirmasi Password</label>
                         <div class="relative">
@@ -215,8 +204,8 @@
                             Jangan gunakan password yang mudah ditebak
                         </div>
                     </div>
-                    
-                    <button type="submit" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-2.5 px-8 rounded-xl transition-all shadow-[0_0_15px_rgba(147,51,234,0.3)] text-sm flex items-center justify-center gap-2 flex-shrink-0">
+
+                    <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 px-8 rounded-xl transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] text-sm flex items-center justify-center gap-2 flex-shrink-0">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                         Perbarui Password
                     </button>
@@ -226,11 +215,10 @@
 
     </div>
 
-    {{-- Security Sidebar (Right Column) --}}
-    <div class="xl:col-span-4 space-y-6">
-        
+    <div class="lg:col-span-5 xl:col-span-4 space-y-6 min-w-0">
+
         <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6 relative overflow-hidden text-center">
-            {{-- Shield Icon --}}
+
             <div class="relative w-20 h-20 mx-auto mb-4">
                 <div class="absolute inset-0 bg-emerald-500/20 rounded-full animate-pulse blur-xl"></div>
                 <div class="w-full h-full bg-[#111c2e] border border-[rgba(255,255,255,0.06)] rounded-full flex items-center justify-center relative z-10">
@@ -239,14 +227,13 @@
                     </svg>
                 </div>
             </div>
-            
+
             <h3 class="text-emerald-400 font-bold text-base mb-1">Status Akun Aktif</h3>
             <p class="text-[10px] text-[#4b5e78] mb-1">Bergabung sejak</p>
             <p class="text-xs font-bold text-white mb-2">{{ $user->created_at->format('d M Y, H:i') }}</p>
         </div>
 
         <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-2xl overflow-hidden">
-
 
             <form method="POST" action="#" class="block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun?');">
                 @csrf @method('DELETE')

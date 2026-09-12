@@ -7,19 +7,13 @@ use Illuminate\Database\Seeder;
 class SubscriptionSharesTableSeeder extends Seeder
 {
 
-    /**
-     * Auto generated seed file
-     *
-     * @return void
-     */
     public function run()
     {
-        
 
         \DB::table('subscription_shares')->delete();
-        
+
         \DB::table('subscription_shares')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 10,
                 'subscription_id' => 14,
@@ -33,7 +27,7 @@ class SubscriptionSharesTableSeeder extends Seeder
                 'created_at' => '2026-07-29 08:40:16',
                 'updated_at' => '2026-07-29 08:40:16',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 12,
                 'subscription_id' => 24,
@@ -47,7 +41,7 @@ class SubscriptionSharesTableSeeder extends Seeder
                 'created_at' => '2026-08-16 10:15:11',
                 'updated_at' => '2026-08-16 10:15:11',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 13,
                 'subscription_id' => 15,
@@ -61,7 +55,7 @@ class SubscriptionSharesTableSeeder extends Seeder
                 'created_at' => '2026-08-16 10:27:00',
                 'updated_at' => '2026-08-18 11:19:14',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 14,
                 'subscription_id' => 15,
@@ -75,7 +69,7 @@ class SubscriptionSharesTableSeeder extends Seeder
                 'created_at' => '2026-08-18 11:19:14',
                 'updated_at' => '2026-08-18 11:19:14',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 15,
                 'subscription_id' => 30,
@@ -90,7 +84,6 @@ class SubscriptionSharesTableSeeder extends Seeder
                 'updated_at' => '2026-08-18 11:28:12',
             ),
         ));
-        
-        
+
     }
 }

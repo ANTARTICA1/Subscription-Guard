@@ -5,25 +5,24 @@
 @source "./../../resources/views/**/*.blade.php";
 @source "resources/views/**/*.blade.php";
 
-
 :root {
     --bg-primary: #08101a;
     --bg-secondary: #0d1726;
     --bg-card: #111c2e;
     --bg-card-hover: #16263d;
     --bg-elevated: #1a2f4c;
-    
+
     --text-primary: #ffffff;
     --text-secondary: #cbd5e1;
     --text-muted: #64748b;
-    
-    --accent-primary: #8b5cf6;
-    --accent-secondary: #6d28d9;
-    --accent-tertiary: #a78bfa;
-    --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
-    --accent-gradient-wide: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #0ea5e9 100%);
-    --accent-glow: rgba(139, 92, 246, 0.25);
-    
+
+    --accent-primary: #10b981;
+    --accent-secondary: #059669;
+    --accent-tertiary: #34d399;
+    --accent-gradient: #10b981;
+    --accent-gradient-wide: #10b981;
+    --accent-glow: rgba(16, 185, 129, 0.25);
+
     --success: #10b981;
     --success-bg: rgba(16, 185, 129, 0.18);
     --warning: #f59e0b;
@@ -32,61 +31,60 @@
     --danger-bg: rgba(239, 68, 68, 0.18);
     --info: #0ea5e9;
     --info-bg: rgba(14, 165, 233, 0.18);
-    
+
     --border-color: rgba(255, 255, 255, 0.08);
     --border-light: rgba(255, 255, 255, 0.15);
     --border-accent: rgba(139, 92, 246, 0.4);
-    
+
     --shadow-sm: 0 4px 12px rgba(0,0,0,0.25);
     --shadow-md: 0 8px 24px rgba(0,0,0,0.35);
     --shadow-lg: 0 16px 40px rgba(0,0,0,0.45);
     --shadow-glow: 0 10px 30px rgba(0,0,0,0.5);
-    
-    --radius-sm: 12px;
-    --radius-md: 18px;
-    --radius-lg: 24px;
-    --radius-xl: 32px;
-    
-    --transition-morph: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    --transition-fast: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    --transition-bounce: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
+    --radius-xl: 12px;
+
+    --transition-morph: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-bounce: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 [data-theme="light"] {
+    --bg-body: #eef2f6;
     --bg-primary: #f8fafc;
-    --bg-secondary: #f1f5f9;
+    --bg-secondary: #eef2f6;
     --bg-card: #ffffff;
     --bg-card-hover: #f8fafc;
     --bg-elevated: #e2e8f0;
-    
+
     --text-primary: #0f172a;
-    --text-secondary: #334155;
+    --text-secondary: #475569;
     --text-muted: #64748b;
-    
-    --accent-primary: #7c3aed;
-    --accent-secondary: #6d28d9;
-    --accent-tertiary: #8b5cf6;
-    --accent-glow: rgba(124, 58, 237, 0.15);
-    
+
+    --accent-primary: #10b981;
+    --accent-secondary: #059669;
+    --accent-tertiary: #34d399;
+    --accent-gradient: #10b981;
+    --accent-gradient-wide: #10b981;
+    --accent-glow: transparent;
+
     --success-bg: rgba(16, 185, 129, 0.12);
     --warning-bg: rgba(245, 158, 11, 0.12);
     --danger-bg: rgba(239, 68, 68, 0.12);
     --info-bg: rgba(59, 130, 246, 0.12);
-    
+
     --border-color: rgba(15, 23, 42, 0.08);
     --border-light: rgba(15, 23, 42, 0.12);
-    --border-accent: rgba(124, 58, 237, 0.3);
-    
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-    --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
-    --shadow-lg: 0 16px 40px rgba(0,0,0,0.12);
-    --shadow-glow: 0 10px 30px rgba(0,0,0,0.08);
+    --border-accent: rgba(16, 185, 129, 0.3);
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.06);
+    --shadow-glow: none;
 }
 
-/* ═══════════════════════════════════════════
-   SCROLL MORPH & INTERSECTION CLASSES
-   ═══════════════════════════════════════════ */
-   
 .scroll-morph {
     opacity: 0;
     transform: translateY(40px) scale(0.95);
@@ -110,7 +108,6 @@
     opacity: 1;
     transform: translateY(0);
 }
-
 
 @keyframes morphIn {
     0% {
@@ -190,7 +187,6 @@
     100% { width: 0%; }
 }
 
-
 * {
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
@@ -217,7 +213,6 @@ body {
     border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
-
 
 .bg-orbs {
     position: fixed;
@@ -258,7 +253,6 @@ body {
     animation-duration: 32s;
     opacity: 0.15;
 }
-
 
 .sidebar {
     background: var(--bg-secondary);
@@ -444,7 +438,6 @@ body {
 .sidebar-user-actions a:hover { background: var(--bg-card-hover); color: var(--text-primary); }
 .sidebar-user-actions button:hover { background: var(--danger-bg); color: var(--danger); }
 
-
 .main-content {
     margin-left: 272px;
     padding: 2.25rem 3rem;
@@ -495,20 +488,18 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    padding: 1.75rem;
-    box-shadow: var(--shadow-md);
-    transition: all var(--transition-morph);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
     position: relative;
     overflow: hidden;
 }
 
 .card:hover {
-    transform: translateY(-5px) scale(1.008);
     border-color: var(--border-accent);
-    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    box-shadow: var(--shadow-md);
 }
 
-/* Morph-in animations with stagger sequence */
 .morph-stagger > * {
     animation: morphIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -598,9 +589,8 @@ body {
     font-weight: 500;
 }
 
-
 .btn-primary {
-    background: var(--accent-gradient);
+    background: #10b981;
     color: #ffffff;
     border: none;
     padding: 0.7rem 1.4rem;
@@ -620,9 +610,9 @@ body {
 }
 
 .btn-primary:hover {
+    background: #059669;
     transform: translateY(-2px);
     box-shadow: 0 8px 28px var(--accent-glow);
-    filter: brightness(1.1);
 }
 
 .btn-primary:active {
@@ -732,7 +722,6 @@ body {
     height: 26px;
 }
 
-
 .form-input, .form-select, textarea.form-input {
     background: var(--bg-primary);
     border: 1.5px solid var(--border-color);
@@ -775,7 +764,6 @@ body {
     background-size: 1.25em 1.25em;
     padding-right: 2.6rem;
 }
-
 
 .badge {
     display: inline-flex;
@@ -828,7 +816,6 @@ body {
     color: var(--text-primary);
 }
 
-
 .toast {
     position: fixed;
     top: 1.5rem;
@@ -872,7 +859,6 @@ body {
     animation: morphIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-
 .score-ring {
     width: 135px;
     height: 135px;
@@ -894,7 +880,6 @@ body {
     font-weight: 900;
     letter-spacing: -0.04em;
 }
-
 
 .calendar-grid {
     display: grid;

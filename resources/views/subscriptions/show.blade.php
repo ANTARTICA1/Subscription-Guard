@@ -3,15 +3,12 @@
 
 @section('content')
 
-
-
-{{-- Top Actions Row --}}
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
     <a href="{{ route('subscriptions.index') }}" class="inline-flex items-center gap-2 text-xs text-[#94a3b8] hover:text-white transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
         Kembali ke Subscriptions
     </a>
-    
+
     <div class="flex items-center gap-3">
         <a href="{{ route('subscriptions.edit', $subscription) }}" class="px-4 py-2 bg-[#111c2e] border border-[rgba(255,255,255,0.06)] hover:bg-[#192a42] text-white text-xs font-semibold rounded-lg flex items-center gap-2 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
@@ -35,21 +32,19 @@
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-10">
-    {{-- Left Column (Main Content) --}}
+
     <div class="lg:col-span-2 space-y-6">
-        
-        {{-- Main Identity Card with Green Glow --}}
+
         @php
             $subColor = $subscription->category->color ?? '#10b981';
-            // Fallback to green if not set
             $glowColor = '#10b981';
         @endphp
         <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-3xl p-8 relative overflow-hidden">
-            {{-- Green Glow Effect --}}
+
             <div class="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[{{ $glowColor }}] rounded-full blur-[120px] opacity-[0.15] pointer-events-none mix-blend-screen"></div>
-            
+
             <div class="relative z-10 flex flex-col md:flex-row gap-8 items-start">
-                {{-- Logo --}}
+
                 <div class="w-32 h-32 rounded-full bg-white p-2 shadow-[0_0_40px_rgba(16,185,129,0.3)] flex-shrink-0 flex items-center justify-center">
                     @if($subscription->logo)
                         <img src="{{ $subscription->logo }}" alt="{{ $subscription->name }}" class="w-full h-full object-contain">
@@ -59,8 +54,7 @@
                         </div>
                     @endif
                 </div>
-                
-                {{-- Details --}}
+
                 <div class="flex-1 w-full">
                     <div class="mb-8">
                         @if($subscription->status === 'active')
@@ -74,8 +68,7 @@
                             {{ $subscription->category->name ?? 'Lainnya' }}
                         </p>
                     </div>
-                    
-                    {{-- Detail Grid --}}
+
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 border-t border-[rgba(255,255,255,0.06)] pt-6">
                         <div>
                             <p class="text-[10px] text-[#4b5e78] font-bold tracking-wide mb-1.5 uppercase">Biaya Tagihan</p>
@@ -110,8 +103,7 @@
                 </div>
             </div>
         </div>
-        
-        {{-- Riwayat Pembayaran Card --}}
+
         <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6">
             <div class="flex items-center justify-between mb-2">
                 <h3 class="text-base font-bold text-white flex items-center gap-2">
@@ -127,7 +119,6 @@
             </div>
             <p class="text-[11px] text-[#4b5e78] mb-6">Semua transaksi untuk {{ $subscription->name }}</p>
 
-            {{-- 3 Glow Stats --}}
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                 <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.03)] rounded-xl p-5 flex flex-col items-center justify-center">
                     <p class="text-[10px] text-[#4b5e78] font-bold tracking-wide uppercase mb-2">Total Terbayar</p>
@@ -149,7 +140,6 @@
                 </div>
             </div>
 
-            {{-- Table --}}
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
@@ -188,7 +178,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="mt-6 flex justify-center text-[10px] text-[#4b5e78] items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                 Semua transaksi aman dan terenkripsi.
@@ -196,10 +186,8 @@
         </div>
     </div>
 
-    {{-- Right Column (Sidebar) --}}
     <div class="lg:col-span-1 space-y-6">
-        
-        {{-- Info Auto-renew --}}
+
         @if($subscription->auto_renew)
         <div class="bg-[#19150d] border border-amber-500/20 rounded-2xl p-6">
             <div class="flex items-start gap-3 mb-3">
@@ -212,13 +200,12 @@
         </div>
         @endif
 
-        {{-- Proyeksi Beban --}}
         <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6">
             <h3 class="text-sm font-bold text-white flex items-center gap-2 mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#4b5e78]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                 Proyeksi Beban
             </h3>
-            
+
             <div class="space-y-4 mb-6">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] text-[#94a3b8]">Per Bulan:</span>
@@ -233,7 +220,7 @@
                     <span class="text-xs font-bold text-emerald-400">Rp{{ number_format($subscription->monthly_amount * 36, 0, ',', '.') }}</span>
                 </div>
             </div>
-            
+
             <div class="bg-[#0b121f] border border-emerald-500/20 rounded-xl p-4 flex gap-3 items-start">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <div class="flex-1">
@@ -246,7 +233,6 @@
             </div>
         </div>
 
-        {{-- Patungan --}}
         <div class="bg-[#111c2e] border border-[rgba(255,255,255,0.04)] rounded-2xl p-6">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-sm font-bold text-white flex items-center gap-2">
@@ -269,10 +255,9 @@
                     <a href="{{ route('shares.index') }}" class="text-[11px] text-[#94a3b8] hover:text-white transition-colors">Kelola →</a>
                 </div>
             </div>
-            
+
             <div class="space-y-3 mb-5">
                 @php
-                    // Retrieve actual shares if any
                     $shares = App\Models\SubscriptionShare::where('subscription_id', $subscription->id)->with('friendUser')->get();
                 @endphp
 
@@ -298,7 +283,7 @@
                     <p class="text-[11px] text-[#4b5e78] text-center py-4">Belum ada patungan.</p>
                 @endforelse
             </div>
-            
+
             <a href="{{ route('shares.index') }}" class="w-full py-2.5 bg-transparent border border-dashed border-[#4b5e78] hover:border-[#94a3b8] text-[#94a3b8] hover:text-white rounded-xl text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors">
                 + Tambah anggota patungan
             </a>

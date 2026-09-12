@@ -6,9 +6,9 @@
 @section('content')
 <div class="max-w-3xl space-y-6">
     <div class="card bg-[#111c2e] border border-[rgba(255,255,255,0.06)] shadow-sm">
-        <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 flex-shrink-0 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center text-2xl">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
+        <div class="flex items-center gap-3.5 mb-6">
+            <div class="text-blue-400 flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
             </div>
             <div>
                 <h3 class="section-title text-[#f1f5f9] mb-1">Status Koneksi</h3>
@@ -31,7 +31,7 @@
         <div class="flex flex-wrap gap-3">
             <form method="POST" action="{{ route('telegram.test-notification') }}">@csrf
                 <button type="submit" class="btn-primary text-xs flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg> 
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                     Uji Coba Notifikasi
                 </button>
             </form>
@@ -71,7 +71,7 @@
 
             <form method="POST" action="{{ route('telegram.regenerate') }}">@csrf
                 <button type="submit" class="btn-secondary text-xs w-full justify-center flex items-center gap-2 hover:border-emerald-500 hover:text-emerald-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg> 
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                     Generate Kode Baru
                 </button>
             </form>
@@ -82,7 +82,7 @@
     <div class="card bg-[#111c2e] border border-[rgba(255,255,255,0.06)] shadow-sm">
         <div class="flex items-center justify-between mb-5">
             <h3 class="section-title text-[#f1f5f9] flex items-center gap-2 mb-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#4b5e78]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg> 
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#4b5e78]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                 History Notifikasi
             </h3>
             <div class="md:hidden flex items-center gap-1 text-[10px] text-[#4b5e78] italic">

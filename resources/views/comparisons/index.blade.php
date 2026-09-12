@@ -40,11 +40,11 @@ $availableOptions = array_merge($mySubs, $allTemplates);
 @endphp
 
 <div class="max-w-5xl space-y-8" x-data="smartCompare()">
-    
+
     <div class="card p-6 border border-[var(--border-color)]">
         <h3 class="section-title mb-2">Smart Compare</h3>
         <p class="text-sm text-[var(--text-muted)] mb-6">Bandingkan langganan Anda saat ini dengan pilihan dari template yang tersedia.</p>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
                 <label class="form-label">Pilih Layanan 1</label>
@@ -81,7 +81,7 @@ $availableOptions = array_merge($mySubs, $allTemplates);
         </div>
 
         <div x-show="item1 && item2" class="overflow-x-auto rounded-xl border border-[var(--border-color)]" x-cloak>
-            <table class="w-full text-sm text-left">
+            <table class="w-full min-w-[480px] text-sm text-left">
                 <thead class="bg-[var(--bg-elevated)] border-b border-[var(--border-color)]">
                     <tr>
                         <th class="p-4 font-semibold text-[var(--text-muted)] w-1/3">Parameter</th>
@@ -134,17 +134,16 @@ $availableOptions = array_merge($mySubs, $allTemplates);
                 </tbody>
             </table>
         </div>
-        
+
         <div x-show="!item1 || !item2" class="text-center py-8 text-[var(--text-muted)] text-sm border-2 border-dashed border-[var(--border-color)] rounded-xl bg-[var(--bg-primary)]" x-cloak>
             Pilih dua layanan pada dropdown di atas untuk melihat perbandingan secara instan.
         </div>
     </div>
 
-    
     <div class="flex items-center gap-2 mb-2 mt-10">
         <h2 class="text-xl font-bold text-[var(--text-primary)]">Rekomendasi Terbaik</h2>
     </div>
-    
+
     @foreach($comparisons as $group)
     <div class="card p-0 overflow-hidden mb-8 border border-[var(--border-color)]">
         <div class="p-5 border-b border-[var(--border-color)] flex items-center gap-4 bg-[var(--bg-elevated)]">
@@ -154,7 +153,7 @@ $availableOptions = array_merge($mySubs, $allTemplates);
                 <p class="text-sm text-[var(--text-muted)] mt-1">{{ $group['description'] }}</p>
             </div>
         </div>
-        
+
         <div class="overflow-x-auto bg-[var(--bg-primary)]">
             <table class="w-full text-sm text-left">
                 <thead class="bg-[var(--bg-primary)] border-b border-[var(--border-color)]">
@@ -258,7 +257,7 @@ function smartCompare() {
         options: @json($availableOptions),
         selectedItem1Id: '',
         selectedItem2Id: '',
-        
+
         get item1() {
             return this.options.find(o => o.id === this.selectedItem1Id);
         },

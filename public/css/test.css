@@ -843,12 +843,12 @@
   --text-primary: #ffffff;
   --text-secondary: #e2e8f0;
   --text-muted: #94a3b8;
-  --accent-primary: #8b5cf6;
-  --accent-secondary: #a855f7;
-  --accent-tertiary: #c084fc;
-  --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
-  --accent-gradient-wide: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #38bdf8 100%);
-  --accent-glow: rgba(139, 92, 246, 0.35);
+  --accent-primary: #10b981;
+  --accent-secondary: #059669;
+  --accent-tertiary: #34d399;
+  --accent-gradient: #10b981;
+  --accent-gradient-wide: #10b981;
+  --accent-glow: rgba(16, 185, 129, 0.25);
   --success: #10b981;
   --success-bg: rgba(16, 185, 129, 0.18);
   --warning: #f59e0b;
@@ -1377,7 +1377,7 @@ body {
   font-weight: 500;
 }
 .btn-primary {
-  background: var(--accent-gradient);
+  background: #10b981;
   color: #ffffff;
   border: none;
   padding: 0.7rem 1.4rem;
@@ -1396,9 +1396,9 @@ body {
   font-family: inherit;
 }
 .btn-primary:hover {
+  background: #059669;
   transform: translateY(-2px);
   box-shadow: 0 8px 28px var(--accent-glow);
-  filter: brightness(1.1);
 }
 .btn-primary:active {
   transform: translateY(1px);

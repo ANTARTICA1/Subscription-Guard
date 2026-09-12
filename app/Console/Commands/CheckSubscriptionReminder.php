@@ -35,7 +35,6 @@ class CheckSubscriptionReminder extends Command
 
             if (!$type) continue;
 
-            
             $alreadySent = Notification::where('subscription_id', $subscription->id)
                 ->where('type', $type)
                 ->whereDate('created_at', Carbon::today())
@@ -56,7 +55,6 @@ class CheckSubscriptionReminder extends Command
                 $message .= "\n\nSubscription ini akan diperpanjang otomatis. Pastikan layanan masih digunakan.";
             }
 
-            
             $status = 'pending';
             $telegramConnection = $user->telegramConnection;
             if ($telegramConnection && $telegramConnection->isVerified() && $user->telegram_chat_id) {
@@ -71,7 +69,6 @@ class CheckSubscriptionReminder extends Command
                 $status = $success ? 'sent' : 'failed';
             }
 
-            
             Notification::create([
                 'user_id' => $user->id,
                 'subscription_id' => $subscription->id,

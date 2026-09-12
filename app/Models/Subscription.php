@@ -109,7 +109,7 @@ class Subscription extends Model
             $next = Carbon::createFromDate($now->year, $month, 1);
             $lastDay = $next->copy()->endOfMonth()->day;
             $next->day(min($day, $lastDay));
-            
+
             if ($next->isPast()) {
                 $next = $next->addYear();
             }
@@ -160,7 +160,7 @@ class Subscription extends Model
     public function getCancelUrlAttribute(): ?string
     {
         $name = strtolower($this->name);
-        
+
         $urls = [
             'netflix' => 'https://www.netflix.com/cancelplan',
             'spotify' => 'https://www.spotify.com/account/change-plan/cancel/',
@@ -204,7 +204,7 @@ class Subscription extends Model
     public function getIsPersonalAttribute(): bool
     {
         $personalKeywords = ['bpjs', 'kesehatan', 'asuransi', 'pribadi', 'personal', 'ktp', 'pinjaman', 'kredit', 'tagihan pribadi', 'obat', 'asuransi jiwa'];
-        
+
         $name = strtolower($this->name);
         $categoryName = $this->category ? strtolower($this->category->name) : '';
 
@@ -213,7 +213,7 @@ class Subscription extends Model
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -224,7 +224,7 @@ class Subscription extends Model
         }
 
         $name = strtolower($this->name);
-        
+
         $logos = [
             'netflix' => 'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg',
             'spotify' => 'https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png',

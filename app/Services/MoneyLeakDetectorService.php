@@ -19,10 +19,10 @@ class MoneyLeakDetectorService
             if ($categorySubs->count() > 1) {
                 $categoryName = $categorySubs->first()->category->name ?? 'Kategori Sama';
                 $names = $categorySubs->pluck('name')->join(' + ');
-                
+
                 $cheapest = $categorySubs->sortBy('monthly_amount')->first();
                 $savings = $categorySubs->sum(fn($s) => $s->monthly_amount) - $cheapest->monthly_amount;
-                
+
                 $totalPotentialSavings += $savings;
 
                 $leaks[] = [
@@ -56,8 +56,8 @@ class MoneyLeakDetectorService
 
         $monthlyPremiumSubs = $subs->filter(fn($s) => $s->billing_cycle === 'monthly' && $s->amount >= 60000);
         foreach ($monthlyPremiumSubs as $sub) {
-            $yearlySavings = ($sub->amount * 12) * 0.15; 
-            $totalPotentialSavings += ($yearlySavings / 12); 
+            $yearlySavings = ($sub->amount * 12) * 0.15;
+            $totalPotentialSavings += ($yearlySavings / 12);
 
             $leaks[] = [
                 'type' => 'cycle',

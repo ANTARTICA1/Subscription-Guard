@@ -30,17 +30,16 @@ class SubscriptionController extends Controller
 
         $subscriptions = $query->latest()->get();
         $categories = Category::all();
-        
+
         $activeSubs = $subscriptions->where('status', 'active');
         $totalActiveCount = $activeSubs->count();
         $monthlySpending = $activeSubs->sum('amount');
-        
+
         $upcomingCount = $activeSubs->filter(function($sub) {
             return $sub->days_until_payment <= 7;
         })->count();
 
-        $analysis = $assistantService->analyze($user);
-        $totalSavings = $analysis['potential_savings'] ?? 0;
+        $totalSavings = $user->tata_assistant_data['potential_savings'] ?? ($assistantService->analyze($user)['potential_savings'] ?? 0);
 
         $popularCategories = $categories->map(function($cat) use ($activeSubs) {
             $cat->active_count = $activeSubs->where('category_id', $cat->id)->count();
@@ -63,11 +62,11 @@ class SubscriptionController extends Controller
         }
 
         return view('subscriptions.index', compact(
-            'subscriptions', 
-            'categories', 
-            'totalActiveCount', 
-            'monthlySpending', 
-            'upcomingCount', 
+            'subscriptions',
+            'categories',
+            'totalActiveCount',
+            'monthlySpending',
+            'upcomingCount',
             'totalSavings',
             'popularCategories',
             'upcomingPayments',

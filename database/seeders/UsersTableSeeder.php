@@ -7,19 +7,13 @@ use Illuminate\Database\Seeder;
 class UsersTableSeeder extends Seeder
 {
 
-    /**
-     * Auto generated seed file
-     *
-     * @return void
-     */
     public function run()
     {
-        
 
         \DB::table('users')->delete();
-        
+
         \DB::table('users')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'user_tag' => NULL,
@@ -35,7 +29,7 @@ class UsersTableSeeder extends Seeder
                 'created_at' => '2026-07-26 14:48:40',
                 'updated_at' => '2026-07-26 15:22:09',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'user_tag' => NULL,
@@ -51,7 +45,7 @@ class UsersTableSeeder extends Seeder
                 'created_at' => '2026-07-26 14:48:40',
                 'updated_at' => '2026-07-26 15:22:09',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 3,
                 'user_tag' => 'TAG-TLTPB7',
@@ -67,7 +61,7 @@ class UsersTableSeeder extends Seeder
                 'created_at' => '2026-07-27 04:21:55',
                 'updated_at' => '2026-08-15 03:46:19',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 4,
                 'user_tag' => 'TAG-APSZ6Y',
@@ -83,7 +77,7 @@ class UsersTableSeeder extends Seeder
                 'created_at' => '2026-07-27 12:05:44',
                 'updated_at' => '2026-07-29 05:17:14',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 5,
                 'user_tag' => 'TAG-2F6ZYH',
@@ -99,7 +93,7 @@ class UsersTableSeeder extends Seeder
                 'created_at' => '2026-08-14 13:36:51',
                 'updated_at' => '2026-08-14 13:38:21',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 6,
                 'user_tag' => 'TAG-HXLJN1',
@@ -116,7 +110,6 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => '2026-08-16 10:19:39',
             ),
         ));
-        
-        
+
     }
 }

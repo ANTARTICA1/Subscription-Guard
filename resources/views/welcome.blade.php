@@ -13,6 +13,12 @@
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('tatagih_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -525,26 +531,17 @@
             margin: 0 auto 60px;
         }
 
-        .ftr-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-top: 56px;
-            text-align: left;
-        }
-
         .ftr-hero {
-            grid-column: 1 / -1;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.1fr 0.9fr;
             gap: 0;
-            background: #0d1526;
-            border: 1px solid rgba(255,255,255,0.06);
+            background: #0c1322;
+            border: 1px solid var(--border);
             border-radius: 20px;
             overflow: hidden;
             transition: border-color 0.3s ease;
         }
-        .ftr-hero:hover { border-color: rgba(255,255,255,0.12); }
+        .ftr-hero:hover { border-color: var(--border-hover); }
 
         .ftr-hero__left {
             padding: 40px 44px;
@@ -554,35 +551,28 @@
         }
 
         .ftr-hero__right {
-            background: rgba(16, 185, 129, 0.04);
+            background: rgba(16, 185, 129, 0.03);
             padding: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-left: 1px solid rgba(255,255,255,0.04);
-        }
-
-        .ftr-hero__emoji {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            display: block;
-            line-height: 1;
+            border-left: 1px solid var(--border);
         }
 
         .ftr-hero__tag {
             display: inline-block;
-            font-size: 0.62rem;
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            color: #10b981;
-            margin-bottom: 16px;
+            color: var(--accent);
+            margin-bottom: 14px;
         }
 
         .ftr-hero__title {
             font-size: 1.6rem;
             font-weight: 800;
-            color: #f1f5f9;
+            color: var(--text-primary);
             letter-spacing: -0.03em;
             line-height: 1.2;
             margin-bottom: 14px;
@@ -590,10 +580,10 @@
 
         .ftr-hero__desc {
             font-size: 0.92rem;
-            color: #64748b;
+            color: var(--text-secondary);
             line-height: 1.7;
             margin: 0 0 20px;
-            max-width: 420px;
+            max-width: 440px;
         }
 
         .ftr-hero__chips {
@@ -606,20 +596,20 @@
         .ftr-hero__chip {
             font-size: 0.85rem;
             font-weight: 600;
-            color: #10b981;
+            color: var(--accent);
             display: flex;
             align-items: center;
         }
         .ftr-hero__chip:not(:last-child)::after {
             content: '•';
             margin-left: 16px;
-            color: rgba(255, 255, 255, 0.2);
+            color: var(--text-muted);
             font-size: 1.2rem;
         }
 
         .ftr-hero__mock {
             background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid var(--border);
             border-radius: 14px;
             padding: 16px 20px;
             width: 100%;
@@ -630,121 +620,108 @@
             align-items: center;
             justify-content: space-between;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid var(--border);
         }
         .ftr-hero__mock-row:last-child { border-bottom: none; }
         .ftr-hero__mock-name {
             font-size: 0.78rem;
             font-weight: 600;
-            color: #cbd5e1;
+            color: var(--text-primary);
         }
         .ftr-hero__mock-val {
             font-size: 0.72rem;
             font-weight: 700;
-            color: #94a3b8;
+            color: var(--text-secondary);
             font-variant-numeric: tabular-nums;
         }
-        .ftr-hero__mock-dot {
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
+
+        .ftr-features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            margin-top: 56px;
+            text-align: left;
         }
 
-        .ftr-item {
-            background: #0d1526;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 18px;
-            padding: 32px 30px 36px;
-            transition: border-color 0.3s ease, transform 0.3s ease;
-            position: relative;
-            min-height: 200px;
+        .ftr-feature-item {
+            padding: 8px 4px;
+            transition: transform 0.25s ease;
         }
-        .ftr-item:hover {
-            border-color: rgba(255,255,255,0.12);
+
+        .ftr-feature-item:hover {
             transform: translateY(-2px);
         }
 
-        .ftr-item__emoji {
-            font-size: 1.6rem;
-            margin-bottom: 16px;
-            display: block;
-            line-height: 1;
-        }
-
-        .ftr-item__tag {
-            display: inline-block;
-            font-size: 0.58rem;
+        .ftr-feature-tag {
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--fc);
-            margin-bottom: 12px;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 8px;
+            display: block;
         }
 
-        .ftr-item__title {
-            font-size: 1.15rem;
+        .ftr-feature-title {
+            font-size: 1.12rem;
             font-weight: 800;
-            color: #f1f5f9;
-            margin-bottom: 10px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
             letter-spacing: -0.02em;
-            line-height: 1.25;
+            line-height: 1.3;
         }
 
-        .ftr-item__desc {
+        .ftr-feature-desc {
             font-size: 0.84rem;
-            color: #64748b;
+            color: var(--text-secondary);
             line-height: 1.65;
             margin: 0;
         }
 
-        .ftr-wide {
-            grid-column: 1 / -1;
+        .ftr-trust-strip {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 0;
-            background: #0d1526;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: border-color 0.3s ease;
+            gap: 32px;
+            margin-top: 56px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            text-align: left;
         }
-        .ftr-wide:hover { border-color: rgba(255,255,255,0.12); }
 
-        .ftr-wide__cell {
-            padding: 32px 30px;
-            border-right: 1px solid rgba(255,255,255,0.04);
+        .ftr-trust-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
-        .ftr-wide__cell:last-child { border-right: none; }
 
-        .ftr-wide__emoji {
-            font-size: 1.4rem;
-            margin-bottom: 14px;
-            display: block;
-            line-height: 1;
-        }
-        .ftr-wide__title {
-            font-size: 1rem;
+        .ftr-trust-title {
+            font-size: 0.95rem;
             font-weight: 800;
-            color: #f1f5f9;
-            margin-bottom: 8px;
+            color: var(--text-primary);
             letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .ftr-wide__desc {
-            font-size: 0.8rem;
-            color: #64748b;
+
+        .ftr-trust-desc {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
             line-height: 1.6;
             margin: 0;
         }
 
-        @media (max-width: 768px) {
-            .ftr-grid { grid-template-columns: 1fr; }
+        @media (max-width: 1024px) {
             .ftr-hero { grid-template-columns: 1fr; }
-            .ftr-hero__right { border-left: none; border-top: 1px solid rgba(255,255,255,0.04); }
+            .ftr-hero__right { border-left: none; border-top: 1px solid var(--border); }
+            .ftr-features-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+            .ftr-trust-strip { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 640px) {
             .ftr-hero__left { padding: 28px 24px; }
-            .ftr-wide { grid-template-columns: 1fr; }
-            .ftr-wide__cell { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.04); }
-            .ftr-wide__cell:last-child { border-bottom: none; }
+            .ftr-features-grid { grid-template-columns: 1fr; gap: 24px; }
+            .ftr-trust-strip { grid-template-columns: 1fr; gap: 20px; padding-top: 28px; }
         }
 
         .hw-timeline {
@@ -916,7 +893,7 @@
             position: relative;
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 24px 48px -12px rgba(0, 0, 0, 0.6);
         }
-        
+
         .lp-split-mock::after {
             content: '';
             position: absolute;
@@ -985,7 +962,7 @@
             transition: all 0.3s ease;
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.02);
         }
-        
+
         .lp-split-mock__member:hover {
             border-color: rgba(255, 255, 255, 0.1);
             background: rgba(255, 255, 255, 0.04);
@@ -1276,110 +1253,435 @@
             .lp-section--alt .lp-section { padding: 80px 20px; }
             .lp-hero__ctas { flex-direction: column; align-items: flex-start; }
             .lp-cta { padding: 80px 20px; }
-        }        /* AI Assistant Section */
-        .lp-ai-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-top: 48px;
-            max-width: 1000px;
+        }
+        .lp-glow-text {
+            color: var(--accent);
+            display: inline-block;
+        }
+
+        .ta-items {
+            margin-top: 56px;
+            max-width: 820px;
             margin-left: auto;
             margin-right: auto;
         }
-
-        @media (min-width: 768px) {
-            .lp-ai-grid {
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: auto auto;
-            }
-            .lp-ai-card--main {
-                grid-row: span 2;
-            }
-            .lp-ai-card--wide {
-                grid-column: span 2;
-            }
-        }
-
-        .lp-ai-card {
-            background: rgba(11, 18, 31, 0.7);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 20px;
-            padding: 32px;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease, box-shadow 0.3s ease;
+        .ta-item {
+            display: grid;
+            grid-template-columns: 56px 1fr;
+            gap: 24px;
+            padding: 32px 0;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            align-items: baseline;
             text-align: left;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            min-height: 220px;
         }
-
-        .lp-ai-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255,255,255,0.1);
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+        .ta-item:last-child {
+            border-bottom: 1px solid rgba(255,255,255,0.07);
         }
-
-        .lp-ai-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.1), transparent 70%);
-            pointer-events: none;
+        .ta-item__num {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.08);
+            letter-spacing: -0.04em;
+            line-height: 1;
+            padding-top: 2px;
         }
-
-        .lp-ai-card:nth-child(2)::before {
-            background: radial-gradient(circle at top right, rgba(239, 68, 68, 0.08), transparent 70%);
+        .ta-item__body {
+            display: block;
         }
-
-        .lp-ai-card:nth-child(3)::before {
-            background: radial-gradient(circle at top right, rgba(245, 158, 11, 0.08), transparent 70%);
-        }
-
-        .lp-ai-card__title {
-            font-size: 1.2rem;
+        .ta-item__title {
+            font-size: 1.1rem;
             font-weight: 700;
-            color: #fff;
+            color: #f1f5f9;
             margin-bottom: 8px;
             letter-spacing: -0.02em;
-            position: relative;
-            z-index: 2;
+            line-height: 1.3;
+        }
+        .ta-item__desc {
+            font-size: 0.84rem;
+            color: #64748b;
+            line-height: 1.7;
+            margin: 0;
+        }
+        @media (max-width: 600px) {
+            .ta-item {
+                grid-template-columns: 40px 1fr;
+                gap: 16px;
+                padding: 24px 0;
+            }
+            .ta-item__num {
+                font-size: 1.2rem;
+            }
         }
 
-        .lp-ai-card__desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .lp-ai-card__visual {
-            position: absolute;
-            top: 32px;
-            right: 32px;
-            color: rgba(255,255,255,0.06);
-            z-index: 1;
-            transition: all 0.5s ease;
+        [data-theme="light"] {
+            --surface-base: #f8fafc;
+            --surface-card: #ffffff;
+            --surface-elevated: #ffffff;
+            --surface-nav: rgba(255, 255, 255, 0.88);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent: #10b981;
+            --accent-hover: #059669;
+            --accent-muted: rgba(16, 185, 129, 0.1);
+            --border: rgba(15, 23, 42, 0.08);
+            --border-hover: rgba(15, 23, 42, 0.16);
         }
 
-        .lp-ai-card:hover .lp-ai-card__visual {
-            color: rgba(255,255,255,0.12);
-            transform: scale(1.05);
+        [data-theme="light"] body {
+            background-color: #f8fafc;
+            color: #0f172a;
         }
 
-        .lp-glow-text {
-            background: linear-gradient(135deg, #a855f7, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
+        [data-theme="light"] ::selection {
+            background: rgba(16, 185, 129, 0.2);
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .lp-nav {
+            background: rgba(255, 255, 255, 0.88);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        [data-theme="light"] .lp-btn-ghost:hover {
+            color: #0f172a;
+            background: rgba(15, 23, 42, 0.05);
+        }
+
+        [data-theme="light"] .lp-btn-secondary {
+            color: #334155;
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+        }
+
+        [data-theme="light"] .lp-btn-secondary:hover {
+            border-color: rgba(15, 23, 42, 0.2);
+            color: #0f172a;
+            background: #f1f5f9;
+        }
+
+        [data-theme="light"] .lp-hero__stats {
+            border-top-color: rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="light"] .lp-mock {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 20px 40px -12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        [data-theme="light"] .lp-mock::after {
+            opacity: 0.02;
+        }
+
+        [data-theme="light"] .lp-mock-row {
+            background: #f8fafc;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        [data-theme="light"] .lp-mock-row:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+            background: #f1f5f9;
+        }
+
+        [data-theme="light"] .lp-mock-notif {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="light"] .lp-mock-ring {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="light"] .lp-section--alt {
+            background: #f1f5f9;
+            border-top: 1px solid rgba(15, 23, 42, 0.08);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="light"] .ftr-hero {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+        }
+
+        [data-theme="light"] .ftr-hero:hover {
+            border-color: rgba(16, 185, 129, 0.35);
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+        }
+
+        [data-theme="light"] .ftr-hero__title {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .ftr-hero__desc {
+            color: #475569;
+        }
+
+        [data-theme="light"] .ftr-hero__right {
+            background: rgba(16, 185, 129, 0.04);
+            border-left: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        [data-theme="light"] .ftr-hero__mock {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        }
+
+        [data-theme="light"] .ftr-hero__mock-row {
+            border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+        }
+
+        [data-theme="light"] .ftr-hero__mock-name {
+            color: #1e293b;
+        }
+
+        [data-theme="light"] .ftr-hero__mock-val {
+            color: #475569;
+        }
+
+        [data-theme="light"] .ftr-hero__chip:not(:last-child)::after {
+            color: rgba(15, 23, 42, 0.2);
+        }
+
+        [data-theme="light"] .ftr-trust-strip {
+            border-top-color: rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="light"] .hw-step {
+            border-top-color: rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="light"] .hw-step:hover {
+            border-top-color: rgba(16, 185, 129, 0.4);
+        }
+
+        [data-theme="light"] .hw-step__num {
+            -webkit-text-stroke: 1.5px rgba(15, 23, 42, 0.12);
+        }
+
+        [data-theme="light"] .hw-step:hover .hw-step__num {
+            -webkit-text-stroke: 1.5px rgba(16, 185, 129, 0.6);
+        }
+
+        [data-theme="light"] .hw-step__title {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .hw-step__desc {
+            color: #475569;
+        }
+
+        [data-theme="light"] .lp-split-mock {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 20px 40px -12px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        [data-theme="light"] .lp-split-mock::after {
+            opacity: 0.02;
+        }
+
+        [data-theme="light"] .lp-split-mock__header {
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        [data-theme="light"] .lp-split-mock__icon {
+            background: #f1f5f9;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        [data-theme="light"] .lp-split-mock__name {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .lp-split-mock__price {
+            color: #64748b;
+        }
+
+        [data-theme="light"] .lp-split-mock__member {
+            background: #f8fafc;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+        }
+
+        [data-theme="light"] .lp-split-mock__member:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+            background: #f1f5f9;
+        }
+
+        [data-theme="light"] .lp-split-mock__member-name {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .lp-split-mock__member-role {
+            color: #64748b;
+        }
+
+        [data-theme="light"] .ta-item {
+            border-top: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="light"] .ta-item:last-child {
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="light"] .ta-item__num {
+            color: rgba(15, 23, 42, 0.15);
+        }
+
+        [data-theme="light"] .ta-item__title {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .ta-item__desc {
+            color: #475569;
+        }
+
+        [data-theme="light"] .lp-testimonial {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+        }
+
+        [data-theme="light"] .lp-testimonial:hover {
+            border-color: rgba(16, 185, 129, 0.35);
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+        }
+
+        [data-theme="light"] .lp-testimonial__text {
+            color: #475569;
+        }
+
+        [data-theme="light"] .lp-testimonial__name {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .lp-testimonial__desc {
+            color: #64748b;
+        }
+
+        [data-theme="light"] .lp-faq {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.02);
+        }
+
+        [data-theme="light"] .lp-faq:hover {
+            border-color: rgba(16, 185, 129, 0.35);
+        }
+
+        [data-theme="light"] .lp-faq__trigger {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .lp-faq__trigger:hover {
+            background: #f8fafc;
+        }
+
+        [data-theme="light"] .lp-faq__trigger svg {
+            color: #64748b;
+        }
+
+        [data-theme="light"] .lp-faq__answer {
+            color: #475569;
+        }
+
+        [data-theme="light"] .lp-cta-section {
+            background: #f1f5f9;
+            border-top: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="light"] .lp-footer {
+            background: #ffffff;
+            border-top: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="light"] .lp-footer__text {
+            color: #64748b;
+        }
+
+        [data-theme="light"] .lp-nav__mobile-menu {
+            background: #ffffff;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="light"] .lp-nav__mobile-menu a {
+            color: #475569;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+        }
+
+        [data-theme="light"] .lp-nav__mobile-menu a:hover {
+            color: #0f172a;
+        }
+
+        @media (max-width: 768px) {
+            [data-theme="light"] .ftr-hero__right {
+                border-left: none;
+                border-top: 1px solid rgba(15, 23, 42, 0.06);
+            }
+        }
+
+        .lp-theme-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--surface-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lp-theme-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+        }
+
+        [data-theme="light"] .lp-theme-btn {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        [data-theme="light"] .lp-theme-btn:hover {
+            border-color: var(--accent);
+            background: #f8fafc;
+        }
+
+        .lp-mobile-theme-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
         }
     </style>
 </head>
-<body x-data="{ mobileMenu: false }">
+<body x-data="{
+    mobileMenu: false,
+    currentTheme: localStorage.getItem('tatagih_theme') || 'dark',
+    toggleTheme() {
+        this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('tatagih_theme', this.currentTheme);
+        document.documentElement.setAttribute('data-theme', this.currentTheme);
+        window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: this.currentTheme } }));
+    }
+}">
 
     <nav class="lp-nav">
         <div class="lp-nav__inner">
@@ -1396,9 +1698,26 @@
             </div>
 
             <div class="lp-nav__actions">
+
+                <button @click="toggleTheme()"
+                        class="lp-theme-btn"
+                        :title="currentTheme === 'light' ? 'Beralih ke Dark Mode' : 'Beralih ke Light Mode'"
+                        aria-label="Toggle theme">
+                    <template x-if="currentTheme === 'light'">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </template>
+                    <template x-if="currentTheme === 'dark'">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </template>
+                </button>
+
                 <a href="{{ route('login') }}" class="lp-btn-ghost">Masuk</a>
                 <a href="{{ route('register') }}" class="lp-btn-primary">Daftar Gratis</a>
-                <button class="lp-nav__hamburger" @click="mobileMenu = !mobileMenu">
+                <button class="lp-nav__hamburger" @click="mobileMenu = !mobileMenu" aria-label="Menu">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                 </button>
             </div>
@@ -1409,6 +1728,21 @@
             <a href="#cara-kerja" @click="mobileMenu = false">Cara Kerja</a>
             <a href="#split-bill" @click="mobileMenu = false">Split Bill</a>
             <a href="#faq" @click="mobileMenu = false">FAQ</a>
+            <div class="lp-mobile-theme-row">
+                <span class="text-sm font-semibold">Mode Tampilan</span>
+                <button @click="toggleTheme()" class="lp-theme-btn" :title="currentTheme === 'light' ? 'Beralih ke Dark Mode' : 'Beralih ke Light Mode'">
+                    <template x-if="currentTheme === 'light'">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </template>
+                    <template x-if="currentTheme === 'dark'">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    </template>
+                </button>
+            </div>
             <a href="{{ route('login') }}" style="color: var(--text-primary);">Masuk</a>
             <a href="{{ route('register') }}" style="color: var(--accent); font-weight: 700;">Daftar Gratis →</a>
         </div>
@@ -1521,86 +1855,86 @@
                 <p class="lp-section__desc">Dari pencatatan sederhana sampai analisis cerdas Tatagih punya semua fitur supaya keuangan berlanggananmu tetap terkendali.</p>
             </div>
 
-            <div class="ftr-grid">
-
-                <div class="ftr-hero lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:50ms">
-                    <div class="ftr-hero__left">
-
-                        <span class="ftr-hero__tag">Fitur Utama</span>
-                        <h3 class="ftr-hero__title">Catat Semua Langganan<br>dalam Satu Tempat</h3>
-                        <p class="ftr-hero__desc">Netflix, Spotify, gym, hosting catat unlimited subscription dengan kategori, siklus bayar, dan tanggal jatuh tempo. Tidak ada lagi tagihan yang terlupakan.</p>
-                        <div class="ftr-hero__chips">
-                            <span class="ftr-hero__chip">Unlimited</span>
-                            <span class="ftr-hero__chip">Multi-kategori</span>
-                            <span class="ftr-hero__chip">Auto-jadwal</span>
-                        </div>
+            <div class="ftr-hero lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:50ms; margin-top: 48px;">
+                <div class="ftr-hero__left">
+                    <span class="ftr-hero__tag">Fitur Utama</span>
+                    <h3 class="ftr-hero__title">Catat Semua Langganan<br>dalam Satu Tempat</h3>
+                    <p class="ftr-hero__desc">Netflix, Spotify, gym, hosting catat unlimited subscription dengan kategori, siklus bayar, dan tanggal jatuh tempo. Tidak ada lagi tagihan yang terlupakan.</p>
+                    <div class="ftr-hero__chips">
+                        <span class="ftr-hero__chip">Unlimited</span>
+                        <span class="ftr-hero__chip">Multi-kategori</span>
+                        <span class="ftr-hero__chip">Auto-jadwal</span>
                     </div>
-                    <div class="ftr-hero__right">
-                        <div class="ftr-hero__mock">
-                            <div class="ftr-hero__mock-row">
-                                <span class="ftr-hero__mock-name"><img src="https://icon.horse/icon/netflix.com" style="width: 14px; height: 14px; border-radius: 4px; display: inline-block; margin-right: 8px; vertical-align: middle;">Netflix</span>
-                                <span class="ftr-hero__mock-val">Rp186.000</span>
-                            </div>
-                            <div class="ftr-hero__mock-row">
-                                <span class="ftr-hero__mock-name"><img src="https://icon.horse/icon/spotify.com" style="width: 14px; height: 14px; border-radius: 4px; display: inline-block; margin-right: 8px; vertical-align: middle;">Spotify</span>
-                                <span class="ftr-hero__mock-val">Rp86.900</span>
-                            </div>
-                            <div class="ftr-hero__mock-row">
-                                <span class="ftr-hero__mock-name"><img src="https://icon.horse/icon/youtube.com" style="width: 14px; height: 14px; border-radius: 4px; display: inline-block; margin-right: 8px; vertical-align: middle;">YouTube</span>
-                                <span class="ftr-hero__mock-val">Rp109.000</span>
-                            </div>
-                            <div class="ftr-hero__mock-row">
-                                <span class="ftr-hero__mock-name"><img src="https://icon.horse/icon/figma.com" style="width: 14px; height: 14px; border-radius: 4px; display: inline-block; margin-right: 8px; vertical-align: middle;">Figma</span>
-                                <span class="ftr-hero__mock-val">$15/mo</span>
-                            </div>
+                </div>
+                <div class="ftr-hero__right">
+                    <div class="ftr-hero__mock">
+                        <div class="ftr-hero__mock-row">
+                            <span class="ftr-hero__mock-name"><img src="https://icon.horse/icon/netflix.com" style="width: 14px; height: 14px; border-radius: 4px; display: inline-block; margin-right: 8px; vertical-align: middle;">Netflix</span>
+                            <span class="ftr-hero__mock-val">Rp186.000</span>
+                        </div>
+                        <div class="ftr-hero__mock-row">
+                            <span class="ftr-hero__mock-name"><img src="https://icon.horse/icon/spotify.com" style="width: 14px; height: 14px; border-radius: 4px; display: inline-block; margin-right: 8px; vertical-align: middle;">Spotify</span>
+                            <span class="ftr-hero__mock-val">Rp86.900</span>
+                        </div>
+                        <div class="ftr-hero__mock-row">
+                            <span class="ftr-hero__mock-name"><img src="https://icon.horse/icon/youtube.com" style="width: 14px; height: 14px; border-radius: 4px; display: inline-block; margin-right: 8px; vertical-align: middle;">YouTube</span>
+                            <span class="ftr-hero__mock-val">Rp109.000</span>
+                        </div>
+                        <div class="ftr-hero__mock-row">
+                            <span class="ftr-hero__mock-name"><img src="https://icon.horse/icon/figma.com" style="width: 14px; height: 14px; border-radius: 4px; display: inline-block; margin-right: 8px; vertical-align: middle;">Figma</span>
+                            <span class="ftr-hero__mock-val">$15/mo</span>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="ftr-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="--fc:#38bdf8; transition-delay:100ms">
-
-                    <span class="ftr-item__tag">Telegram Bot</span>
-                    <h3 class="ftr-item__title">Reminder via Telegram</h3>
-                    <p class="ftr-item__desc">Bot cerdas mengirim reminder H-7, H-3, dan H-1 sebelum tagihan jatuh tempo langsung ke chat Telegram Anda.</p>
+            <div class="ftr-features-grid">
+                <div class="ftr-feature-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:100ms">
+                    <span class="ftr-feature-tag">Pengingat Otomatis</span>
+                    <h3 class="ftr-feature-title">Reminder via Telegram</h3>
+                    <p class="ftr-feature-desc">Bot cerdas mengirim reminder H-7, H-3, dan H-1 sebelum tagihan jatuh tempo langsung ke chat Telegram Anda.</p>
                 </div>
 
-                <div class="ftr-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="--fc:#fbbf24; transition-delay:150ms">
-
-                    <span class="ftr-item__tag">Hemat Saldo</span>
-                    <h3 class="ftr-item__title">Deteksi Pemborosan</h3>
-                    <p class="ftr-item__desc">Analisis otomatis menemukan langganan yang jarang dipakai atau terlalu mahal agar Anda bisa berhemat tepat waktu.</p>
+                <div class="ftr-feature-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:150ms">
+                    <span class="ftr-feature-tag">Analisis Pengeluaran</span>
+                    <h3 class="ftr-feature-title">Deteksi Pemborosan</h3>
+                    <p class="ftr-feature-desc">Analisis otomatis menemukan langganan yang jarang dipakai atau terlalu mahal agar Anda bisa berhemat tepat waktu.</p>
                 </div>
 
-                <div class="ftr-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="--fc:#f43f5e; transition-delay:200ms">
-
-                    <span class="ftr-item__tag">Patungan</span>
-                    <h3 class="ftr-item__title">Split Bill / Patungan</h3>
-                    <p class="ftr-item__desc">Bagi biaya subscription dengan teman. Lacak siapa yang sudah bayar, kirim reminder, dan validasi bukti transfer.</p>
+                <div class="ftr-feature-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:200ms">
+                    <span class="ftr-feature-tag">Sistem Patungan</span>
+                    <h3 class="ftr-feature-title">Split Bill / Patungan</h3>
+                    <p class="ftr-feature-desc">Bagi biaya subscription dengan teman. Lacak siapa yang sudah bayar, kirim reminder, dan validasi bukti transfer.</p>
                 </div>
 
-                <div class="ftr-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="--fc:#a855f7; transition-delay:250ms">
-
-                    <span class="ftr-item__tag">Asisten Cerdas</span>
-                    <h3 class="ftr-item__title">TATA Assistant</h3>
-                    <p class="ftr-item__desc">Asisten cerdas yang menganalisis pengeluaran, memberi rekomendasi penghematan, dan menghitung skor kesehatan keuangan.</p>
+                <div class="ftr-feature-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:250ms">
+                    <span class="ftr-feature-tag">Asisten Cerdas</span>
+                    <h3 class="ftr-feature-title">TATA Assistant</h3>
+                    <p class="ftr-feature-desc">Asisten cerdas yang menganalisis pengeluaran, memberi rekomendasi penghematan, dan menghitung skor kesehatan keuangan.</p>
                 </div>
+            </div>
 
-                <div class="ftr-wide lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:300ms">
-                    <div class="ftr-wide__cell">
-
-                        <h4 class="ftr-wide__title">Komparasi Layanan</h4>
-                        <p class="ftr-wide__desc">Bandingkan Netflix vs Disney+, Spotify vs YouTube Music untuk cari yang paling value for money.</p>
-                    </div>
-                    <div class="ftr-wide__cell">
-
-                        <h4 class="ftr-wide__title">100% Aman</h4>
-                        <p class="ftr-wide__desc">Tidak perlu data kartu kredit atau akses rekening. Tatagih hanya mencatat dan mengingatkan.</p>
-                    </div>
-                    <div class="ftr-wide__cell">
-
-                        <h4 class="ftr-wide__title">Gratis Selamanya</h4>
-                        <p class="ftr-wide__desc">Semua fitur tersedia gratis tanpa batasan. Tidak ada biaya tersembunyi atau upsell.</p>
-                    </div>
+            <div class="ftr-trust-strip lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:300ms">
+                <div class="ftr-trust-item">
+                    <h4 class="ftr-trust-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        Komparasi Layanan
+                    </h4>
+                    <p class="ftr-trust-desc">Bandingkan Netflix vs Disney+, Spotify vs YouTube Music untuk cari yang paling value for money.</p>
+                </div>
+                <div class="ftr-trust-item">
+                    <h4 class="ftr-trust-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        100% Aman & Privat
+                    </h4>
+                    <p class="ftr-trust-desc">Tidak perlu data kartu kredit atau akses rekening. Tatagih hanya mencatat dan mengingatkan.</p>
+                </div>
+                <div class="ftr-trust-item">
+                    <h4 class="ftr-trust-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Gratis Selamanya
+                    </h4>
+                    <p class="ftr-trust-desc">Semua fitur tersedia gratis tanpa batasan. Tidak ada biaya tersembunyi atau upsell.</p>
                 </div>
             </div>
         </div>
@@ -1745,45 +2079,45 @@
             </div>
         </div>
     </div>
-    <div class="lp-section--alt" style="background: linear-gradient(to bottom, transparent, rgba(11,18,31,0.5) 20%, rgba(11,18,31,0.5) 80%, transparent);" id="ai-assistant">
+    <div class="lp-section--alt" id="ai-assistant">
         <div class="lp-section lp-section__center">
             <div class="lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')">
-                <h2 class="lp-section__title">Dilengkapi <span class="lp-glow-text">Tata Asisten</span></h2>
+                <div class="lp-section__eyebrow">Analisis Keuangan</div>
+                <h2 class="lp-section__title">Dilengkapi <span style="color: var(--accent);">Tata Asisten</span></h2>
                 <p class="lp-section__desc">Bukan sekadar pencatat biasa. Tatagih bertindak layaknya analis keuangan pribadi Anda, mendeteksi setiap kebocoran dana sekecil apa pun.</p>
             </div>
 
-            <div class="lp-ai-grid">
-
-                <div class="lp-ai-card lp-ai-card--main lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay: 50ms; min-height: 380px;">
-                    <div class="lp-ai-card__visual" style="top: 20%; right: 50%; transform: translateX(50%);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <div class="ta-items">
+                <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:100ms">
+                    <div class="ta-item__num">01</div>
+                    <div class="ta-item__body">
+                        <div class="ta-item__title">Health Score 360</div>
+                        <p class="ta-item__desc">Mengevaluasi kesehatan finansial secara menyeluruh, menghitung rasio pemborosan tagihan dan efisiensi pengeluaran Anda secara real-time. Skor 0-100.</p>
                     </div>
-                    <div class="lp-ai-card__title">Health Score 360°</div>
-                    <div class="lp-ai-card__desc">Tata mengevaluasi kesehatan finansial Anda, mulai dari efisiensi tagihan hingga perencanaan jangka panjang. Dapatkan skor 0-100 secara real-time.</div>
                 </div>
 
-                <div class="lp-ai-card lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay: 150ms;">
-                    <div class="lp-ai-card__visual">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M10 14l4 4m0-4l-4 4"/></svg>
+                <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:150ms">
+                    <div class="ta-item__num">02</div>
+                    <div class="ta-item__body">
+                        <div class="ta-item__title">Deteksi Tsunami Tagihan</div>
+                        <p class="ta-item__desc">Peringatan otomatis saat jadwal tagihan menumpuk di hari yang sama, mencegah guncangan arus kas bulanan secara tiba-tiba.</p>
                     </div>
-                    <div class="lp-ai-card__title">Deteksi Tsunami Tagihan</div>
-                    <div class="lp-ai-card__desc">Peringatan otomatis saat jadwal tagihan menumpuk di hari yang sama, menyelamatkan arus kas bulanan Anda dari gelombang tagihan.</div>
                 </div>
 
-                <div class="lp-ai-card lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay: 250ms;">
-                    <div class="lp-ai-card__visual">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="7.5 4.21 12 6.81 16.5 4.21"/><polyline points="7.5 19.79 7.5 14.6 3 12"/><polyline points="21 12 16.5 14.6 16.5 19.79"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:200ms">
+                    <div class="ta-item__num">03</div>
+                    <div class="ta-item__body">
+                        <div class="ta-item__title">Pelacak Tumpang Tindih</div>
+                        <p class="ta-item__desc">Mendeteksi langganan rival dalam satu fungsi. Menemukan layanan ganda yang bisa digilir per musim untuk menghemat pengeluaran.</p>
                     </div>
-                    <div class="lp-ai-card__title">Pelacak Tumpang Tindih</div>
-                    <div class="lp-ai-card__desc">Mendeteksi langganan rival. Mengapa bayar Netflix dan Prime Video sekaligus jika fungsinya sama dan bisa bergantian?</div>
                 </div>
-                
-                <div class="lp-ai-card lp-ai-card--wide lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay: 350ms; min-height: 180px;">
-                    <div class="lp-ai-card__visual" style="top: auto; bottom: 32px; right: 32px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+
+                <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:250ms">
+                    <div class="ta-item__num">04</div>
+                    <div class="ta-item__body">
+                        <div class="ta-item__title">Peringatan Inflasi Gaya Hidup</div>
+                        <p class="ta-item__desc">Mengawasi total beban tagihan berkala. Jika pengeluaran subscription melonjak melebihi batas wajar, sistem segera memberi sinyal intervensi.</p>
                     </div>
-                    <div class="lp-ai-card__title">Peringatan Inflasi Gaya Hidup</div>
-                    <div class="lp-ai-card__desc" style="max-width: 60%;">Tata mengawasi total beban Anda. Jika tagihan melampaui batas wajar maka sistem akan memberi intervensi untuk mencegah gaya hidup yang boros.</div>
                 </div>
             </div>
         </div>
@@ -1882,8 +2216,6 @@
             </div>
         </div>
     </div>
-
-
 
     <footer class="lp-footer">
         <p class="lp-footer__text">&copy; {{ date('Y') }} Tatagih. All rights reserved.</p>

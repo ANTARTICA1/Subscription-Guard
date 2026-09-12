@@ -366,8 +366,8 @@ class SharedSubscriptionController extends Controller
             $this->recalculateAutoSplits($subscription->fresh());
         }
 
-        $message = $isOwner 
-            ? 'Anggota patungan berhasil dihapus dan porsi patungan dihitung ulang.' 
+        $message = $isOwner
+            ? 'Anggota patungan berhasil dihapus dan porsi patungan dihitung ulang.'
             : 'Anda berhasil keluar dari grup patungan.';
 
         return back()->with('success', $message);

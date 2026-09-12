@@ -11,6 +11,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\PaymentHistoryController;
 use App\Http\Controllers\TelegramController;
 use App\Http\Controllers\FinancialAssistantController;
+use App\Http\Controllers\TataChatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\SharedSubscriptionController;
@@ -18,11 +19,9 @@ use App\Http\Controllers\MoneyLeakController;
 use App\Http\Controllers\SubscriptionComparisonController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 
-
 Route::get('/', function () {
     return auth()->check() ? redirect('/dashboard') : view('welcome');
 });
-
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -35,27 +34,22 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 });
 
-
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    
     Route::get('/subscriptions/export', [SubscriptionController::class, 'export'])->name('subscriptions.export');
     Route::post('/subscriptions/{subscription}/mark-paid', [SubscriptionController::class, 'markPaid'])->name('subscriptions.mark-paid');
     Route::post('/subscriptions/{subscription}/toggle-status', [SubscriptionController::class, 'toggleStatus'])->name('subscriptions.toggle-status');
     Route::resource('subscriptions', SubscriptionController::class);
 
-    
     Route::get('/social', [SocialController::class, 'index'])->name('social.index');
     Route::post('/social/add', [SocialController::class, 'addFriend'])->name('social.add');
     Route::get('/social/add/{tag}', [SocialController::class, 'addFriendByTag'])->name('social.add-by-tag');
     Route::post('/social/accept/{id}', [SocialController::class, 'acceptFriend'])->name('social.accept');
     Route::delete('/social/remove/{id}', [SocialController::class, 'removeFriend'])->name('social.remove');
 
-    
     Route::get('/shares', [SharedSubscriptionController::class, 'index'])->name('shares.index');
     Route::post('/shares', [SharedSubscriptionController::class, 'store'])->name('shares.store');
     Route::post('/shares/payment-info', [SharedSubscriptionController::class, 'updatePaymentInfo'])->name('shares.payment-info');
@@ -69,39 +63,35 @@ Route::middleware('auth')->group(function () {
     Route::post('/shares/{id}/toggle-public', [SharedSubscriptionController::class, 'togglePublic'])->name('shares.toggle-public');
     Route::delete('/shares/{id}', [SharedSubscriptionController::class, 'destroy'])->name('shares.destroy');
 
-    
     Route::get('/discover', [\App\Http\Controllers\DiscoverController::class, 'index'])->name('discover.index');
 
-    
     Route::get('/leaks', [MoneyLeakController::class, 'index'])->name('leaks.index');
     Route::get('/leaks/scan', [MoneyLeakController::class, 'scan'])->name('leaks.scan');
 
-    
     Route::get('/comparisons', [SubscriptionComparisonController::class, 'index'])->name('comparisons.index');
 
-
-
-    
     Route::get('/payments', [PaymentHistoryController::class, 'index'])->name('payments.index');
     Route::post('/payments', [PaymentHistoryController::class, 'store'])->name('payments.store');
     Route::delete('/payments/{id}', [PaymentHistoryController::class, 'destroy'])->name('payments.destroy');
 
-    
     Route::get('/telegram', [TelegramController::class, 'connect'])->name('telegram.connect');
     Route::post('/telegram/regenerate', [TelegramController::class, 'regenerateCode'])->name('telegram.regenerate');
     Route::post('/telegram/test-notification', [TelegramController::class, 'sendTestNotification'])->name('telegram.test-notification');
     Route::delete('/telegram', [TelegramController::class, 'disconnect'])->name('telegram.disconnect');
 
-    
     Route::get('/assistant', [FinancialAssistantController::class, 'index'])->name('assistant');
     Route::post('/assistant/scan', [FinancialAssistantController::class, 'scan'])->name('assistant.scan');
+    Route::get('/assistant/chat', [TataChatController::class, 'index'])->name('assistant.chat');
+    Route::post('/assistant/chat/send', [TataChatController::class, 'sendMessage'])->name('assistant.chat.send');
+    Route::post('/assistant/chat/new', [TataChatController::class, 'createSession'])->name('assistant.chat.new');
+    Route::delete('/assistant/chat/session/{id}', [TataChatController::class, 'deleteSession'])->name('assistant.chat.delete-session');
+    Route::delete('/assistant/chat/session/{id}/clear', [TataChatController::class, 'clearMessages'])->name('assistant.chat.clear');
+    Route::delete('/assistant/chat/message/{id}', [TataChatController::class, 'deleteMessage'])->name('assistant.chat.delete-message');
 
-    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
-    
     Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::get('/users', [AdminDashboardController::class, 'users'])->name('users');

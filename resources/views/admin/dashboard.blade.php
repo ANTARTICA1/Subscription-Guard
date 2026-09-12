@@ -40,13 +40,12 @@
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-    
+
     <div class="card">
         <h3 class="text-lg font-bold mb-4" style="color: var(--text-primary);">Pertumbuhan User</h3>
         <canvas id="userChart" height="150"></canvas>
     </div>
 
-    
     <div class="card">
         <h3 class="text-lg font-bold mb-4" style="color: var(--text-primary);">Kategori Populer</h3>
         @foreach($popularCategories as $cat)
@@ -63,7 +62,6 @@
         @endforeach
     </div>
 </div>
-
 
 <div class="card">
     <div class="flex items-center justify-between mb-4">

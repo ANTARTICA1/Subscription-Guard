@@ -7,19 +7,13 @@ use Illuminate\Database\Seeder;
 class SubscriptionsTableSeeder extends Seeder
 {
 
-    /**
-     * Auto generated seed file
-     *
-     * @return void
-     */
     public function run()
     {
-        
 
         \DB::table('subscriptions')->delete();
-        
+
         \DB::table('subscriptions')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 14,
                 'user_id' => 3,
@@ -41,7 +35,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-07-28 02:22:07',
                 'updated_at' => '2026-07-31 05:39:08',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 15,
                 'user_id' => 3,
@@ -63,7 +57,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-07-28 03:37:30',
                 'updated_at' => '2026-08-16 10:27:00',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 17,
                 'user_id' => 3,
@@ -85,7 +79,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-07-30 04:19:51',
                 'updated_at' => '2026-07-30 04:19:51',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 18,
                 'user_id' => 3,
@@ -107,7 +101,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-07-31 05:01:42',
                 'updated_at' => '2026-07-31 05:01:42',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 19,
                 'user_id' => 3,
@@ -129,7 +123,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-07-31 05:06:47',
                 'updated_at' => '2026-07-31 05:06:47',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 20,
                 'user_id' => 3,
@@ -151,7 +145,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-08-01 14:08:35',
                 'updated_at' => '2026-08-01 14:08:35',
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 21,
                 'user_id' => 3,
@@ -173,7 +167,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-08-02 06:07:05',
                 'updated_at' => '2026-08-02 06:07:05',
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 22,
                 'user_id' => 3,
@@ -195,7 +189,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-08-15 03:28:11',
                 'updated_at' => '2026-08-15 03:28:11',
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 23,
                 'user_id' => 3,
@@ -217,7 +211,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-08-15 04:02:38',
                 'updated_at' => '2026-08-15 04:02:38',
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 24,
                 'user_id' => 3,
@@ -239,7 +233,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-08-16 09:45:44',
                 'updated_at' => '2026-08-16 09:45:44',
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 25,
                 'user_id' => 6,
@@ -261,7 +255,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-08-16 10:50:15',
                 'updated_at' => '2026-08-16 10:50:15',
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 28,
                 'user_id' => 2,
@@ -283,7 +277,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-08-18 11:26:04',
                 'updated_at' => '2026-08-18 11:26:04',
             ),
-            12 => 
+            12 =>
             array (
                 'id' => 30,
                 'user_id' => 2,
@@ -305,7 +299,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-08-18 11:27:23',
                 'updated_at' => '2026-08-18 11:28:12',
             ),
-            13 => 
+            13 =>
             array (
                 'id' => 31,
                 'user_id' => 2,
@@ -327,7 +321,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-08-18 11:37:35',
                 'updated_at' => '2026-08-18 11:37:35',
             ),
-            14 => 
+            14 =>
             array (
                 'id' => 32,
                 'user_id' => 2,
@@ -349,7 +343,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-08-18 11:38:18',
                 'updated_at' => '2026-08-18 11:38:18',
             ),
-            15 => 
+            15 =>
             array (
                 'id' => 33,
                 'user_id' => 2,
@@ -371,7 +365,7 @@ class SubscriptionsTableSeeder extends Seeder
                 'created_at' => '2026-08-18 11:39:58',
                 'updated_at' => '2026-08-18 11:39:58',
             ),
-            16 => 
+            16 =>
             array (
                 'id' => 34,
                 'user_id' => 2,
@@ -394,7 +388,6 @@ class SubscriptionsTableSeeder extends Seeder
                 'updated_at' => '2026-08-18 11:41:44',
             ),
         ));
-        
-        
+
     }
 }

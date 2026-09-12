@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    
+
     use HasFactory, Notifiable;
 
     protected $fillable = [
@@ -101,6 +101,16 @@ class User extends Authenticatable
     public function sharedWithMe(): HasMany
     {
         return $this->hasMany(SubscriptionShare::class, 'friend_user_id');
+    }
+
+    public function tataChatSessions(): HasMany
+    {
+        return $this->hasMany(TataChatSession::class)->orderBy('updated_at', 'desc');
+    }
+
+    public function tataChatMessages(): HasMany
+    {
+        return $this->hasMany(TataChatMessage::class);
     }
 
     public function isAdmin(): bool

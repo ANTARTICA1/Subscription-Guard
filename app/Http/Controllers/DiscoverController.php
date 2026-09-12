@@ -12,7 +12,6 @@ class DiscoverController extends Controller
     {
         $user = Auth::user();
 
-        
         $publicSubscriptions = Subscription::public()
             ->active()
             ->where('user_id', '!=', $user->id)

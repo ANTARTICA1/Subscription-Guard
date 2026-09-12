@@ -17,7 +17,7 @@ class SubscriptionComparisonController extends Controller
             $items = $group['items'];
             $bestValueScore = -1;
             $bestValueIndex = -1;
-            
+
             $cheapestPrice = PHP_INT_MAX;
             $cheapestIndex = -1;
 
@@ -36,7 +36,7 @@ class SubscriptionComparisonController extends Controller
                 $item['is_best_value'] = ($index === $bestValueIndex);
                 $item['is_cheapest'] = ($index === $cheapestIndex);
             }
-            unset($item); 
+            unset($item);
             $group['items'] = $items;
             $comparisons[] = $group;
         }

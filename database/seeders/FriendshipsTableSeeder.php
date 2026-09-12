@@ -7,19 +7,13 @@ use Illuminate\Database\Seeder;
 class FriendshipsTableSeeder extends Seeder
 {
 
-    /**
-     * Auto generated seed file
-     *
-     * @return void
-     */
     public function run()
     {
-        
 
         \DB::table('friendships')->delete();
-        
+
         \DB::table('friendships')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 1,
                 'user_id' => 3,
@@ -28,7 +22,7 @@ class FriendshipsTableSeeder extends Seeder
                 'created_at' => '2026-07-27 12:06:53',
                 'updated_at' => '2026-07-27 12:06:53',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 2,
                 'user_id' => 2,
@@ -38,7 +32,6 @@ class FriendshipsTableSeeder extends Seeder
                 'updated_at' => '2026-08-18 11:21:30',
             ),
         ));
-        
-        
+
     }
 }

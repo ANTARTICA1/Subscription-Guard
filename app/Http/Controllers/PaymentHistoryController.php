@@ -26,7 +26,6 @@ class PaymentHistoryController extends Controller
         $payments = $query->latest('payment_date')->paginate(15);
         $subscriptions = Subscription::where('user_id', Auth::id())->get();
 
-        
         $chartLabels = [];
         $chartData = [];
         $chartCountData = [];
@@ -77,18 +76,18 @@ class PaymentHistoryController extends Controller
         for ($i = 5; $i >= 0; $i--) {
             $monthStart = Carbon::now()->subMonths($i)->startOfMonth();
             $monthEnd = Carbon::now()->subMonths($i)->endOfMonth();
-            
+
             $count = $subscriptions->filter(function($sub) use ($monthStart, $monthEnd) {
                 $start = $sub->start_date ? Carbon::parse($sub->start_date) : $sub->created_at;
                 if ($start > $monthEnd) return false;
-                
+
                 if ($sub->status !== 'active') {
                    $end = $sub->end_date ? Carbon::parse($sub->end_date) : $sub->updated_at;
                    if ($end < $monthStart) return false;
                 }
                 return true;
             })->count();
-            
+
             $activeSubCountData[] = $count;
         }
 
@@ -126,7 +125,7 @@ class PaymentHistoryController extends Controller
             ->get();
 
         return view('payments.index', compact(
-            'payments', 'subscriptions', 'chartLabels', 'chartData', 'totalPaid', 
+            'payments', 'subscriptions', 'chartLabels', 'chartData', 'totalPaid',
             'pendingVerifications', 'historyValidations',
             'donutLabels', 'donutData', 'donutColors', 'donutPercentages', 'totalCategorySum',
             'totalPaidSparkline', 'transactionCountSparkline', 'activeSubSparkline',
@@ -144,25 +143,25 @@ class PaymentHistoryController extends Controller
 
         $count = count($data);
         $step = 100 / max(1, $count - 1);
-        
+
         $path = '';
         $prevX = 0;
         $prevY = 0;
 
         foreach (array_values($data) as $i => $value) {
             $x = $i * $step;
-            $y = 28 - ((($value - $min) / $range) * 24); 
-            
+            $y = 28 - ((($value - $min) / $range) * 24);
+
             if ($i === 0) {
                 $path .= 'M' . round($x, 1) . ',' . round($y, 1);
             } else {
                 $cp1x = $prevX + ($step * 0.4);
                 $cp2x = $x - ($step * 0.4);
-                $path .= ' C' . round($cp1x, 1) . ',' . round($prevY, 1) . ' ' 
-                         . round($cp2x, 1) . ',' . round($y, 1) . ' ' 
+                $path .= ' C' . round($cp1x, 1) . ',' . round($prevY, 1) . ' '
+                         . round($cp2x, 1) . ',' . round($y, 1) . ' '
                          . round($x, 1) . ',' . round($y, 1);
             }
-            
+
             $prevX = $x;
             $prevY = $y;
         }

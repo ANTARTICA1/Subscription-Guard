@@ -135,7 +135,6 @@ class SubscriptionSeeder extends Seeder
                 $subData
             );
 
-            
             for ($i = 5; $i >= 0; $i--) {
                 $payDate = Carbon::now()->subMonths($i)->day(min($sub->payment_date, 28));
                 PaymentHistory::updateOrCreate(

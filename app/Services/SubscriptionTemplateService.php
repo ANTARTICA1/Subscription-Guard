@@ -106,7 +106,7 @@ class SubscriptionTemplateService
                     ],
                 ],
             ],
-            
+
             'Music' => [
                 [
                     'name' => 'Spotify',
@@ -148,7 +148,7 @@ class SubscriptionTemplateService
                     ],
                 ],
             ],
-            
+
             'AI & Productivity' => [
                 [
                     'name' => 'ChatGPT',

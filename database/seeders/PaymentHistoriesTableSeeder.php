@@ -7,19 +7,13 @@ use Illuminate\Database\Seeder;
 class PaymentHistoriesTableSeeder extends Seeder
 {
 
-    /**
-     * Auto generated seed file
-     *
-     * @return void
-     */
     public function run()
     {
-        
 
         \DB::table('payment_histories')->delete();
-        
+
         \DB::table('payment_histories')->insert(array (
-            0 => 
+            0 =>
             array (
                 'id' => 55,
                 'user_id' => 3,
@@ -31,7 +25,7 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'created_at' => '2026-07-28 02:25:46',
                 'updated_at' => '2026-07-28 02:25:46',
             ),
-            1 => 
+            1 =>
             array (
                 'id' => 56,
                 'user_id' => 3,
@@ -43,7 +37,7 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'created_at' => '2026-07-30 03:30:55',
                 'updated_at' => '2026-07-30 03:30:55',
             ),
-            2 => 
+            2 =>
             array (
                 'id' => 57,
                 'user_id' => 3,
@@ -55,7 +49,7 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'created_at' => '2026-07-30 03:31:17',
                 'updated_at' => '2026-07-30 03:31:17',
             ),
-            3 => 
+            3 =>
             array (
                 'id' => 58,
                 'user_id' => 3,
@@ -67,7 +61,7 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'created_at' => '2026-08-03 00:11:29',
                 'updated_at' => '2026-08-03 00:11:29',
             ),
-            4 => 
+            4 =>
             array (
                 'id' => 59,
                 'user_id' => 3,
@@ -79,7 +73,7 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'created_at' => '2026-08-03 00:13:17',
                 'updated_at' => '2026-08-03 00:13:17',
             ),
-            5 => 
+            5 =>
             array (
                 'id' => 60,
                 'user_id' => 3,
@@ -91,7 +85,7 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'created_at' => '2026-08-16 09:46:44',
                 'updated_at' => '2026-08-16 09:46:44',
             ),
-            6 => 
+            6 =>
             array (
                 'id' => 61,
                 'user_id' => 6,
@@ -103,7 +97,7 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'created_at' => '2026-08-16 10:51:22',
                 'updated_at' => '2026-08-16 10:51:22',
             ),
-            7 => 
+            7 =>
             array (
                 'id' => 62,
                 'user_id' => 6,
@@ -115,7 +109,7 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'created_at' => '2026-08-16 10:55:42',
                 'updated_at' => '2026-08-16 10:55:42',
             ),
-            8 => 
+            8 =>
             array (
                 'id' => 65,
                 'user_id' => 2,
@@ -127,7 +121,7 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'created_at' => '2026-08-18 11:40:08',
                 'updated_at' => '2026-08-18 11:40:08',
             ),
-            9 => 
+            9 =>
             array (
                 'id' => 66,
                 'user_id' => 2,
@@ -139,7 +133,7 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'created_at' => '2026-08-18 11:40:27',
                 'updated_at' => '2026-08-18 11:40:27',
             ),
-            10 => 
+            10 =>
             array (
                 'id' => 67,
                 'user_id' => 2,
@@ -151,7 +145,7 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'created_at' => '2026-08-18 11:42:24',
                 'updated_at' => '2026-08-18 11:42:24',
             ),
-            11 => 
+            11 =>
             array (
                 'id' => 68,
                 'user_id' => 2,
@@ -164,7 +158,6 @@ class PaymentHistoriesTableSeeder extends Seeder
                 'updated_at' => '2026-08-18 11:42:26',
             ),
         ));
-        
-        
+
     }
 }
