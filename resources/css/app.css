@@ -57,7 +57,7 @@
     --bg-secondary: #eef2f6;
     --bg-card: #ffffff;
     --bg-card-hover: #f8fafc;
-    --bg-elevated: #e2e8f0;
+    --bg-elevated: #f1f5f9;
 
     --text-primary: #0f172a;
     --text-secondary: #475569;
@@ -690,6 +690,56 @@ body {
 .btn-ghost:hover {
     background: var(--bg-card-hover);
     color: var(--text-primary);
+}
+
+.btn-emerald-soft {
+    background: rgba(16, 185, 129, 0.1);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius-xl);
+    font-weight: 700;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    font-family: inherit;
+}
+
+.btn-emerald-soft:hover {
+    background: rgba(16, 185, 129, 0.18);
+    border-color: rgba(16, 185, 129, 0.5);
+    color: #6ee7b7;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+}
+
+.btn-emerald-soft:active {
+    transform: translateY(0);
+}
+
+.btn-emerald-soft svg {
+    color: currentColor;
+}
+
+[data-theme="light"] .btn-emerald-soft {
+    background: #ecfdf5 !important;
+    border: 1px solid #a7f3d0 !important;
+    color: #047857 !important;
+    box-shadow: 0 1px 3px rgba(16, 185, 129, 0.08) !important;
+}
+
+[data-theme="light"] .btn-emerald-soft:hover {
+    background: #d1fae5 !important;
+    border-color: #6ee7b7 !important;
+    color: #065f46 !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15) !important;
 }
 
 .fab {

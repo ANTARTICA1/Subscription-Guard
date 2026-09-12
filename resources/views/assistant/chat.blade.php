@@ -110,13 +110,6 @@
                         </svg>
                     </button>
 
-                    <button @click="historyCollapsed = true"
-                            class="hidden lg:flex p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors cursor-pointer"
-                            title="Sembunyikan Riwayat">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-                        </svg>
-                    </button>
 
                     <button @click="showMobileSidebar = false"
                             class="lg:hidden p-1.5 text-[var(--text-muted)] hover:text-[var(--text-primary)] rounded-lg cursor-pointer">
@@ -185,22 +178,14 @@
                     <button @click="toggleSidebar()"
                             class="p-2 -ml-1 text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-lg border border-[var(--border-color)] hover:border-emerald-500/40 bg-[var(--bg-secondary)] transition-colors cursor-pointer"
                             :title="historyCollapsed ? 'Buka Riwayat' : 'Tutup Riwayat'">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+                        <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': historyCollapsed }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
                         </svg>
                     </button>
-
-                    <div class="relative flex-shrink-0">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-1 flex items-center justify-center">
-                            <img src="{{ asset('images/bot.png') }}" alt="TATA AI" class="w-full h-full object-contain">
-                        </div>
-                        <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-[var(--bg-card)]" title="Online"></span>
-                    </div>
 
                     <div class="min-w-0">
                         <div class="flex items-center gap-2">
                             <h2 class="text-sm font-bold text-[var(--text-primary)] tracking-tight truncate">TATA AI</h2>
-                            <span class="px-1.5 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 rounded-full border border-emerald-500/20 hidden sm:inline-block">Asisten Finansial</span>
                         </div>
                         <p class="text-[11px] text-[var(--text-muted)] truncate hidden sm:block">Analisis pengeluaran dan optimasi portofolio langganan Anda</p>
                     </div>
@@ -226,7 +211,7 @@
                             <img src="{{ asset('images/bot.png') }}" alt="TATA AI" class="w-full h-full object-contain">
                         </div>
 
-                        <h3 class="text-lg font-bold text-[var(--text-primary)]">Halo, {{ auth()->user()->name }}! 👋</h3>
+                        <h3 class="text-lg font-bold text-[var(--text-primary)]">Halo, {{ auth()->user()->name }}!</h3>
                         <p class="text-xs text-[var(--text-muted)] mt-1.5 max-w-md leading-relaxed">
                             Saya TATA, asisten cerdas portofolio langganan Anda. Ajukan pertanyaan apa saja tentang pengeluaran, tagihan terdekat, atau cara menghemat biaya.
                         </p>
@@ -332,14 +317,12 @@
                                     <div class="flex items-center justify-between gap-2 mt-2 select-none border-t border-[var(--border-color)]/60 pt-1.5">
                                         <div class="flex items-center gap-1.5">
                                             <template x-if="!msg.is_offline_fallback">
-                                                <span class="inline-flex items-center gap-1 text-[10px] text-[var(--text-muted)] font-medium">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500/80"></span>
+                                                <span class="inline-flex items-center text-[10px] text-[var(--text-muted)] font-medium">
                                                     Gemini
                                                 </span>
                                             </template>
                                             <template x-if="msg.is_offline_fallback">
-                                                <span class="inline-flex items-center gap-1 text-[10px] text-[var(--text-muted)] font-medium">
-                                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500/80"></span>
+                                                <span class="inline-flex items-center text-[10px] text-[var(--text-muted)] font-medium">
                                                     Offline
                                                 </span>
                                             </template>

@@ -186,8 +186,14 @@
                 @endforelse
             </div>
 
-            <a href="{{ route('dashboard') }}" class="w-full block text-center py-2.5 bg-[var(--bg-elevated)] hover:border-emerald-500/40 border border-[var(--border-color)] rounded-xl text-[11px] font-bold text-emerald-500 transition-colors">
-                Lihat Kalender Lengkap
+            <a href="{{ route('dashboard') }}" class="btn-emerald-soft group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 flex-shrink-0 transition-transform duration-200 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span>Lihat Kalender Lengkap</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0 opacity-60 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+                </svg>
             </a>
         </div>
 

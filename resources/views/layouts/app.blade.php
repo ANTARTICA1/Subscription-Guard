@@ -40,6 +40,37 @@
         .btn-primary:hover {
             background: #059669 !important;
         }
+        .btn-emerald-soft {
+            background: rgba(16, 185, 129, 0.1) !important;
+            color: #34d399 !important;
+            border: 1px solid rgba(16, 185, 129, 0.25) !important;
+            padding: 0.65rem 1rem !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 0.78rem !important;
+            cursor: pointer !important;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.5rem !important;
+            width: 100% !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+        }
+        .btn-emerald-soft:hover {
+            background: rgba(16, 185, 129, 0.18) !important;
+            border-color: rgba(16, 185, 129, 0.5) !important;
+            color: #6ee7b7 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2) !important;
+        }
+        .btn-emerald-soft:active {
+            transform: translateY(0) !important;
+        }
+        .btn-emerald-soft svg {
+            color: currentColor !important;
+        }
         .card {
             background: #0d1526 !important;
             border: 1px solid rgba(255, 255, 255, 0.05) !important;
@@ -503,7 +534,7 @@
             --bg-secondary: #eef2f6 !important;
             --bg-card: #ffffff !important;
             --bg-card-hover: #f8fafc !important;
-            --bg-elevated: #e2e8f0 !important;
+            --bg-elevated: #f1f5f9 !important;
             --text-primary: #0f172a !important;
             --text-secondary: #475569 !important;
             --text-muted: #64748b !important;
@@ -649,6 +680,20 @@
         [data-theme="light"] .btn-ghost:hover {
             background-color: #e2e8f0 !important;
             color: #0f172a !important;
+        }
+
+        [data-theme="light"] .btn-emerald-soft {
+            background: #ecfdf5 !important;
+            border: 1px solid #a7f3d0 !important;
+            color: #047857 !important;
+            box-shadow: 0 1px 3px rgba(16, 185, 129, 0.08) !important;
+        }
+
+        [data-theme="light"] .btn-emerald-soft:hover {
+            background: #d1fae5 !important;
+            border-color: #6ee7b7 !important;
+            color: #065f46 !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15) !important;
         }
 
         [data-theme="light"] input,
@@ -867,7 +912,7 @@
             </div>
 
             <a href="{{ route('telegram.connect') }}" class="nav-link {{ request()->routeIs('telegram.*') ? 'active' : '' }}" data-tooltip="Integrasi Telegram">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"/></svg>
                 <span class="nav-link-text">Integrasi Telegram</span>
             </a>
             @endif
