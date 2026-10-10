@@ -14,35 +14,30 @@
     <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl shadow-sm overflow-hidden">
         
         <div class="px-5 py-3 border-b border-[var(--border-color)] bg-[var(--bg-card)] flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span class="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)]">Buat Grup Patungan</span>
-                <span class="text-[11px] text-[var(--text-muted)] hidden sm:inline">• Selesaikan 3 langkah mudah di bawah</span>
-            </div>
 
-            <div class="flex items-center gap-1.5 sm:gap-2">
-                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold transition-all"
-                     :class="step >= 1 ? 'text-emerald-500 bg-emerald-500/10 border border-emerald-500/20' : 'text-[var(--text-muted)] bg-[var(--bg-elevated)]/40'">
+            <div class="flex items-center gap-2 text-xs">
+                <div class="flex items-center gap-1.5 font-medium transition-colors"
+                     :class="step >= 1 ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'">
                     <span class="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold"
-                          :class="step >= 1 ? 'bg-emerald-500 text-white' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'">1</span>
+                          :class="step >= 1 ? 'bg-[var(--text-primary)] text-[var(--bg-card)]' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'">1</span>
                     <span>Pilih Langganan</span>
                 </div>
 
-                <svg class="w-3.5 h-3.5 text-[var(--text-muted)] opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <svg class="w-3 h-3 text-[var(--text-muted)] opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
 
-                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold transition-all"
-                     :class="step >= 2 ? 'text-emerald-500 bg-emerald-500/10 border border-emerald-500/20' : 'text-[var(--text-muted)] bg-[var(--bg-elevated)]/40'">
+                <div class="flex items-center gap-1.5 font-medium transition-colors"
+                     :class="step >= 2 ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'">
                     <span class="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold"
-                          :class="step >= 2 ? 'bg-emerald-500 text-white' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'">2</span>
+                          :class="step >= 2 ? 'bg-[var(--text-primary)] text-[var(--bg-card)]' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'">2</span>
                     <span>Pilih Teman</span>
                 </div>
 
-                <svg class="w-3.5 h-3.5 text-[var(--text-muted)] opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <svg class="w-3 h-3 text-[var(--text-muted)] opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
 
-                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold transition-all"
-                     :class="step >= 3 ? 'text-emerald-500 bg-emerald-500/10 border border-emerald-500/20' : 'text-[var(--text-muted)] bg-[var(--bg-elevated)]/40'">
+                <div class="flex items-center gap-1.5 font-medium transition-colors"
+                     :class="step >= 3 ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'">
                     <span class="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold"
-                          :class="step >= 3 ? 'bg-emerald-500 text-white' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'">3</span>
+                          :class="step >= 3 ? 'bg-[var(--text-primary)] text-[var(--bg-card)]' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'">3</span>
                     <span>Kirim Undangan</span>
                 </div>
             </div>
@@ -53,7 +48,7 @@
             <div class="xl:col-span-3 flex flex-col h-[460px] bg-[var(--bg-card)]">
                 <div class="p-3.5 pb-2.5 flex items-center justify-between border-b border-[var(--border-color)]/60">
                     <div class="flex items-center gap-2">
-                        <span class="w-5 h-5 rounded bg-emerald-500/10 text-emerald-500 font-bold text-[10px] flex items-center justify-center">1</span>
+                        <span class="w-5 h-5 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)] font-bold text-[10px] flex items-center justify-center">1</span>
                         <h3 class="text-xs font-bold text-[var(--text-primary)]">Pilih Subscription</h3>
                     </div>
                     <span class="text-[10px] font-medium text-[var(--text-muted)]" x-text="filteredSubs.length + ' item'"></span>
@@ -61,7 +56,7 @@
 
                 <div class="p-3 pb-2">
                     <div class="relative">
-                        <input type="text" x-model="searchSub" placeholder="Cari subscription..." class="w-full bg-[var(--bg-elevated)] border border-[var(--border-color)] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-emerald-500 transition-colors">
+                        <input type="text" x-model="searchSub" placeholder="Cari subscription..." class="w-full bg-[var(--bg-elevated)] border border-[var(--border-color)] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--text-secondary)] transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[var(--text-muted)] absolute left-2.5 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </div>
                 </div>
@@ -71,9 +66,9 @@
                         <div @click="selectSub(sub.id)" 
                              class="p-2.5 rounded-lg border transition-all cursor-pointer flex items-center gap-2.5 relative group" 
                              :class="selectedSubId === sub.id 
-                                ? 'bg-emerald-500/10 border-emerald-500 text-[var(--text-primary)]' 
-                                : 'border-[var(--border-color)]/40 bg-[var(--bg-card)] hover:bg-[var(--bg-elevated)] hover:border-[var(--border-color)]'">
-                            <div class="w-9 h-9 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-color)] flex items-center justify-center flex-shrink-0 p-1.5" 
+                                ? 'bg-[var(--bg-elevated)] border-[var(--border-color)] text-[var(--text-primary)] shadow-sm' 
+                                : 'border-[var(--border-color)]/40 bg-[var(--bg-card)] hover:bg-[var(--bg-elevated)]/50 hover:border-[var(--border-color)]'">
+                            <div class="w-9 h-9 rounded-lg bg-[var(--bg-card)] border border-[var(--border-color)] flex items-center justify-center flex-shrink-0 p-1.5" 
                                  :style="!sub.logo ? `color: ${sub.category ? sub.category.color : '#fff'}; background: ${sub.category ? sub.category.color : '#fff'}15` : ''">
                                 <template x-if="sub.logo">
                                     <img :src="sub.logo" class="w-full h-full object-contain rounded-sm">
@@ -83,14 +78,14 @@
                                 </template>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-xs font-bold text-[var(--text-primary)] truncate group-hover:text-emerald-500 transition-colors" x-text="sub.name"></p>
+                                <p class="text-xs font-bold text-[var(--text-primary)] truncate" x-text="sub.name"></p>
                                 <p class="text-[10px] text-[var(--text-muted)] truncate" x-text="sub.category ? sub.category.name : ''"></p>
                                 <div class="flex items-center gap-1.5 mt-0.5">
                                     <p class="text-[11px] font-semibold text-[var(--text-primary)]">Rp<span x-text="formatMoney(sub.amount)"></span> <span class="text-[9px] text-[var(--text-muted)] font-normal" x-text="'/ ' + sub.billing_cycle"></span></p>
                                 </div>
                             </div>
                             <div class="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 transition-all"
-                                 :class="selectedSubId === sub.id ? 'bg-emerald-500 text-white' : 'border border-[var(--border-color)] text-transparent'">
+                                 :class="selectedSubId === sub.id ? 'bg-[var(--text-primary)] text-[var(--bg-card)]' : 'border border-[var(--border-color)] text-transparent'">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-2.5 w-2.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
                             </div>
                         </div>
@@ -102,7 +97,7 @@
                             </div>
                             <p class="text-xs font-bold text-[var(--text-primary)] mb-1">Belum ada subscription</p>
                             <p class="text-[10px] text-[var(--text-muted)] mb-3 leading-relaxed">Tambahkan langganan terlebih dahulu sebelum membagikan tagihan.</p>
-                            <a href="{{ route('subscriptions.create') }}" class="inline-block px-3 py-1.5 bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 hover:bg-emerald-500 hover:text-white transition-colors rounded-md text-xs font-bold">Tambah Sekarang</a>
+                            <a href="{{ route('subscriptions.create') }}" class="btn-primary inline-block px-3 py-1.5 rounded-md text-xs font-bold">Tambah Sekarang</a>
                         </div>
                     </template>
                 </div>
@@ -111,8 +106,7 @@
             <div class="xl:col-span-3 flex flex-col h-[460px] bg-[var(--bg-card)] transition-opacity" :class="step < 2 ? 'opacity-40 pointer-events-none' : ''">
                 <div class="p-3.5 pb-2.5 flex items-center justify-between border-b border-[var(--border-color)]/60">
                     <div class="flex items-center gap-2">
-                        <span class="w-5 h-5 rounded text-[10px] font-bold flex items-center justify-center"
-                              :class="step >= 2 ? 'bg-emerald-500/10 text-emerald-500' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'">2</span>
+                        <span class="w-5 h-5 rounded text-[10px] font-bold flex items-center justify-center bg-[var(--bg-elevated)] text-[var(--text-secondary)]">2</span>
                         <h3 class="text-xs font-bold text-[var(--text-primary)]">Pilih Teman</h3>
                     </div>
                     <span class="text-[10px] font-medium text-[var(--text-muted)]" x-text="filteredFriends.length + ' teman'"></span>
@@ -120,7 +114,7 @@
 
                 <div class="p-3 pb-2">
                     <div class="relative">
-                        <input type="text" x-model="searchFriend" placeholder="Cari teman..." class="w-full bg-[var(--bg-elevated)] border border-[var(--border-color)] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-emerald-500 transition-colors">
+                        <input type="text" x-model="searchFriend" placeholder="Cari teman..." class="w-full bg-[var(--bg-elevated)] border border-[var(--border-color)] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--text-secondary)] transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[var(--text-muted)] absolute left-2.5 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                     </div>
                 </div>
@@ -130,19 +124,19 @@
                         <div @click="toggleFriend(friend.id)" 
                              class="p-2.5 rounded-lg border transition-all cursor-pointer flex items-center justify-between group"
                              :class="selectedFriends.includes(friend.id) 
-                                ? 'bg-emerald-500/10 border-emerald-500' 
-                                : 'border-[var(--border-color)]/40 bg-[var(--bg-card)] hover:bg-[var(--bg-elevated)] hover:border-[var(--border-color)]'">
+                                ? 'bg-[var(--bg-elevated)] border-[var(--border-color)] shadow-sm' 
+                                : 'border-[var(--border-color)]/40 bg-[var(--bg-card)] hover:bg-[var(--bg-elevated)]/50 hover:border-[var(--border-color)]'">
                             <div class="flex items-center gap-2.5 min-w-0">
-                                <div class="w-8 h-8 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-color)] flex items-center justify-center text-xs font-bold text-[var(--text-primary)] flex-shrink-0">
+                                <div class="w-8 h-8 rounded-full bg-[var(--bg-card)] border border-[var(--border-color)] flex items-center justify-center text-xs font-bold text-[var(--text-primary)] flex-shrink-0">
                                     <span x-text="friend.name.substring(0,1)"></span>
                                 </div>
                                 <div class="min-w-0">
-                                    <p class="text-xs font-bold text-[var(--text-primary)] leading-tight truncate group-hover:text-emerald-500 transition-colors" x-text="friend.name"></p>
-                                    <p class="text-[10px] text-[var(--text-muted)] truncate" x-text="'@' + friend.user_tag"></p>
+                                    <p class="text-xs font-bold text-[var(--text-primary)] leading-tight truncate" x-text="friend.name"></p>
+                                    <p class="text-[10px] text-[var(--text-muted)] truncate font-mono" x-text="'@' + friend.user_tag"></p>
                                 </div>
                             </div>
                             <div class="w-5 h-5 rounded-md flex items-center justify-center transition-all flex-shrink-0" 
-                                 :class="selectedFriends.includes(friend.id) ? 'bg-emerald-500 text-white' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)] group-hover:text-emerald-500'">
+                                 :class="selectedFriends.includes(friend.id) ? 'bg-[var(--text-primary)] text-[var(--bg-card)]' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" :class="selectedFriends.includes(friend.id) ? 'rotate-45 transition-transform' : 'transition-transform'"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                             </div>
                         </div>
@@ -153,8 +147,7 @@
             <div class="xl:col-span-3 flex flex-col h-[460px] bg-[var(--bg-card)] transition-opacity" :class="step < 2 ? 'opacity-40 pointer-events-none' : ''">
                 <div class="p-3.5 pb-2.5 flex items-center justify-between border-b border-[var(--border-color)]/60">
                     <div class="flex items-center gap-2">
-                        <span class="w-5 h-5 rounded text-[10px] font-bold flex items-center justify-center"
-                              :class="selectedFriends.length > 0 ? 'bg-emerald-500/10 text-emerald-500' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'">3</span>
+                        <span class="w-5 h-5 rounded text-[10px] font-bold flex items-center justify-center bg-[var(--bg-elevated)] text-[var(--text-secondary)]">3</span>
                         <h3 class="text-xs font-bold text-[var(--text-primary)]">Anggota Terpilih</h3>
                     </div>
                     <span class="bg-[var(--bg-elevated)] text-[var(--text-muted)] text-[10px] px-2 py-0.5 rounded font-bold" x-text="selectedFriends.length + ' orang'"></span>
@@ -162,14 +155,14 @@
 
                 <div class="flex-1 overflow-y-auto min-h-0 space-y-1.5 p-3 custom-scrollbar">
                     <template x-for="friend in selectedFriendsData" :key="friend.id">
-                        <div class="p-2.5 rounded-lg bg-[var(--bg-card)] border border-[var(--border-color)] hover:bg-[var(--bg-elevated)] transition-all flex items-center justify-between group">
+                        <div class="p-2.5 rounded-lg bg-[var(--bg-card)] border border-[var(--border-color)] hover:bg-[var(--bg-elevated)]/50 transition-all flex items-center justify-between group">
                             <div class="flex items-center gap-2.5 min-w-0">
-                                <div class="w-7 h-7 rounded-md bg-emerald-500 flex items-center justify-center text-xs font-bold text-white shadow-sm flex-shrink-0">
+                                <div class="w-7 h-7 rounded-full bg-[var(--bg-elevated)] border border-[var(--border-color)] flex items-center justify-center text-xs font-bold text-[var(--text-primary)] flex-shrink-0">
                                     <span x-text="friend.name.substring(0,1)"></span>
                                 </div>
                                 <div class="min-w-0">
                                     <p class="text-xs font-bold text-[var(--text-primary)] leading-tight truncate" x-text="friend.name"></p>
-                                    <p class="text-[10px] text-[var(--text-muted)] truncate" x-text="'@' + friend.user_tag"></p>
+                                    <p class="text-[10px] text-[var(--text-muted)] truncate font-mono" x-text="'@' + friend.user_tag"></p>
                                 </div>
                             </div>
                             <button @click="toggleFriend(friend.id)" class="w-6 h-6 rounded-md bg-[var(--bg-elevated)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-muted)] hover:text-red-400 hover:border-red-400/40 hover:bg-red-400/10 transition-colors flex-shrink-0" title="Hapus dari grup">
@@ -190,18 +183,18 @@
                 </div>
             </div>
 
-            <div class="xl:col-span-3 flex flex-col justify-between h-[460px] bg-[var(--bg-elevated)]/25 p-4">
+            <div class="xl:col-span-3 flex flex-col justify-between h-[460px] bg-[var(--bg-card)] p-4">
                 <div>
                     <div class="flex items-center justify-between pb-3 border-b border-[var(--border-color)] mb-3">
                         <h3 class="text-xs font-bold text-[var(--text-primary)] flex items-center gap-1.5">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                             Ringkasan Patungan
                         </h3>
-                        <span class="text-[10px] font-semibold text-emerald-500" x-show="selectedSub" x-text="selectedSub ? selectedSub.billing_cycle : ''"></span>
+                        <span class="text-[10px] font-medium text-[var(--text-muted)] uppercase tracking-wider" x-show="selectedSub" x-text="selectedSub ? selectedSub.billing_cycle : ''"></span>
                     </div>
 
                     <template x-if="selectedSub">
-                        <div class="mb-3 p-2 rounded-lg bg-[var(--bg-card)] border border-[var(--border-color)] flex items-center gap-2.5">
+                        <div class="mb-3 py-1 flex items-center gap-2.5">
                             <div class="w-7 h-7 rounded-md bg-[var(--bg-elevated)] border border-[var(--border-color)] flex items-center justify-center p-1 flex-shrink-0">
                                 <template x-if="selectedSub.logo">
                                     <img :src="selectedSub.logo" class="w-full h-full object-contain">
@@ -212,19 +205,19 @@
                             </div>
                             <div class="min-w-0 flex-1">
                                 <p class="font-bold text-[var(--text-primary)] text-xs leading-tight truncate" x-text="selectedSub.name"></p>
-                                <p class="text-[9px] text-[var(--text-muted)]" x-text="'Total: Rp' + formatMoney(totalAmount)"></p>
+                                <p class="text-[10px] text-[var(--text-muted)]" x-text="'Total: Rp' + formatMoney(totalAmount)"></p>
                             </div>
                         </div>
                     </template>
 
                     <div class="space-y-3 mb-3">
-                        <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg p-2.5">
-                            <div class="flex items-baseline justify-between mb-1">
-                                <span class="text-[10px] uppercase font-bold text-[var(--text-muted)]">Porsi Per Orang</span>
+                        <div class="py-2 border-y border-[var(--border-color)]/60">
+                            <div class="flex items-baseline justify-between mb-0.5">
+                                <span class="text-[10px] uppercase font-bold text-[var(--text-muted)] tracking-wider">Porsi Per Orang</span>
                                 <span class="text-[10px] text-[var(--text-muted)]"><span x-text="(selectedSub ? (selectedSub.shares ? selectedSub.shares.length : 0) : 0) + 1 + selectedFriends.length"></span> orang</span>
                             </div>
                             <div class="flex items-baseline gap-1.5">
-                                <span class="text-xl font-extrabold text-emerald-500 tracking-tight">Rp<span x-text="formatMoney(splitAmount)"></span></span>
+                                <span class="text-xl font-black text-[var(--text-primary)] tracking-tight">Rp<span x-text="formatMoney(splitAmount)"></span></span>
                                 <span class="text-[10px] text-[var(--text-muted)]" x-text="selectedSub ? '/ ' + selectedSub.billing_cycle : ''"></span>
                             </div>
                         </div>
@@ -234,30 +227,28 @@
                             <div class="space-y-1.5 max-h-20 overflow-y-auto custom-scrollbar pr-1 text-[11px]">
                                 <div class="flex items-center justify-between text-[var(--text-primary)]">
                                     <span class="truncate">{{ auth()->user()->name }} (Host)</span>
-                                    <span class="font-bold text-emerald-500">Rp<span x-text="formatMoney(splitAmount)"></span></span>
+                                    <span class="font-semibold text-[var(--text-primary)]">Rp<span x-text="formatMoney(splitAmount)"></span></span>
                                 </div>
                                 <template x-if="selectedSub && selectedSub.shares">
                                     <template x-for="share in selectedSub.shares" :key="share.id">
                                         <div class="flex items-center justify-between text-[var(--text-primary)]">
                                             <span class="truncate" x-text="share.friend_name"></span>
-                                            <span class="font-bold text-emerald-500">Rp<span x-text="formatMoney(splitAmount)"></span></span>
+                                            <span class="font-semibold text-[var(--text-primary)]">Rp<span x-text="formatMoney(splitAmount)"></span></span>
                                         </div>
                                     </template>
                                 </template>
                                 <template x-for="friend in selectedFriendsData" :key="friend.id">
                                     <div class="flex items-center justify-between text-[var(--text-primary)]">
                                         <span class="truncate" x-text="friend.name"></span>
-                                        <span class="font-bold text-emerald-500">Rp<span x-text="formatMoney(splitAmount)"></span></span>
+                                        <span class="font-semibold text-[var(--text-primary)]">Rp<span x-text="formatMoney(splitAmount)"></span></span>
                                     </div>
                                 </template>
                             </div>
                         </div>
 
-                        <div x-show="totalAmount > 0 && splitAmount < totalAmount" class="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-2 flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                            <p class="text-[10px] text-[var(--text-primary)] font-semibold">
-                                Hemat <strong class="text-emerald-500 font-bold">Rp<span x-text="formatMoney(totalAmount - splitAmount)"></span></strong> dibanding bayar sendiri
-                            </p>
+                        <div x-show="totalAmount > 0 && splitAmount < totalAmount" class="flex items-center gap-1.5 text-[11px] text-[var(--text-muted)] pt-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                            <span>Hemat <strong class="font-bold text-emerald-600 dark:text-emerald-400">Rp<span x-text="formatMoney(totalAmount - splitAmount)"></span></strong> dibanding bayar sendiri</span>
                         </div>
                     </div>
                 </div>
@@ -270,7 +261,7 @@
                     </template>
 
                     <label for="is_public" class="mb-3 flex items-start gap-2 cursor-pointer select-none">
-                        <input type="checkbox" name="is_public" value="1" id="is_public" class="mt-0.5 w-3.5 h-3.5 rounded border-[var(--border-color)] text-emerald-500 focus:ring-emerald-500 cursor-pointer" checked>
+                        <input type="checkbox" name="is_public" value="1" id="is_public" class="mt-0.5 w-3.5 h-3.5 rounded border-[var(--border-color)] text-[var(--text-primary)] focus:ring-0 cursor-pointer" checked>
                         <div class="flex-1">
                             <span class="text-[11px] font-semibold text-[var(--text-primary)] block">Tampilkan di Discover</span>
                             <p class="text-[9px] text-[var(--text-muted)] leading-tight">Pengguna lain dapat mencari grup ini di menu Discover.</p>
@@ -288,20 +279,17 @@
 
     <div class="grid grid-cols-1 xl:grid-cols-4 gap-6 pt-2">
         <div class="xl:col-span-3" x-data="{ activeTab: 'saya' }">
-            
-            <div class="flex items-center justify-between border-b border-[var(--border-color)] pb-3 mb-4">
-                <div class="inline-flex items-center p-0.5 bg-[var(--bg-elevated)]/50 rounded-lg border border-[var(--border-color)]">
-                    <button @click="activeTab = 'saya'" class="px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5"
-                            :class="activeTab === 'saya' ? 'bg-[var(--bg-card)] text-[var(--text-primary)] shadow-sm font-bold border border-[var(--border-color)]' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'">
-                        <span>Patungan Saya</span>
-                        <span class="px-1.5 py-0.2 rounded-full text-[10px]" :class="activeTab === 'saya' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'">{{ $mySharedSubscriptions->count() }}</span>
-                    </button>
-                    <button @click="activeTab = 'bergabung'" class="px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5"
-                            :class="activeTab === 'bergabung' ? 'bg-[var(--bg-card)] text-[var(--text-primary)] shadow-sm font-bold border border-[var(--border-color)]' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'">
-                        <span>Saya Bergabung</span>
-                        <span class="px-1.5 py-0.2 rounded-full text-[10px]" :class="activeTab === 'bergabung' ? 'bg-emerald-500/10 text-emerald-500' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'">{{ $sharedWithMe->count() }}</span>
-                    </button>
-                </div>
+            <div class="flex items-center gap-6 border-b border-[var(--border-color)] pb-3 mb-4">
+                <button @click="activeTab = 'saya'" class="text-xs font-semibold pb-1 -mb-3 transition-colors flex items-center gap-2 cursor-pointer"
+                        :class="activeTab === 'saya' ? 'text-[var(--text-primary)] font-bold border-b-2 border-[var(--text-primary)]' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] border-b-2 border-transparent'">
+                    <span>Patungan Saya</span>
+                    <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-[var(--bg-elevated)] text-[var(--text-muted)]">{{ $mySharedSubscriptions->count() }}</span>
+                </button>
+                <button @click="activeTab = 'bergabung'" class="text-xs font-semibold pb-1 -mb-3 transition-colors flex items-center gap-2 cursor-pointer"
+                        :class="activeTab === 'bergabung' ? 'text-[var(--text-primary)] font-bold border-b-2 border-[var(--text-primary)]' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] border-b-2 border-transparent'">
+                    <span>Saya Bergabung</span>
+                    <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-[var(--bg-elevated)] text-[var(--text-muted)]">{{ $sharedWithMe->count() }}</span>
+                </button>
             </div>
 
             <div x-show="activeTab === 'saya'" x-transition.opacity>
@@ -312,7 +300,7 @@
                             $totalMembers = $sub->shares->count();
                             $allPaid = $totalMembers > 0 && $paidCount === $totalMembers;
                         @endphp
-                        <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg p-4 hover:border-emerald-500/40 transition-colors flex flex-col justify-between relative shadow-sm">
+                        <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg p-4 hover:border-[var(--text-secondary)]/30 transition-colors flex flex-col justify-between relative shadow-sm">
                             @if($sub->pending_proofs_count > 0)
                                 <div class="absolute -top-2 right-3 bg-amber-500 text-black text-[9px] font-bold px-2 py-0.5 rounded shadow-sm z-10">
                                     {{ $sub->pending_proofs_count }} bukti menunggu
@@ -330,7 +318,7 @@
                                     </div>
                                     <div class="min-w-0 flex-1">
                                         <h4 class="font-bold text-[var(--text-primary)] text-sm leading-tight truncate" title="{{ $sub->name }}">{{ $sub->name }}</h4>
-                                        <p class="text-[10px] text-[var(--text-muted)] mt-0.5">{{ $sub->shares->count() + 1 }} anggota • <span class="{{ $sub->is_public ? 'text-emerald-500 font-semibold' : 'text-[var(--text-muted)]' }}">{{ $sub->is_public ? 'Publik' : 'Privat' }}</span></p>
+                                        <p class="text-[10px] text-[var(--text-muted)] mt-0.5">{{ $sub->shares->count() + 1 }} anggota • <span>{{ $sub->is_public ? 'Publik' : 'Privat' }}</span></p>
                                     </div>
                                 </div>
 
@@ -355,7 +343,7 @@
                             </div>
 
                             <div class="flex items-center gap-2 pt-2.5 border-t border-[var(--border-color)]/60">
-                                <button @click="openSquadModal({{ json_encode($sub) }})" class="flex-1 text-xs font-semibold py-1.5 px-3 rounded-md bg-[var(--bg-elevated)] hover:bg-emerald-500/10 hover:text-emerald-500 border border-[var(--border-color)] text-[var(--text-primary)] transition-colors flex items-center justify-center gap-1.5">
+                                <button @click="openSquadModal({{ json_encode($sub) }})" class="flex-1 text-xs font-semibold py-1.5 px-3 rounded-md bg-[var(--bg-elevated)] hover:bg-[var(--bg-elevated)]/80 border border-[var(--border-color)] text-[var(--text-primary)] transition-colors flex items-center justify-center gap-1.5">
                                     Kelola Anggota
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
                                 </button>
@@ -376,7 +364,7 @@
             <div x-show="activeTab === 'bergabung'" x-cloak>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @forelse($sharedWithMe as $share)
-                        <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg p-4 hover:border-emerald-500/40 transition-colors flex flex-col justify-between shadow-sm">
+                        <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg p-4 hover:border-[var(--text-secondary)]/30 transition-colors flex flex-col justify-between shadow-sm">
                             <div>
                                 <div class="flex items-center gap-3 mb-4">
                                     <div class="w-9 h-9 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-color)] flex items-center justify-center flex-shrink-0 p-1.5 overflow-hidden">
@@ -422,7 +410,7 @@
                             </div>
 
                             <div class="pt-2.5 border-t border-[var(--border-color)]/60">
-                                <button @click="openMemberPaymentModal({{ json_encode($share) }})" class="w-full text-xs font-semibold py-1.5 px-3 rounded-md bg-[var(--bg-elevated)] hover:bg-emerald-500/10 hover:text-emerald-500 border border-[var(--border-color)] text-[var(--text-primary)] transition-colors flex items-center justify-center gap-1.5">
+                                <button @click="openMemberPaymentModal({{ json_encode($share) }})" class="w-full text-xs font-semibold py-1.5 px-3 rounded-md bg-[var(--bg-elevated)] hover:bg-[var(--bg-elevated)]/80 border border-[var(--border-color)] text-[var(--text-primary)] transition-colors flex items-center justify-center gap-1.5">
                                     Detail & Pembayaran
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
                                 </button>
@@ -432,7 +420,7 @@
                         <div class="col-span-full py-10 text-center bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg p-6">
                             <h4 class="text-xs font-bold text-[var(--text-primary)] mb-1">Belum Bergabung Patungan Apapun</h4>
                             <p class="text-[11px] text-[var(--text-muted)] max-w-sm mx-auto mb-3">Temukan grup patungan terbuka untuk menghemat pengeluaran langganan.</p>
-                            <a href="{{ route('discover.index') }}" class="text-xs font-semibold text-emerald-500 hover:text-emerald-600">Cari Grup Patungan</a>
+                            <a href="{{ route('discover.index') }}" class="text-xs font-semibold text-[var(--text-primary)] hover:underline">Cari Grup Patungan</a>
                         </div>
                     @endforelse
                 </div>
@@ -443,7 +431,7 @@
             <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg p-4 shadow-sm">
                 <div class="flex items-center justify-between pb-3 mb-3 border-b border-[var(--border-color)]">
                     <h3 class="font-bold text-[var(--text-primary)] text-xs uppercase tracking-wider flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         Aktivitas Terbaru
                     </h3>
                 </div>
@@ -451,7 +439,7 @@
                 <div class="divide-y divide-[var(--border-color)]/60">
                     @forelse($activities as $act)
                         <div class="py-2.5 first:pt-0 last:pb-0 flex items-start gap-2.5">
-                            <div class="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5 {{ $act['type'] === 'paid' ? 'bg-emerald-500/20 text-emerald-500' : ($act['type'] === 'proof' ? 'bg-blue-500/20 text-blue-500' : ($act['type'] === 'rejected' ? 'bg-red-500/20 text-red-500' : 'bg-emerald-500/20 text-emerald-500')) }}">
+                            <div class="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5 {{ $act['type'] === 'paid' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]' }}">
                                 @if($act['type'] === 'paid')
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
                                 @elseif($act['type'] === 'proof')

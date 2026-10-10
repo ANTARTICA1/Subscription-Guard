@@ -129,37 +129,47 @@ class FinancialAssistantService
         $recommendations = [];
         $potentialSavings = 0;
 
+        $brandCounts = [];
+        foreach ($subscriptions as $s) {
+            $normalizedName = strtolower(trim(preg_replace('/\b(mobile|basic|standard|premium|family|student|individual|vip|ultra|plus|starter|pro|paket|langganan|kelas \d+)\b/i', '', $s->name)));
+            $normalizedName = preg_replace('/[^a-z0-9]/', '', $normalizedName);
+            if (!empty($normalizedName)) {
+                $brandCounts[$normalizedName][] = $s;
+            }
+        }
+
+        foreach ($brandCounts as $brand => $items) {
+            if (count($items) > 1) {
+                $names = collect($items)->pluck('name')->join(' & ');
+                $recommendations[] = "Duplikasi Terdeteksi: <b>{$names}</b>. Anda memiliki lebih dari satu langganan untuk penyedia yang sama.";
+                $sorted = collect($items)->sortBy('monthly_amount');
+                $potentialSavings += $sorted->slice(0, count($items) - 1)->sum('monthly_amount');
+            }
+        }
+
         $musicSubs = $subscriptions->filter(fn($s) => stripos($s->name, 'Music') !== false || stripos($s->name, 'Spotify') !== false);
         $cloudSubs = $subscriptions->filter(fn($s) => stripos($s->name, 'iCloud') !== false || stripos($s->name, 'Google One') !== false);
         $tvSubs = $subscriptions->filter(fn($s) => stripos($s->name, 'Apple TV') !== false || stripos($s->name, 'Netflix') !== false);
 
         if ($musicSubs->count() > 0 && $cloudSubs->count() > 0 && $tvSubs->count() > 0) {
-            $recommendations[] = "Terdeteksi pola langganan terpisah (Musik + Cloud + TV). Ekosistem Bundle seperti <b>Apple One</b> atau <b>Google One Premium</b> dapat memangkas tagihan Anda secara radikal.";
-            $potentialSavings += 50000;
+            $recommendations[] = "Terdeteksi pola langganan terpisah (Musik + Cloud + TV). Ekosistem bundle seperti <b>Apple One</b> atau <b>Google One</b> dapat dipertimbangkan jika ingin menyatukan layanan.";
         }
 
         $expensiveSubs = $subscriptions->filter(fn($s) => $s->monthly_amount > 150000)->sortByDesc('monthly_amount');
         if ($expensiveSubs->count() > 0) {
-            $recommendations[] = "Beberapa langganan Anda (seperti {$expensiveSubs->first()->name}) berada di tier Premium. Pastikan tingkat utilitas (penggunaan) Anda harian. Jika jarang dipakai, segera batalkan.";
-            $potentialSavings += $expensiveSubs->first()->monthly_amount * 0.3;
+            $recommendations[] = "Layanan <b>{$expensiveSubs->first()->name}</b> memiliki biaya bulanan tertinggi. Pastikan Anda menggunakannya secara rutin agar tetap bernilai sepadan.";
         }
 
         $monthlySubs = $subscriptions->where('billing_cycle', 'monthly');
-        $yearlySavings = 0;
-        foreach ($monthlySubs as $sub) {
-            $yearlyEstimate = $sub->amount * 12 * 0.15;
-            $yearlySavings += $yearlyEstimate;
-        }
-        if ($yearlySavings > 50000) {
-            $recommendations[] = "Sistem menemukan potensi penghematan <b>Rp" . number_format($yearlySavings, 0, ',', '.') . "/tahun</b> dengan beralih ke siklus pembayaran tahunan (asumsi diskon 15%).";
-            $potentialSavings += $yearlySavings / 12;
+        if ($monthlySubs->count() >= 3) {
+            $recommendations[] = "Untuk langganan yang sudah pasti Anda pakai dalam jangka panjang, cek apakah penyedia layanan resmi menyediakan opsi paket tahunan berdiskon.";
         }
 
         if ($totalMonthly > 500000) {
             $insights[] = [
                 'icon' => 'alert-triangle',
-                'title' => 'Inflasi Gaya Hidup',
-                'description' => "Beban langganan mencapai <b>Rp " . number_format($totalMonthly, 0, ',', '.') . "</b>/bulan. Angka ini cukup tinggi, awasi agar tidak mengganggu rasio tabungan (saving rate) Anda.",
+                'title' => 'Tinjauan Pengeluaran Rutin',
+                'description' => "Beban langganan mencapai <b>Rp " . number_format($totalMonthly, 0, ',', '.') . "</b>/bulan. Pastikan alokasi ini sesuai dengan rasio anggaran bulanan Anda.",
             ];
         }
 
@@ -171,40 +181,29 @@ class FinancialAssistantService
                 $hasCashflowRisk = true;
                 $insights[] = [
                     'icon' => 'calendar',
-                    'title' => 'Tsunami Tagihan',
-                    'description' => "Ada <b>{$count} tagihan</b> yang jatuh tempo di tanggal <b>{$date}</b>. Hati-hati dengan risiko arus kas tersendat di pertengahan bulan. Pertimbangkan geser tanggal tagihan jika memungkinkan.",
+                    'title' => 'Konsentrasi Tanggal Tagihan',
+                    'description' => "Ada <b>{$count} tagihan</b> yang jatuh tempo di tanggal <b>{$date}</b>. Pastikan saldo rekening mencukupi menjelang tanggal tersebut.",
                 ];
                 break;
             }
         }
 
-        $redundancyCount = 0;
-
         $videoStreamers = $subscriptions->filter(fn($s) => preg_match('/netflix|disney|prime|hbo|vidio|viu|apple tv|wetv|iqiyi|catchplay|crunchyroll/i', $s->name));
-        if ($videoStreamers->count() > 1) {
-            $redundancyCount++;
+        if ($videoStreamers->count() > 2) {
             $names = $videoStreamers->pluck('name')->implode(' & ');
-            $recommendations[] = "Redundansi Streaming Video: <b>{$names}</b>. Sebaiknya Anda berlangganan bergilir (ganti-ganti aplikasi tiap bulan) daripada berlangganan semuanya sekaligus.";
-            $cheapest = $videoStreamers->sortBy('monthly_amount')->first();
-            $potentialSavings += $cheapest->monthly_amount;
+            $recommendations[] = "Beberapa Layanan Streaming Aktif: <b>{$names}</b>. Anda dapat mempertimbangkan sistem rotasi bulanan jika waktu menonton terbatas.";
         }
 
         $aiTools = $subscriptions->filter(fn($s) => preg_match('/chatgpt|claude|gemini|perplexity|copilot|openai|midjourney/i', $s->name));
         if ($aiTools->count() > 1) {
-            $redundancyCount++;
             $names = $aiTools->pluck('name')->implode(' & ');
-            $recommendations[] = "Tumpang tindih Layanan AI: <b>{$names}</b>. Sebagian besar AI pintar memiliki kemampuan yang mirip. Pilih satu yang paling sesuai untuk alur kerja Anda.";
-            $cheapest = $aiTools->sortBy('monthly_amount')->first();
-            $potentialSavings += $cheapest->monthly_amount;
+            $recommendations[] = "Multi-Layanan AI: <b>{$names}</b>. Evaluasi model yang paling produktif untuk kebutuhan sehari-hari Anda.";
         }
 
         $musicStreamers = $subscriptions->filter(fn($s) => preg_match('/spotify|apple music|youtube music|joox/i', $s->name));
         if ($musicStreamers->count() > 1) {
-            $redundancyCount++;
             $names = $musicStreamers->pluck('name')->implode(' & ');
-            $recommendations[] = "Tumpang tindih Layanan Musik: <b>{$names}</b>. Katalog lagu mayoritas identik. Batalkan salah satu untuk penghematan instan.";
-            $cheapest = $musicStreamers->sortBy('monthly_amount')->first();
-            $potentialSavings += $cheapest->monthly_amount;
+            $recommendations[] = "Multi-Layanan Musik: <b>{$names}</b>. Pertimbangkan mempertahankan satu katalog utama.";
         }
 
         if (empty($recommendations)) {

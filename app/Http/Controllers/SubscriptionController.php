@@ -159,37 +159,16 @@ class SubscriptionController extends Controller
         return back()->with('success', "Status subscription {$subscription->name} berhasil {$statusText}.");
     }
 
-    public function export()
+    public function export(Request $request, \App\Services\SubscriptionExportService $exportService)
     {
-        $subscriptions = Subscription::where('user_id', Auth::id())->with('category')->get();
+        $user = Auth::user();
+        $filePath = $exportService->generateExcel($user);
+        $filename = 'subscriptions_tatagih_' . date('Y-m-d') . '.xlsx';
 
-        $filename = 'subscriptions_tatagih_' . date('Y-m-d') . '.csv';
-        $headers = [
-            'Content-Type' => 'text/csv; charset=UTF-8',
-            'Content-Disposition' => "attachment; filename=\"$filename\"",
-        ];
-
-        $callback = function () use ($subscriptions) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, ['ID', 'Nama', 'Kategori', 'Nominal', 'Mata Uang', 'Siklus Billing', 'Tanggal Pembayaran', 'Auto Renew', 'Status', 'Tanggal Mulai']);
-
-            foreach ($subscriptions as $sub) {
-                fputcsv($file, [
-                    $sub->id,
-                    $sub->name,
-                    $sub->category->name ?? 'Uncategorized',
-                    $sub->amount,
-                    $sub->currency,
-                    $sub->billing_cycle,
-                    $sub->payment_date,
-                    $sub->auto_renew ? 'Ya' : 'Tidak',
-                    $sub->status,
-                    $sub->start_date->format('Y-m-d'),
-                ]);
-            }
-            fclose($file);
-        };
-
-        return response()->stream($callback, 200, $headers);
+        return response()->download($filePath, $filename, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Cache-Control' => 'max-age=0, no-cache, must-revalidate',
+            'Pragma' => 'public',
+        ])->deleteFileAfterSend(true);
     }
 }

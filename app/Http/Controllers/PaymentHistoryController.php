@@ -70,8 +70,6 @@ class PaymentHistoryController extends Controller
             $donutPercentages[] = $totalCategorySum > 0 ? round(($cat->total / $totalCategorySum) * 100) : 0;
         }
 
-        $totalPaidSparkline = $this->generateSparklinePath($chartData);
-        $transactionCountSparkline = $this->generateSparklinePath($chartCountData);
         $activeSubCountData = [];
         for ($i = 5; $i >= 0; $i--) {
             $monthStart = Carbon::now()->subMonths($i)->startOfMonth();
@@ -94,7 +92,6 @@ class PaymentHistoryController extends Controller
         $activeSubCount = $activeSubCountData[5] ?? 0;
         $lastMonthActiveSubCount = $activeSubCountData[4] ?? 0;
         $activeSubDiff = $activeSubCount - $lastMonthActiveSubCount;
-        $activeSubSparkline = $this->generateSparklinePath($activeSubCountData);
 
         $thisMonthSum = $chartData[5] ?? 0;
         $lastMonthSum = $chartData[4] ?? 0;
@@ -124,48 +121,18 @@ class PaymentHistoryController extends Controller
             ->take(15)
             ->get();
 
+        $rejectedVerifications = \App\Models\SubscriptionShare::where('owner_id', Auth::id())
+            ->where('payment_status', 'rejected')
+            ->get();
+        $rejectedCount = $rejectedVerifications->count();
+        $rejectedTotal = $rejectedVerifications->sum('split_amount');
+
         return view('payments.index', compact(
             'payments', 'subscriptions', 'chartLabels', 'chartData', 'totalPaid',
-            'pendingVerifications', 'historyValidations',
+            'pendingVerifications', 'historyValidations', 'rejectedCount', 'rejectedTotal',
             'donutLabels', 'donutData', 'donutColors', 'donutPercentages', 'totalCategorySum',
-            'totalPaidSparkline', 'transactionCountSparkline', 'activeSubSparkline',
             'totalPaidDiffPct', 'thisMonthCount', 'trxCountDiff', 'activeSubCount', 'activeSubDiff'
         ));
-    }
-
-    private function generateSparklinePath(array $data)
-    {
-        if (empty($data)) return 'M0,15 L100,15';
-        $min = min($data);
-        $max = max($data);
-        $range = $max - $min;
-        if ($range == 0) return 'M0,15 L100,15';
-
-        $count = count($data);
-        $step = 100 / max(1, $count - 1);
-
-        $path = '';
-        $prevX = 0;
-        $prevY = 0;
-
-        foreach (array_values($data) as $i => $value) {
-            $x = $i * $step;
-            $y = 28 - ((($value - $min) / $range) * 24);
-
-            if ($i === 0) {
-                $path .= 'M' . round($x, 1) . ',' . round($y, 1);
-            } else {
-                $cp1x = $prevX + ($step * 0.4);
-                $cp2x = $x - ($step * 0.4);
-                $path .= ' C' . round($cp1x, 1) . ',' . round($prevY, 1) . ' '
-                         . round($cp2x, 1) . ',' . round($y, 1) . ' '
-                         . round($x, 1) . ',' . round($y, 1);
-            }
-
-            $prevX = $x;
-            $prevY = $y;
-        }
-        return $path;
     }
 
     public function store(PaymentHistoryRequest $request)

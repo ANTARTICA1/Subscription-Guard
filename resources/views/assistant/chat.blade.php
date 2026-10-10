@@ -92,7 +92,7 @@
 
             <div class="p-3.5 border-b border-[var(--border-color)] flex items-center justify-between min-w-[250px] bg-[var(--bg-card)]">
                 <div class="flex items-center gap-2">
-                    <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg class="w-4 h-4 text-[var(--text-muted)] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                     </svg>
                     <div>
@@ -103,7 +103,7 @@
 
                 <div class="flex items-center gap-1">
                     <button @click="createNewSession()"
-                            class="p-1.5 rounded-lg text-[var(--text-secondary)] hover:text-emerald-500 hover:bg-emerald-500/10 transition-colors cursor-pointer"
+                            class="p-1.5 rounded-lg text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors cursor-pointer"
                             title="Percakapan Baru">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
@@ -122,7 +122,7 @@
 
             <div class="p-3 min-w-[250px]">
                 <button @click="createNewSession()"
-                        class="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 transition-colors cursor-pointer shadow-sm shadow-emerald-600/20">
+                        class="btn-primary w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold cursor-pointer">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
@@ -132,7 +132,7 @@
 
             <div class="flex-1 overflow-y-auto px-2 space-y-1 py-1 chat-scroll min-w-[250px]">
                 @forelse($sessions as $sess)
-                    <div class="group flex items-center justify-between px-2.5 py-2 rounded-xl text-xs transition-colors cursor-pointer {{ $activeSession && $activeSession->id === $sess->id ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-semibold border border-emerald-500/20' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] border border-transparent' }}">
+                    <div class="group flex items-center justify-between px-2.5 py-2 rounded-xl text-xs transition-colors cursor-pointer {{ $activeSession && $activeSession->id === $sess->id ? 'bg-[var(--bg-elevated)] text-[var(--text-primary)] font-semibold border border-[var(--border-color)]' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)] hover:text-[var(--text-primary)] border border-transparent' }}">
                         <a href="{{ route('assistant.chat', ['session_id' => $sess->id]) }}" class="flex-1 truncate flex items-center gap-2 cursor-pointer min-w-0">
                             <svg class="w-3.5 h-3.5 flex-shrink-0 opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
@@ -207,7 +207,7 @@
 
                 <template x-if="messages.length === 0">
                     <div class="h-full flex flex-col items-center justify-center text-center max-w-xl mx-auto py-6">
-                        <div class="w-20 h-20 rounded-2xl bg-gradient-to-b from-emerald-500/15 to-emerald-500/5 border border-emerald-500/20 p-2.5 flex items-center justify-center mb-4 shadow-lg shadow-emerald-500/5">
+                        <div class="w-16 h-16 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-color)] p-2.5 flex items-center justify-center mb-4 shadow-sm">
                             <img src="{{ asset('images/bot.png') }}" alt="TATA AI" class="w-full h-full object-contain">
                         </div>
 
@@ -218,65 +218,65 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-6 w-full text-left">
                             <button @click="sendPrompt('Berapa total tagihan langgananku bulan ini?')"
-                                    class="group p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-emerald-500/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 text-xs cursor-pointer flex items-center justify-between gap-3">
+                                    class="group p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-[var(--text-muted)] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 text-xs cursor-pointer flex items-center justify-between gap-3">
                                 <div class="flex items-center gap-2.5 min-w-0">
-                                    <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg class="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                                     </svg>
                                     <div class="min-w-0">
-                                        <span class="font-semibold text-[var(--text-primary)] group-hover:text-emerald-500 transition-colors block truncate">Total Tagihan</span>
+                                        <span class="font-semibold text-[var(--text-primary)] block truncate">Total Tagihan</span>
                                         <p class="text-[11px] text-[var(--text-muted)] truncate">Berapa total tagihan bulan ini?</p>
                                     </div>
                                 </div>
-                                <svg class="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-emerald-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg class="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
 
                             <button @click="sendPrompt('Langganan apa yang memakan biaya paling besar?')"
-                                    class="group p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-emerald-500/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 text-xs cursor-pointer flex items-center justify-between gap-3">
+                                    class="group p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-[var(--text-muted)] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 text-xs cursor-pointer flex items-center justify-between gap-3">
                                 <div class="flex items-center gap-2.5 min-w-0">
-                                    <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg class="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                     </svg>
                                     <div class="min-w-0">
-                                        <span class="font-semibold text-[var(--text-primary)] group-hover:text-emerald-500 transition-colors block truncate">Layanan Terbesar</span>
+                                        <span class="font-semibold text-[var(--text-primary)] block truncate">Layanan Terbesar</span>
                                         <p class="text-[11px] text-[var(--text-muted)] truncate">Cek layanan yang paling boros</p>
                                     </div>
                                 </div>
-                                <svg class="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-emerald-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg class="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
 
                             <button @click="sendPrompt('Berikan rekomendasi konkret untuk menghemat biaya langganan saya')"
-                                    class="group p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-emerald-500/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 text-xs cursor-pointer flex items-center justify-between gap-3">
+                                    class="group p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-[var(--text-muted)] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 text-xs cursor-pointer flex items-center justify-between gap-3">
                                 <div class="flex items-center gap-2.5 min-w-0">
-                                    <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg class="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                                     </svg>
                                     <div class="min-w-0">
-                                        <span class="font-semibold text-[var(--text-primary)] group-hover:text-emerald-500 transition-colors block truncate">Tips Hemat Biaya</span>
+                                        <span class="font-semibold text-[var(--text-primary)] block truncate">Tips Hemat Biaya</span>
                                         <p class="text-[11px] text-[var(--text-muted)] truncate">Rekomendasi optimasi langganan</p>
                                     </div>
                                 </div>
-                                <svg class="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-emerald-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg class="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>
 
                             <button @click="sendPrompt('Bagaimana cara menggunakan fitur Split Bill untuk patungan langganan?')"
-                                    class="group p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-emerald-500/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 text-xs cursor-pointer flex items-center justify-between gap-3">
+                                    class="group p-3 rounded-xl border border-[var(--border-color)] bg-[var(--bg-secondary)] hover:border-[var(--text-muted)] hover:-translate-y-0.5 hover:shadow-sm transition-all duration-200 text-xs cursor-pointer flex items-center justify-between gap-3">
                                 <div class="flex items-center gap-2.5 min-w-0">
-                                    <svg class="w-4 h-4 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <svg class="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-colors shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>
                                     <div class="min-w-0">
-                                        <span class="font-semibold text-[var(--text-primary)] group-hover:text-emerald-500 transition-colors block truncate">Panduan Split Bill</span>
+                                        <span class="font-semibold text-[var(--text-primary)] block truncate">Panduan Split Bill</span>
                                         <p class="text-[11px] text-[var(--text-muted)] truncate">Berbagi biaya patungan bersama teman</p>
                                     </div>
                                 </div>
-                                <svg class="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-emerald-500 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg class="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                                 </svg>
                             </button>

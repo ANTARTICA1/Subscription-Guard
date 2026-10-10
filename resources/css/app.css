@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
 @source "../views/**/*.blade.php";
 @source "../../resources/views/**/*.blade.php";
@@ -6,6 +7,7 @@
 @source "resources/views/**/*.blade.php";
 
 :root {
+    --bg-body: #08101a;
     --bg-primary: #08101a;
     --bg-secondary: #0d1726;
     --bg-card: #111c2e;
@@ -13,8 +15,8 @@
     --bg-elevated: #1a2f4c;
 
     --text-primary: #ffffff;
-    --text-secondary: #cbd5e1;
-    --text-muted: #64748b;
+    --text-secondary: #e2e8f0;
+    --text-muted: #94a3b8;
 
     --accent-primary: #10b981;
     --accent-secondary: #059669;
@@ -60,8 +62,8 @@
     --bg-elevated: #f1f5f9;
 
     --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #64748b;
+    --text-secondary: #334155;
+    --text-muted: #475569;
 
     --accent-primary: #10b981;
     --accent-secondary: #059669;
@@ -83,6 +85,79 @@
     --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
     --shadow-lg: 0 10px 25px rgba(0,0,0,0.06);
     --shadow-glow: none;
+}
+
+.theme-card {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+.theme-elevated {
+    background-color: var(--bg-elevated) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+.theme-input {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+.theme-text-primary {
+    color: var(--text-primary) !important;
+}
+.theme-text-secondary {
+    color: var(--text-secondary) !important;
+}
+.theme-text-muted {
+    color: var(--text-muted) !important;
+}
+.theme-border {
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="light"] .theme-card {
+    background-color: #ffffff !important;
+    border-color: rgba(15, 23, 42, 0.08) !important;
+    color: #0f172a !important;
+}
+[data-theme="light"] .theme-elevated {
+    background-color: #f1f5f9 !important;
+    border-color: rgba(15, 23, 42, 0.08) !important;
+    color: #0f172a !important;
+}
+[data-theme="light"] .theme-input {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+}
+[data-theme="light"] .theme-text-primary {
+    color: #0f172a !important;
+}
+[data-theme="light"] .theme-text-secondary {
+    color: #334155 !important;
+}
+[data-theme="light"] .theme-text-muted {
+    color: #64748b !important;
+}
+[data-theme="light"] .theme-border {
+    border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+.text-\[\#4b5e78\],
+.text-\[\#64748b\] {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="light"] .text-\[\#4b5e78\],
+[data-theme="light"] .text-\[\#64748b\],
+[data-theme="light"] .text-slate-400,
+[data-theme="light"] .text-slate-500 {
+    color: #475569 !important;
+}
+
+[data-theme="light"] .text-\[\#475569\],
+[data-theme="light"] .text-slate-600 {
+    color: #334155 !important;
 }
 
 .scroll-morph {

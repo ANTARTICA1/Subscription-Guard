@@ -16,7 +16,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\SharedSubscriptionController;
 use App\Http\Controllers\MoneyLeakController;
-use App\Http\Controllers\SubscriptionComparisonController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 
 Route::get('/', function () {
@@ -68,13 +67,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/leaks', [MoneyLeakController::class, 'index'])->name('leaks.index');
     Route::get('/leaks/scan', [MoneyLeakController::class, 'scan'])->name('leaks.scan');
 
-    Route::get('/comparisons', [SubscriptionComparisonController::class, 'index'])->name('comparisons.index');
-
     Route::get('/payments', [PaymentHistoryController::class, 'index'])->name('payments.index');
     Route::post('/payments', [PaymentHistoryController::class, 'store'])->name('payments.store');
     Route::delete('/payments/{id}', [PaymentHistoryController::class, 'destroy'])->name('payments.destroy');
 
     Route::get('/telegram', [TelegramController::class, 'connect'])->name('telegram.connect');
+    Route::post('/telegram/manual-connect', [TelegramController::class, 'manualConnect'])->name('telegram.manual-connect');
     Route::post('/telegram/regenerate', [TelegramController::class, 'regenerateCode'])->name('telegram.regenerate');
     Route::post('/telegram/test-notification', [TelegramController::class, 'sendTestNotification'])->name('telegram.test-notification');
     Route::delete('/telegram', [TelegramController::class, 'disconnect'])->name('telegram.disconnect');

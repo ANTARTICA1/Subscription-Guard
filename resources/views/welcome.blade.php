@@ -27,9 +27,9 @@
             --surface-card: #0c1322;
             --surface-elevated: #111b2e;
             --surface-nav: #0a1020;
-            --text-primary: #e8ecf4;
-            --text-secondary: #7b8ca5;
-            --text-muted: #3d4f6a;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
             --accent: #10b981;
             --accent-hover: #34d399;
             --accent-muted: rgba(16, 185, 129, 0.12);
@@ -337,8 +337,9 @@
         .lp-mock__badge {
             font-size: 0.62rem;
             font-weight: 700;
-            color: var(--accent);
-            background: var(--accent-muted);
+            color: var(--text-muted);
+            background: var(--surface-card);
+            border: 1px solid var(--border);
             padding: 3px 10px;
             border-radius: 6px;
         }
@@ -429,8 +430,8 @@
             width: 32px;
             height: 32px;
             border-radius: 8px;
-            background: #2563eb15;
-            color: #60a5fa;
+            background: rgba(100, 116, 139, 0.12);
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -500,7 +501,7 @@
         .lp-section__eyebrow {
             font-size: 0.68rem;
             font-weight: 700;
-            color: var(--accent);
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.1em;
             margin-bottom: 12px;
@@ -551,7 +552,7 @@
         }
 
         .ftr-hero__right {
-            background: rgba(16, 185, 129, 0.03);
+            background: rgba(255, 255, 255, 0.015);
             padding: 32px;
             display: flex;
             align-items: center;
@@ -565,7 +566,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.12em;
-            color: var(--accent);
+            color: var(--text-muted);
             margin-bottom: 14px;
         }
 
@@ -596,7 +597,7 @@
         .ftr-hero__chip {
             font-size: 0.85rem;
             font-weight: 600;
-            color: var(--accent);
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
         }
@@ -657,7 +658,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--accent);
+            color: var(--text-muted);
             margin-bottom: 8px;
             display: block;
         }
@@ -780,7 +781,7 @@
 
         .hw-step__desc {
             font-size: 0.84rem;
-            color: #64748b;
+            color: var(--text-secondary);
             line-height: 1.65;
             margin: 0 0 18px;
             max-width: 300px;
@@ -790,9 +791,9 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--c, #10b981);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-secondary);
             margin-top: 12px;
             position: relative;
             padding-bottom: 6px;
@@ -804,8 +805,8 @@
             bottom: 0;
             width: 24px;
             height: 2px;
-            background: var(--c, #10b981);
-            opacity: 0.4;
+            background: var(--border-hover);
+            opacity: 0.5;
             border-radius: 2px;
             transition: width 0.4s ease, opacity 0.4s ease;
         }
@@ -815,11 +816,11 @@
         }
 
         .hw-step__tag svg {
-            width: 22px !important;
-            height: 22px !important;
-            min-width: 22px;
+            width: 20px !important;
+            height: 20px !important;
+            min-width: 20px;
             flex-shrink: 0;
-            color: var(--c, #94a3b8);
+            color: var(--text-muted);
         }
 
         .hw-step:not(:last-child) .hw-step__inner {
@@ -869,11 +870,10 @@
         }
 
         .lp-split__feat-check {
-            width: 24px;
-            height: 24px;
-            border-radius: 7px;
-            background: var(--accent-muted);
-            color: var(--accent);
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            color: var(--text-muted);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -881,8 +881,8 @@
         }
 
         .lp-split__feat-check svg {
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
         }
 
         .lp-split-mock {
@@ -998,75 +998,6 @@
             color: var(--text-muted);
         }
 
-        .lp-testimonials {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-top: 64px;
-        }
-
-        .lp-testimonial {
-            background: var(--surface-base);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            transition: border-color 0.2s ease;
-        }
-
-        .lp-testimonial:hover {
-            border-color: var(--border-hover);
-        }
-
-        .lp-testimonial__stars {
-            display: flex;
-            gap: 2px;
-            margin-bottom: 16px;
-        }
-
-        .lp-testimonial__stars svg {
-            width: 16px;
-            height: 16px;
-            color: #f59e0b;
-            fill: #f59e0b;
-        }
-
-        .lp-testimonial__text {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 20px;
-            font-weight: 500;
-            font-style: italic;
-        }
-
-        .lp-testimonial__author {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .lp-testimonial__avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        .lp-testimonial__name {
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .lp-testimonial__desc {
-            font-size: 0.68rem;
-            color: var(--text-muted);
-        }
 
         .lp-faqs {
             max-width: 720px;
@@ -1248,7 +1179,6 @@
             .lp-features { grid-template-columns: 1fr; }
             .lp-steps { grid-template-columns: 1fr; gap: 40px; }
             .lp-steps::before { display: none; }
-            .lp-testimonials { grid-template-columns: 1fr; }
             .lp-section { padding: 80px 20px; }
             .lp-section--alt .lp-section { padding: 80px 20px; }
             .lp-hero__ctas { flex-direction: column; align-items: flex-start; }
@@ -1280,7 +1210,7 @@
         .ta-item__num {
             font-size: 1.5rem;
             font-weight: 800;
-            color: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.25);
             letter-spacing: -0.04em;
             line-height: 1;
             padding-top: 2px;
@@ -1298,7 +1228,7 @@
         }
         .ta-item__desc {
             font-size: 0.84rem;
-            color: #64748b;
+            color: var(--text-secondary);
             line-height: 1.7;
             margin: 0;
         }
@@ -1319,8 +1249,8 @@
             --surface-elevated: #ffffff;
             --surface-nav: rgba(255, 255, 255, 0.88);
             --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #64748b;
+            --text-secondary: #334155;
+            --text-muted: #475569;
             --accent: #10b981;
             --accent-hover: #059669;
             --accent-muted: rgba(16, 185, 129, 0.1);
@@ -1383,7 +1313,7 @@
         }
 
         [data-theme="light"] .lp-mock-row:hover {
-            border-color: rgba(16, 185, 129, 0.3);
+            border-color: var(--border-hover);
             background: #f1f5f9;
         }
 
@@ -1412,7 +1342,7 @@
         }
 
         [data-theme="light"] .ftr-hero:hover {
-            border-color: rgba(16, 185, 129, 0.35);
+            border-color: var(--border-hover);
             box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
         }
 
@@ -1425,7 +1355,7 @@
         }
 
         [data-theme="light"] .ftr-hero__right {
-            background: rgba(16, 185, 129, 0.04);
+            background: #f8fafc;
             border-left: 1px solid rgba(15, 23, 42, 0.06);
         }
 
@@ -1460,7 +1390,7 @@
         }
 
         [data-theme="light"] .hw-step:hover {
-            border-top-color: rgba(16, 185, 129, 0.4);
+            border-top-color: var(--border-hover);
         }
 
         [data-theme="light"] .hw-step__num {
@@ -1468,7 +1398,7 @@
         }
 
         [data-theme="light"] .hw-step:hover .hw-step__num {
-            -webkit-text-stroke: 1.5px rgba(16, 185, 129, 0.6);
+            -webkit-text-stroke: 1.5px rgba(15, 23, 42, 0.35);
         }
 
         [data-theme="light"] .hw-step__title {
@@ -1503,7 +1433,7 @@
         }
 
         [data-theme="light"] .lp-split-mock__price {
-            color: #64748b;
+            color: #475569;
         }
 
         [data-theme="light"] .lp-split-mock__member {
@@ -1513,7 +1443,7 @@
         }
 
         [data-theme="light"] .lp-split-mock__member:hover {
-            border-color: rgba(16, 185, 129, 0.3);
+            border-color: var(--border-hover);
             background: #f1f5f9;
         }
 
@@ -1522,7 +1452,7 @@
         }
 
         [data-theme="light"] .lp-split-mock__member-role {
-            color: #64748b;
+            color: #475569;
         }
 
         [data-theme="light"] .ta-item {
@@ -1534,7 +1464,7 @@
         }
 
         [data-theme="light"] .ta-item__num {
-            color: rgba(15, 23, 42, 0.15);
+            color: rgba(15, 23, 42, 0.35);
         }
 
         [data-theme="light"] .ta-item__title {
@@ -1543,29 +1473,6 @@
 
         [data-theme="light"] .ta-item__desc {
             color: #475569;
-        }
-
-        [data-theme="light"] .lp-testimonial {
-            background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.08);
-            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
-        }
-
-        [data-theme="light"] .lp-testimonial:hover {
-            border-color: rgba(16, 185, 129, 0.35);
-            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
-        }
-
-        [data-theme="light"] .lp-testimonial__text {
-            color: #475569;
-        }
-
-        [data-theme="light"] .lp-testimonial__name {
-            color: #0f172a;
-        }
-
-        [data-theme="light"] .lp-testimonial__desc {
-            color: #64748b;
         }
 
         [data-theme="light"] .lp-faq {
@@ -1587,7 +1494,7 @@
         }
 
         [data-theme="light"] .lp-faq__trigger svg {
-            color: #64748b;
+            color: #475569;
         }
 
         [data-theme="light"] .lp-faq__answer {
@@ -1605,7 +1512,7 @@
         }
 
         [data-theme="light"] .lp-footer__text {
-            color: #64748b;
+            color: #475569;
         }
 
         [data-theme="light"] .lp-nav__mobile-menu {
@@ -1709,7 +1616,7 @@
                         </svg>
                     </template>
                     <template x-if="currentTheme === 'dark'">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                         </svg>
                     </template>
@@ -1737,7 +1644,7 @@
                         </svg>
                     </template>
                     <template x-if="currentTheme === 'dark'">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                         </svg>
                     </template>
@@ -1811,7 +1718,7 @@
                     </div>
                     <div style="text-align: right;">
                         <div class="lp-mock-row__price">Rp186.000</div>
-                        <div class="lp-mock-row__status" style="color: #f97066; background: rgba(249,112,102,0.1);">3 hari lagi</div>
+                        <div class="lp-mock-row__status" style="color: var(--text-muted); background: var(--surface-card); border: 1px solid var(--border);">3 hari lagi</div>
                     </div>
                 </div>
 
@@ -1823,7 +1730,7 @@
                     </div>
                     <div style="text-align: right;">
                         <div class="lp-mock-row__price">Rp86.900</div>
-                        <div class="lp-mock-row__status" style="color: var(--accent); background: var(--accent-muted);">12 hari lagi</div>
+                        <div class="lp-mock-row__status" style="color: var(--text-muted); background: var(--surface-card); border: 1px solid var(--border);">12 hari lagi</div>
                     </div>
                 </div>
 
@@ -1835,13 +1742,13 @@
                     </div>
                     <div style="text-align: right;">
                         <div class="lp-mock-row__price">Rp109.000</div>
-                        <div class="lp-mock-row__status" style="color: var(--accent); background: var(--accent-muted);">18 hari lagi</div>
+                        <div class="lp-mock-row__status" style="color: var(--text-muted); background: var(--surface-card); border: 1px solid var(--border);">18 hari lagi</div>
                     </div>
                 </div>
             </div>
 
             <div class="lp-mock-ring">
-                <div class="lp-mock-ring__value" style="color: var(--accent);">82</div>
+                <div class="lp-mock-ring__value" style="color: var(--text-primary);">82</div>
                 <div class="lp-mock-ring__label">Skor</div>
             </div>
         </div>
@@ -1917,21 +1824,21 @@
             <div class="ftr-trust-strip lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:300ms">
                 <div class="ftr-trust-item">
                     <h4 class="ftr-trust-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                        Komparasi Layanan
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" style="color: var(--text-muted);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        Deteksi Pemborosan
                     </h4>
-                    <p class="ftr-trust-desc">Bandingkan Netflix vs Disney+, Spotify vs YouTube Music untuk cari yang paling value for money.</p>
+                    <p class="ftr-trust-desc">Identifikasi langganan pasif, duplikasi, dan kenaikan harga secara cerdas dan efisien.</p>
                 </div>
                 <div class="ftr-trust-item">
                     <h4 class="ftr-trust-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" style="color: var(--text-muted);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                         100% Aman & Privat
                     </h4>
                     <p class="ftr-trust-desc">Tidak perlu data kartu kredit atau akses rekening. Tatagih hanya mencatat dan mengingatkan.</p>
                 </div>
                 <div class="ftr-trust-item">
                     <h4 class="ftr-trust-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" style="color: var(--text-muted);" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         Gratis Selamanya
                     </h4>
                     <p class="ftr-trust-desc">Semua fitur tersedia gratis tanpa batasan. Tidak ada biaya tersembunyi atau upsell.</p>
@@ -1953,7 +1860,7 @@
                     <div class="hw-step__num">01</div>
                     <h3 class="hw-step__title">Catat Langganan</h3>
                     <p class="hw-step__desc">Masukkan nama layanan, harga, dan siklus pembayaran. Sistem otomatis menghitung jadwal jatuh tempo secara akurat.</p>
-                    <span class="hw-step__tag" style="--c: #10b981;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" style="width: 22px; height: 22px; min-width: 22px; display: block;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Input cepat & otomatis</span>
+                    <span class="hw-step__tag"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" style="width: 22px; height: 22px; min-width: 22px; display: block;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Input cepat & otomatis</span>
                 </div>
             </div>
 
@@ -1962,7 +1869,7 @@
                     <div class="hw-step__num">02</div>
                     <h3 class="hw-step__title">Hubungkan Telegram</h3>
                     <p class="hw-step__desc">Kirim kode verifikasi ke bot Telegram kami. Setelah terhubung, pengingat tagihan akan dikirim otomatis ke HP Anda.</p>
-                    <span class="hw-step__tag" style="--c: #38bdf8;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" style="width: 22px; height: 22px; min-width: 22px; display: block;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg> Reminder H-7, H-3, H-1</span>
+                    <span class="hw-step__tag"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" style="width: 22px; height: 22px; min-width: 22px; display: block;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg> Reminder H-7, H-3, H-1</span>
                 </div>
             </div>
 
@@ -1971,7 +1878,7 @@
                     <div class="hw-step__num">03</div>
                     <h3 class="hw-step__title">Kontrol & Hemat</h3>
                     <p class="hw-step__desc">Pantau pengeluaran, deteksi pemborosan, dan batalkan layanan yang tidak terpakai sebelum terjadi auto-renewal.</p>
-                    <span class="hw-step__tag" style="--c: #fbbf24;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" style="width: 22px; height: 22px; min-width: 22px; display: block;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg> Anti tagihan siluman</span>
+                    <span class="hw-step__tag"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" style="width: 22px; height: 22px; min-width: 22px; display: block;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg> Anti tagihan siluman</span>
                 </div>
             </div>
         </div>
@@ -2031,7 +1938,7 @@
                                 </div>
                                 <div style="text-align: right;">
                                     <div style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); margin-bottom: 3px;">Rp46.500</div>
-                                    <span style="font-size: 0.58rem; font-weight: 700; padding: 3px 8px; border-radius: 5px; background: var(--accent-muted); color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em;">Lunas</span>
+                                    <span style="font-size: 0.58rem; font-weight: 700; padding: 3px 8px; border-radius: 5px; background: var(--surface-card); border: 1px solid var(--border); color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em;">Lunas</span>
                                 </div>
                             </div>
                             <div class="lp-split-mock__member">
@@ -2044,7 +1951,7 @@
                                 </div>
                                 <div style="text-align: right;">
                                     <div style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); margin-bottom: 3px;">Rp46.500</div>
-                                    <span style="font-size: 0.58rem; font-weight: 700; padding: 3px 8px; border-radius: 5px; background: #f59e0b15; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.04em;">Menunggak</span>
+                                    <span style="font-size: 0.58rem; font-weight: 700; padding: 3px 8px; border-radius: 5px; background: var(--surface-card); border: 1px solid var(--border); color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Menunggak</span>
                                 </div>
                             </div>
                             <div class="lp-split-mock__member">
@@ -2057,7 +1964,7 @@
                                 </div>
                                 <div style="text-align: right;">
                                     <div style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); margin-bottom: 3px;">Rp46.500</div>
-                                    <span style="font-size: 0.58rem; font-weight: 700; padding: 3px 8px; border-radius: 5px; background: var(--accent-muted); color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em;">Lunas</span>
+                                    <span style="font-size: 0.58rem; font-weight: 700; padding: 3px 8px; border-radius: 5px; background: var(--surface-card); border: 1px solid var(--border); color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em;">Lunas</span>
                                 </div>
                             </div>
                             <div class="lp-split-mock__member">
@@ -2070,7 +1977,7 @@
                                 </div>
                                 <div style="text-align: right;">
                                     <div style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); margin-bottom: 3px;">Rp46.500</div>
-                                    <span style="font-size: 0.58rem; font-weight: 700; padding: 3px 8px; border-radius: 5px; background: var(--accent-muted); color: var(--accent); text-transform: uppercase; letter-spacing: 0.04em;">Lunas</span>
+                                    <span style="font-size: 0.58rem; font-weight: 700; padding: 3px 8px; border-radius: 5px; background: var(--surface-card); border: 1px solid var(--border); color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em;">Lunas</span>
                                 </div>
                             </div>
                         </div>
@@ -2079,87 +1986,43 @@
             </div>
         </div>
     </div>
-    <div class="lp-section--alt" id="ai-assistant">
-        <div class="lp-section lp-section__center">
-            <div class="lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')">
-                <div class="lp-section__eyebrow">Analisis Keuangan</div>
-                <h2 class="lp-section__title">Dilengkapi <span style="color: var(--accent);">Tata Asisten</span></h2>
-                <p class="lp-section__desc">Bukan sekadar pencatat biasa. Tatagih bertindak layaknya analis keuangan pribadi Anda, mendeteksi setiap kebocoran dana sekecil apa pun.</p>
-            </div>
-
-            <div class="ta-items">
-                <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:100ms">
-                    <div class="ta-item__num">01</div>
-                    <div class="ta-item__body">
-                        <div class="ta-item__title">Health Score 360</div>
-                        <p class="ta-item__desc">Mengevaluasi kesehatan finansial secara menyeluruh, menghitung rasio pemborosan tagihan dan efisiensi pengeluaran Anda secara real-time. Skor 0-100.</p>
-                    </div>
-                </div>
-
-                <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:150ms">
-                    <div class="ta-item__num">02</div>
-                    <div class="ta-item__body">
-                        <div class="ta-item__title">Deteksi Tsunami Tagihan</div>
-                        <p class="ta-item__desc">Peringatan otomatis saat jadwal tagihan menumpuk di hari yang sama, mencegah guncangan arus kas bulanan secara tiba-tiba.</p>
-                    </div>
-                </div>
-
-                <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:200ms">
-                    <div class="ta-item__num">03</div>
-                    <div class="ta-item__body">
-                        <div class="ta-item__title">Pelacak Tumpang Tindih</div>
-                        <p class="ta-item__desc">Mendeteksi langganan rival dalam satu fungsi. Menemukan layanan ganda yang bisa digilir per musim untuk menghemat pengeluaran.</p>
-                    </div>
-                </div>
-
-                <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:250ms">
-                    <div class="ta-item__num">04</div>
-                    <div class="ta-item__body">
-                        <div class="ta-item__title">Peringatan Inflasi Gaya Hidup</div>
-                        <p class="ta-item__desc">Mengawasi total beban tagihan berkala. Jika pengeluaran subscription melonjak melebihi batas wajar, sistem segera memberi sinyal intervensi.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="lp-section">
+    <div class="lp-section lp-section__center" id="ai-assistant">
         <div class="lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')">
-            <div class="lp-section__eyebrow">Testimoni</div>
-            <h2 class="lp-section__title">Dipercaya Pengguna</h2>
-            <p class="lp-section__desc">Apa kata mereka tentang Tatagih.</p>
+            <div class="lp-section__eyebrow">Analisis Keuangan</div>
+            <h2 class="lp-section__title">Dilengkapi Tata Asisten</h2>
+            <p class="lp-section__desc">Bukan sekadar pencatat biasa. Tatagih bertindak layaknya analis keuangan pribadi Anda, mendeteksi setiap kebocoran dana sekecil apa pun.</p>
         </div>
 
-        <div class="lp-testimonials">
-            <div class="lp-testimonial lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay: 100ms;">
-                <div class="lp-testimonial__stars">
-                    @for($i = 0; $i < 5; $i++)
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                    @endfor
-                </div>
-                <p class="lp-testimonial__text">"Fitur notifikasi Telegramnya mantep banget King. Dulu sering kebobolan auto renewal Spotify padahal udah jarang dipakai. UI nya juga mantap parah."</p>
-                <div class="lp-testimonial__author">
-                    <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Dimas R." class="lp-testimonial__avatar" style="object-fit: cover;">
-                    <div>
-                        <div class="lp-testimonial__name">Dimas R.</div>
-                        <div class="lp-testimonial__desc">Software Developer</div>
-                    </div>
+        <div class="ta-items">
+            <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:100ms">
+                <div class="ta-item__num">01</div>
+                <div class="ta-item__body">
+                    <div class="ta-item__title">Health Score 360</div>
+                    <p class="ta-item__desc">Mengevaluasi kesehatan finansial secara menyeluruh, menghitung rasio pemborosan tagihan dan efisiensi pengeluaran Anda secara real-time. Skor 0-100.</p>
                 </div>
             </div>
 
-            <div class="lp-testimonial lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay: 200ms;">
-                <div class="lp-testimonial__stars">
-                    @for($i = 0; $i < 5; $i++)
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                    @endfor
+            <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:150ms">
+                <div class="ta-item__num">02</div>
+                <div class="ta-item__body">
+                    <div class="ta-item__title">Deteksi Tsunami Tagihan</div>
+                    <p class="ta-item__desc">Peringatan otomatis saat jadwal tagihan menumpuk di hari yang sama, mencegah guncangan arus kas bulanan secara tiba-tiba.</p>
                 </div>
-                <p class="lp-testimonial__text">"Mengelola tagihan dan patungan langganan jadi gampang. Fitur Split Bill membantu banget buat mencatat siapa yang nunggak. 10/10 Recommended!"</p>
-                <div class="lp-testimonial__author">
-                    <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Anita K." class="lp-testimonial__avatar" style="object-fit: cover;">
-                    <div>
-                        <div class="lp-testimonial__name">Anita K.</div>
-                        <div class="lp-testimonial__desc">Mahasiswa</div>
-                    </div>
+            </div>
+
+            <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:200ms">
+                <div class="ta-item__num">03</div>
+                <div class="ta-item__body">
+                    <div class="ta-item__title">Pelacak Tumpang Tindih</div>
+                    <p class="ta-item__desc">Mendeteksi langganan rival dalam satu fungsi. Menemukan layanan ganda yang bisa digilir per musim untuk menghemat pengeluaran.</p>
+                </div>
+            </div>
+
+            <div class="ta-item lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')" style="transition-delay:250ms">
+                <div class="ta-item__num">04</div>
+                <div class="ta-item__body">
+                    <div class="ta-item__title">Peringatan Inflasi Gaya Hidup</div>
+                    <p class="ta-item__desc">Mengawasi total beban tagihan berkala. Jika pengeluaran subscription melonjak melebihi batas wajar, sistem segera memberi sinyal intervensi.</p>
                 </div>
             </div>
         </div>

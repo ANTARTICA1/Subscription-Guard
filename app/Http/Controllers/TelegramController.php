@@ -55,6 +55,31 @@ class TelegramController extends Controller
         return back()->with('success', 'Telegram berhasil diputus!');
     }
 
+    public function manualConnect(Request $request)
+    {
+        $request->validate([
+            'chat_id' => 'required|string|max:255',
+        ]);
+
+        $user = Auth::user();
+        $chatId = trim($request->input('chat_id'));
+
+        $connection = $user->telegramConnection;
+        if (!$connection) {
+            $connection = new TelegramConnection();
+            $connection->user_id = $user->id;
+            $connection->verification_code = 'TATAGIH-' . strtoupper(Str::random(6));
+        }
+
+        $connection->chat_id = $chatId;
+        $connection->verified_at = now();
+        $connection->save();
+
+        $user->update(['telegram_chat_id' => $chatId]);
+
+        return back()->with('success', 'Akun Telegram berhasil terhubung!');
+    }
+
     public function sendTestNotification(TelegramService $telegramService)
     {
         $user = Auth::user();

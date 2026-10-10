@@ -35,12 +35,14 @@ class CheckSubscriptionReminder extends Command
 
             if (!$type) continue;
 
-            $alreadySent = Notification::where('subscription_id', $subscription->id)
+            $existingNotif = Notification::where('subscription_id', $subscription->id)
                 ->where('type', $type)
                 ->whereDate('created_at', Carbon::today())
-                ->exists();
+                ->first();
 
-            if ($alreadySent) continue;
+            if ($existingNotif && $existingNotif->status === 'sent') {
+                continue;
+            }
 
             $user = $subscription->user;
             $nextDate = $subscription->next_payment_date->translatedFormat('d F Y');
@@ -69,17 +71,29 @@ class CheckSubscriptionReminder extends Command
                 $status = $success ? 'sent' : 'failed';
             }
 
-            Notification::create([
-                'user_id' => $user->id,
-                'subscription_id' => $subscription->id,
-                'type' => $type,
-                'message' => $message,
-                'sent_at' => $status === 'sent' ? now() : null,
-                'status' => $status,
-            ]);
+            if ($existingNotif) {
+                $existingNotif->update([
+                    'message' => $message,
+                    'sent_at' => $status === 'sent' ? now() : $existingNotif->sent_at,
+                    'status' => $status,
+                ]);
+            } else {
+                Notification::create([
+                    'user_id' => $user->id,
+                    'subscription_id' => $subscription->id,
+                    'type' => $type,
+                    'message' => $message,
+                    'sent_at' => $status === 'sent' ? now() : null,
+                    'status' => $status,
+                ]);
+            }
 
-            $sent++;
-            $this->line("  → Sent {$type} reminder for {$subscription->name} to {$user->name}");
+            if ($status === 'sent') {
+                $sent++;
+                $this->line("  → Berhasil kirim {$type} reminder untuk {$subscription->name} ke Telegram {$user->name}");
+            } else {
+                $this->warn("  → Pengingat {$type} untuk {$subscription->name} disimpan (Status: {$status})");
+            }
         }
 
         $this->info("Done! {$sent} reminders processed.");

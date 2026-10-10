@@ -40,17 +40,13 @@
             $glowColor = '#10b981';
         @endphp
         <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.04)] rounded-3xl p-8 relative overflow-hidden">
-
-            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[{{ $glowColor }}] rounded-full blur-[120px] opacity-[0.15] pointer-events-none mix-blend-screen"></div>
-
             <div class="relative z-10 flex flex-col md:flex-row gap-8 items-start">
-
-                <div class="w-32 h-32 rounded-full bg-white p-2 shadow-[0_0_40px_rgba(16,185,129,0.3)] flex-shrink-0 flex items-center justify-center">
+                <div class="w-32 h-32 rounded-full bg-white p-2 shadow-sm flex-shrink-0 flex items-center justify-center">
                     @if($subscription->logo)
                         <img src="{{ $subscription->logo }}" alt="{{ $subscription->name }}" class="w-full h-full object-contain">
                     @else
                         <div class="w-full h-full flex items-center justify-center text-4xl font-bold" style="color: {{ $subColor }}">
-                            {!! $subscription->category->icon ?? 'S' !!}
+                            {{ strtoupper(substr($subscription->name, 0, 2)) }}
                         </div>
                     @endif
                 </div>
@@ -63,8 +59,8 @@
                             <span class="inline-block px-2.5 py-1 bg-[#192a42] border border-[rgba(255,255,255,0.06)] text-[#94a3b8] text-[10px] font-bold tracking-widest uppercase rounded mb-3">{{ strtoupper($subscription->status) }}</span>
                         @endif
                         <h1 class="text-3xl font-extrabold text-white mb-2 tracking-tight">{{ $subscription->name }}</h1>
-                        <p class="text-sm text-[#94a3b8] flex items-center gap-2">
-                            {!! $subscription->category->icon ?? '' !!}
+                        <p class="text-sm text-[#94a3b8] flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
                             {{ $subscription->category->name ?? 'Lainnya' }}
                         </p>
                     </div>
@@ -122,7 +118,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
                 <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.03)] rounded-xl p-5 flex flex-col items-center justify-center">
                     <p class="text-[10px] text-[#4b5e78] font-bold tracking-wide uppercase mb-2">Total Terbayar</p>
-                    <p class="text-2xl font-extrabold text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]">
+                    <p class="text-2xl font-extrabold text-white">
                         Rp{{ number_format($subscription->paymentHistories->where('status', 'paid')->sum('amount'), 0, ',', '.') }}
                     </p>
                 </div>
@@ -134,7 +130,7 @@
                 </div>
                 <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.03)] rounded-xl p-5 flex flex-col items-center justify-center">
                     <p class="text-[10px] text-[#4b5e78] font-bold tracking-wide uppercase mb-2">Rata-rata</p>
-                    <p class="text-2xl font-extrabold text-emerald-400 drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]">
+                    <p class="text-2xl font-extrabold text-white">
                         Rp{{ number_format($subscription->amount, 0, ',', '.') }}
                     </p>
                 </div>
@@ -189,13 +185,13 @@
     <div class="lg:col-span-1 space-y-6">
 
         @if($subscription->auto_renew)
-        <div class="bg-[#19150d] border border-amber-500/20 rounded-2xl p-6">
+        <div class="card border border-amber-500/20 bg-amber-500/10 rounded-2xl p-6">
             <div class="flex items-start gap-3 mb-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                 <h4 class="text-[11px] font-bold text-amber-500 tracking-wider uppercase mt-0.5">Info Auto-Renew</h4>
             </div>
-            <p class="text-[11px] text-[#94a3b8] leading-relaxed pl-8">
-                Layanan ini memperpanjang otomatis pada <span class="font-bold text-white">{{ $subscription->next_payment_date->translatedFormat('d F Y') }}</span>. Pastikan saldo Anda mencukupi untuk tagihan berikutnya.
+            <p class="text-[11px] text-[var(--text-secondary)] leading-relaxed pl-8">
+                Layanan ini memperpanjang otomatis pada <span class="font-bold text-[var(--text-primary)]">{{ $subscription->next_payment_date->translatedFormat('d F Y') }}</span>. Pastikan saldo Anda mencukupi untuk tagihan berikutnya.
             </p>
         </div>
         @endif
@@ -213,21 +209,21 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] text-[#94a3b8]">12 Bulan:</span>
-                    <span class="text-xs font-bold text-emerald-400">Rp{{ number_format($subscription->monthly_amount * 12, 0, ',', '.') }}</span>
+                    <span class="text-xs font-bold text-white">Rp{{ number_format($subscription->monthly_amount * 12, 0, ',', '.') }}</span>
                 </div>
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] text-[#94a3b8]">3 Tahun:</span>
-                    <span class="text-xs font-bold text-emerald-400">Rp{{ number_format($subscription->monthly_amount * 36, 0, ',', '.') }}</span>
+                    <span class="text-xs font-bold text-white">Rp{{ number_format($subscription->monthly_amount * 36, 0, ',', '.') }}</span>
                 </div>
             </div>
 
-            <div class="bg-[#0b121f] border border-emerald-500/20 rounded-xl p-4 flex gap-3 items-start">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <div class="bg-[#0b121f] border border-[rgba(255,255,255,0.06)] rounded-xl p-4 flex gap-3 items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#94a3b8] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 <div class="flex-1">
                     <p class="text-[11px] font-bold text-white mb-1">Potensi hemat setahun</p>
                     <p class="text-[9px] text-[#4b5e78]">Jika Anda membatalkan layanan ini.</p>
                 </div>
-                <div class="text-xs font-bold text-emerald-400">
+                <div class="text-xs font-bold text-white">
                     Rp{{ number_format($subscription->monthly_amount * 12, 0, ',', '.') }}
                 </div>
             </div>

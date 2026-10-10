@@ -37,6 +37,22 @@ class ProfileController extends Controller
 
         $user->update($validated);
 
+        if (!empty($validated['telegram_chat_id'])) {
+            $connection = $user->telegramConnection;
+            if (!$connection) {
+                $connection = new \App\Models\TelegramConnection();
+                $connection->user_id = $user->id;
+                $connection->verification_code = 'TATAGIH-' . strtoupper(\Illuminate\Support\Str::random(6));
+            }
+            $connection->chat_id = $validated['telegram_chat_id'];
+            $connection->verified_at = now();
+            $connection->save();
+        } elseif (array_key_exists('telegram_chat_id', $validated) && empty($validated['telegram_chat_id'])) {
+            if ($user->telegramConnection) {
+                $user->telegramConnection->delete();
+            }
+        }
+
         return back()->with('success', 'Profil berhasil diperbarui!');
     }
 

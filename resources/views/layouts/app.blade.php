@@ -24,6 +24,10 @@
     </script>
     <style>
         :root {
+            --bg-body: #08101a !important;
+            --text-primary: #ffffff !important;
+            --text-secondary: #e2e8f0 !important;
+            --text-muted: #94a3b8 !important;
             --accent-primary: #10b981 !important;
             --accent-secondary: #059669 !important;
             --accent-tertiary: #34d399 !important;
@@ -31,6 +35,12 @@
             --accent-gradient-wide: #10b981 !important;
             --accent-glow: transparent !important;
             --shadow-glow: none !important;
+        }
+
+        .text-\[\#4b5e78\],
+        .text-\[\#64748b\],
+        .text-slate-500 {
+            color: #94a3b8 !important;
         }
         .btn-primary {
             background: #10b981 !important;
@@ -536,8 +546,8 @@
             --bg-card-hover: #f8fafc !important;
             --bg-elevated: #f1f5f9 !important;
             --text-primary: #0f172a !important;
-            --text-secondary: #475569 !important;
-            --text-muted: #64748b !important;
+            --text-secondary: #334155 !important;
+            --text-muted: #475569 !important;
             --border-color: rgba(15, 23, 42, 0.08) !important;
             --border-light: rgba(15, 23, 42, 0.12) !important;
         }
@@ -559,7 +569,7 @@
         [data-theme="light"] .sidebar-collapse-btn {
             border-color: rgba(15, 23, 42, 0.1);
             background: #f8fafc;
-            color: #64748b;
+            color: #475569;
         }
 
         [data-theme="light"] .sidebar-collapse-btn:hover {
@@ -664,7 +674,7 @@
         }
 
         [data-theme="light"] .section-desc {
-            color: #64748b !important;
+            color: #475569 !important;
         }
 
         [data-theme="light"] .btn-secondary {
@@ -706,7 +716,7 @@
 
         [data-theme="light"] input::placeholder,
         [data-theme="light"] textarea::placeholder {
-            color: #94a3b8 !important;
+            color: #64748b !important;
         }
 
         [data-theme="light"] .bg-\[\#0f172a\],
@@ -744,15 +754,82 @@
             color: #0f172a !important;
         }
 
+        [data-theme="light"] .bg-emerald-500,
+        [data-theme="light"] .bg-emerald-600,
+        [data-theme="light"] .bg-emerald-500 *,
+        [data-theme="light"] .bg-emerald-600 *,
+        [data-theme="light"] .btn-primary,
+        [data-theme="light"] .btn-primary * {
+            color: #ffffff !important;
+        }
+
         [data-theme="light"] .text-\[\#94a3b8\],
         [data-theme="light"] .text-\[\#64748b\],
-        [data-theme="light"] .text-slate-400 {
+        [data-theme="light"] .text-slate-400,
+        [data-theme="light"] .text-slate-500 {
             color: #475569 !important;
         }
 
         [data-theme="light"] .text-\[\#4b5e78\],
-        [data-theme="light"] .text-\[\#475569\] {
+        [data-theme="light"] .text-\[\#475569\],
+        [data-theme="light"] .text-slate-600 {
+            color: #334155 !important;
+        }
+
+        .theme-card {
+            background-color: var(--bg-card) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        .theme-elevated {
+            background-color: var(--bg-elevated) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        .theme-input {
+            background-color: var(--bg-card) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+        .theme-text-primary {
+            color: var(--text-primary) !important;
+        }
+        .theme-text-secondary {
+            color: var(--text-secondary) !important;
+        }
+        .theme-text-muted {
+            color: var(--text-muted) !important;
+        }
+        .theme-border {
+            border-color: var(--border-color) !important;
+        }
+
+        [data-theme="light"] .theme-card {
+            background-color: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.08) !important;
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .theme-elevated {
+            background-color: #f1f5f9 !important;
+            border-color: rgba(15, 23, 42, 0.08) !important;
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .theme-input {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .theme-text-primary {
+            color: #0f172a !important;
+        }
+        [data-theme="light"] .theme-text-secondary {
+            color: #334155 !important;
+        }
+        [data-theme="light"] .theme-text-muted {
             color: #64748b !important;
+        }
+        [data-theme="light"] .theme-border {
+            border-color: rgba(15, 23, 42, 0.08) !important;
         }
 
         .hide-scrollbar {
@@ -797,7 +874,7 @@
                 <img src="{{ asset('images/logo.png') }}" alt="Tatagih Logo" class="h-9 w-auto flex-shrink-0">
                 <div class="sidebar-logo-text">
                     <span class="text-base font-bold text-white tracking-tight leading-none">Tatagih</span>
-                    <span class="text-[10px] text-[#64748b] font-medium mt-0.5">Subscription Manager</span>
+                    <span class="text-[10px] text-[var(--text-muted)] font-medium mt-0.5">Subscription Manager</span>
                 </div>
             </a>
 
@@ -852,11 +929,6 @@
             <a href="{{ route('leaks.index') }}" class="nav-link {{ request()->routeIs('leaks.*') ? 'active' : '' }}" data-tooltip="Deteksi Pemborosan">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                 <span class="nav-link-text">Deteksi Pemborosan</span>
-            </a>
-
-            <a href="{{ route('comparisons.index') }}" class="nav-link {{ request()->routeIs('comparisons.*') ? 'active' : '' }}" data-tooltip="Komparasi">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                <span class="nav-link-text">Komparasi</span>
             </a>
 
             <div class="nav-group mb-0.5">

@@ -22,16 +22,9 @@
         <div class="mb-2">
             <span class="text-xs font-semibold text-[var(--text-secondary)]">Active Subscriptions</span>
         </div>
-        <div class="flex items-end justify-between gap-2 min-w-0">
-            <div class="min-w-0">
-                <p class="text-xl font-extrabold text-[var(--text-primary)] leading-tight tracking-tight" x-text="count"></p>
-                <p class="text-[10px] text-[var(--text-muted)] mt-1 truncate">Layanan aktif digunakan</p>
-            </div>
-            <div class="flex-shrink-0 w-12 h-6">
-                <svg viewBox="0 0 100 30" class="w-full h-full stroke-emerald-500" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="{{ $activeSparkline }}" />
-                </svg>
-            </div>
+        <div class="min-w-0">
+            <p class="text-xl font-extrabold text-[var(--text-primary)] leading-tight tracking-tight" x-text="count"></p>
+            <p class="text-[10px] text-[var(--text-muted)] mt-1 truncate">Layanan aktif digunakan</p>
         </div>
     </div>
 
@@ -43,16 +36,9 @@
         <div class="mb-2">
             <span class="text-xs font-semibold text-[var(--text-secondary)]">Pengeluaran Bulanan</span>
         </div>
-        <div class="flex items-end justify-between gap-2 min-w-0">
-            <div class="min-w-0">
-                <p class="text-xl font-extrabold text-[var(--text-primary)] leading-tight tracking-tight whitespace-nowrap" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
-                <p class="text-[10px] text-[var(--text-muted)] mt-1 truncate">Total estimasi per bulan</p>
-            </div>
-            <div class="flex-shrink-0 w-12 h-6">
-                <svg viewBox="0 0 100 30" class="w-full h-full stroke-green-500" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="{{ $monthlySparkline }}" />
-                </svg>
-            </div>
+        <div class="min-w-0">
+            <p class="text-xl font-extrabold text-[var(--text-primary)] leading-tight tracking-tight whitespace-nowrap" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
+            <p class="text-[10px] text-[var(--text-muted)] mt-1 truncate">Total estimasi per bulan</p>
         </div>
     </div>
 
@@ -64,16 +50,9 @@
         <div class="mb-2">
             <span class="text-xs font-semibold text-[var(--text-secondary)]">Proyeksi Tahunan</span>
         </div>
-        <div class="flex items-end justify-between gap-2 min-w-0">
-            <div class="min-w-0">
-                <p class="text-xl font-extrabold text-[var(--text-primary)] leading-tight tracking-tight whitespace-nowrap" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
-                <p class="text-[10px] text-[var(--text-muted)] mt-1 truncate">Estimasi 12 bulan</p>
-            </div>
-            <div class="flex-shrink-0 w-12 h-6">
-                <svg viewBox="0 0 100 30" class="w-full h-full stroke-sky-500" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="{{ $yearlySparkline }}" />
-                </svg>
-            </div>
+        <div class="min-w-0">
+            <p class="text-xl font-extrabold text-[var(--text-primary)] leading-tight tracking-tight whitespace-nowrap" x-text="'Rp' + new Intl.NumberFormat('id-ID').format(count)"></p>
+            <p class="text-[10px] text-[var(--text-muted)] mt-1 truncate">Estimasi 12 bulan</p>
         </div>
     </div>
 
@@ -81,16 +60,9 @@
         <div class="mb-2">
             <span class="text-xs font-semibold text-[var(--text-secondary)]">Kategori Aktif</span>
         </div>
-        <div class="flex items-end justify-between gap-2 min-w-0">
-            <div class="min-w-0">
-                <p class="text-xl font-extrabold text-[var(--text-primary)] leading-tight tracking-tight">{{ $categoryCount }}</p>
-                <p class="text-[10px] text-[var(--text-muted)] mt-1 truncate">Kategori digunakan</p>
-            </div>
-            <div class="flex-shrink-0 w-12 h-6">
-                <svg viewBox="0 0 100 30" class="w-full h-full stroke-amber-500" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="{{ $categorySparkline }}" />
-                </svg>
-            </div>
+        <div class="min-w-0">
+            <p class="text-xl font-extrabold text-[var(--text-primary)] leading-tight tracking-tight">{{ $categoryCount }}</p>
+            <p class="text-[10px] text-[var(--text-muted)] mt-1 truncate">Kategori digunakan</p>
         </div>
     </div>
 </div>
@@ -103,7 +75,7 @@
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)]">Tren Pengeluaran (6 Bulan)</h3>
                 <p class="text-[10px] text-[var(--text-muted)] mt-0.5">Data realisasi dari riwayat pembayaran</p>
             </div>
-            <a href="{{ route('payments.index') }}" class="text-xs font-semibold text-emerald-500 hover:text-emerald-600 transition-colors">Lihat Semua →</a>
+            <a href="{{ route('payments.index') }}" class="text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors">Lihat Semua →</a>
         </div>
         <div style="position: relative; height: 260px;">
             <canvas id="spendingChart"></canvas>
@@ -116,7 +88,7 @@
                 <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)]">Subscription Health</h3>
                 <p class="text-[10px] text-[var(--text-muted)] mt-0.5">{{ $healthScore['personality'] ? 'AI: ' . $healthScore['personality'] : 'Evaluasi AI Tata Asisten' }}</p>
             </div>
-            <a href="{{ route('assistant') }}" class="text-xs font-semibold text-emerald-500 hover:text-emerald-600 transition-colors flex items-center gap-1">
+            <a href="{{ route('assistant') }}" class="text-xs font-semibold text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-1">
                 <span>Tata Asisten</span>
                 <span>→</span>
             </a>
@@ -148,9 +120,9 @@
         </div>
 
         @if(!empty($healthScore['recommendations']))
-        <a href="{{ route('assistant') }}" class="p-2.5 rounded-md flex items-center gap-2 text-[11px] border border-[var(--border-color)] bg-transparent hover:border-emerald-500/40 transition-colors group cursor-pointer text-[var(--text-secondary)]">
+        <a href="{{ route('assistant') }}" class="pt-2.5 border-t border-[var(--border-color)]/60 flex items-center gap-2 text-[11px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors group cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 flex-shrink-0" style="color: {{ $healthScore['color'] }};" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            <span class="font-medium leading-tight truncate group-hover:text-[var(--text-primary)] transition-colors">{!! strip_tags($healthScore['recommendations'][0]) !!}</span>
+            <span class="font-medium leading-tight truncate group-hover:underline">{!! strip_tags($healthScore['recommendations'][0]) !!}</span>
         </a>
         @endif
     </div>
@@ -161,7 +133,7 @@
     <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg p-5 shadow-sm">
         <div class="flex items-center justify-between pb-3 mb-3 border-b border-[var(--border-color)]/60">
             <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] flex items-center gap-1.5">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 Tagihan Terdekat
             </h3>
             <span class="text-[10px] font-semibold text-[var(--text-muted)]">{{ count($upcoming) }} tagihan</span>
@@ -210,7 +182,7 @@
     <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg p-5 shadow-sm">
         <div class="pb-3 mb-3 border-b border-[var(--border-color)]/60">
             <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] flex items-center gap-1.5">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
                 Distribusi Kategori
             </h3>
         </div>
@@ -230,7 +202,7 @@
     <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-lg p-5 shadow-sm" x-data="miniCalendar()" x-init="init()">
         <div class="flex items-center justify-between pb-3 mb-3 border-b border-[var(--border-color)]/60">
             <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] flex items-center gap-1.5">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                 Kalender
             </h3>
             <span class="text-xs font-bold text-[var(--text-primary)]" x-text="monthTitle"></span>
@@ -249,7 +221,7 @@
                      :class="(day.day > 0 ? (day.isToday ? 'bg-emerald-500 text-white font-bold' : (day.hasEvent ? 'bg-[var(--bg-elevated)] cursor-pointer hover:bg-[var(--border-color)]' : '')) : '') + (selectedDay && selectedDay.day === day.day && day.day > 0 ? ' ring-2 ring-emerald-500' : '')"
                      :title="day.hasEvent ? day.events.map(e => e.title).join(', ') : ''">
                     <div class="absolute inset-0 flex items-center justify-center text-[11px] font-medium">
-                        <span x-text="day.day > 0 ? day.day : ''" :class="day.hasEvent && !day.isToday ? 'text-emerald-500 font-bold' : ''"></span>
+                        <span x-text="day.day > 0 ? day.day : ''" :class="day.hasEvent && !day.isToday ? 'text-[var(--text-primary)] font-bold' : ''"></span>
                         <template x-if="day.hasEvent">
                             <div class="absolute bottom-0.5 flex gap-0.5 justify-center w-full">
                                 <template x-for="event in day.events.slice(0, 3)">
@@ -286,24 +258,21 @@
     </div>
 </div>
 
-<div class="mt-4 p-6 flex flex-col md:flex-row items-center justify-between relative overflow-hidden" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; box-shadow: var(--shadow-sm);">
-    <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full pointer-events-none" style="background: var(--accent-primary); filter: blur(80px); opacity: 0.15;"></div>
-    <div class="absolute -left-20 -bottom-20 w-64 h-64 rounded-full pointer-events-none" style="background: var(--info); filter: blur(80px); opacity: 0.15;"></div>
-
-    <div class="flex flex-col sm:flex-row items-center gap-5 relative z-10 w-full md:w-auto text-center sm:text-left">
+<div class="mt-4 p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] shadow-sm">
+    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 w-full md:w-auto text-center sm:text-left">
         <div class="flex -space-x-3 flex-shrink-0">
-            <img class="w-12 h-12 rounded-full object-cover" style="border: 2px solid var(--bg-card);" src="https://i.pravatar.cc/150?u=1" alt="Teman 1">
-            <img class="w-12 h-12 rounded-full object-cover" style="border: 2px solid var(--bg-card);" src="https://i.pravatar.cc/150?u=2" alt="Teman 2">
-            <img class="w-12 h-12 rounded-full object-cover" style="border: 2px solid var(--bg-card);" src="https://i.pravatar.cc/150?u=3" alt="Teman 3">
-            <div class="w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold text-white z-10" style="background: var(--bg-elevated); border: 2px solid var(--bg-card);">+3</div>
+            <img class="w-11 h-11 rounded-full object-cover border-2 border-[var(--bg-card)]" src="https://i.pravatar.cc/150?u=1" alt="Teman 1">
+            <img class="w-11 h-11 rounded-full object-cover border-2 border-[var(--bg-card)]" src="https://i.pravatar.cc/150?u=2" alt="Teman 2">
+            <img class="w-11 h-11 rounded-full object-cover border-2 border-[var(--bg-card)]" src="https://i.pravatar.cc/150?u=3" alt="Teman 3">
+            <div class="w-11 h-11 rounded-full flex items-center justify-center text-xs font-bold text-[var(--text-primary)] bg-[var(--bg-elevated)] border-2 border-[var(--bg-card)] z-10">+3</div>
         </div>
         <div>
-            <h4 class="text-base font-extrabold mb-1" style="color: var(--text-primary);">Patungan Tagihan? (Share Subs)</h4>
-            <p class="text-xs font-medium" style="color: var(--text-secondary);">Bagi tagihan otomatis dengan teman. Lacak siapa yang belum bayar tanpa canggung.</p>
+            <h4 class="text-sm sm:text-base font-bold text-[var(--text-primary)] mb-0.5">Patungan Tagihan? (Share Subs)</h4>
+            <p class="text-xs text-[var(--text-secondary)]">Bagi tagihan otomatis dengan teman. Lacak siapa yang belum bayar tanpa canggung.</p>
         </div>
     </div>
-    <div class="mt-5 md:mt-0 flex items-center justify-center w-full md:w-auto relative z-10" style="transform: translateY(-12px);">
-        <a href="{{ route('shares.index') }}" class="btn-primary rounded-full text-xs font-bold" style="box-shadow: 0 0 15px var(--accent-glow);">
+    <div class="mt-3 md:mt-0 flex items-center justify-center shrink-0">
+        <a href="{{ route('shares.index') }}" class="btn-primary px-5 py-2.5 rounded-xl text-xs font-bold shadow-sm transition-all flex items-center justify-center">
             Coba Share Subs
         </a>
     </div>
@@ -347,7 +316,7 @@ function miniCalendar() {
 document.addEventListener('DOMContentLoaded', function() {
     const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
     const gridColor = isDark ? 'rgba(148, 163, 184, 0.06)' : 'rgba(15, 23, 42, 0.06)';
-    const tickColor = isDark ? '#64748b' : '#64748b';
+    const tickColor = isDark ? '#94a3b8' : '#475569';
 
     const spendingCanvas = document.getElementById('spendingChart');
     if (spendingCanvas) {

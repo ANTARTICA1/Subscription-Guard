@@ -89,6 +89,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+    const tickColor = isDark ? '#94a3b8' : '#475569';
     new Chart(document.getElementById('userChart').getContext('2d'), {
         type: 'line',
         data: {
@@ -96,21 +98,21 @@ document.addEventListener('DOMContentLoaded', function() {
             datasets: [{
                 label: 'User Baru',
                 data: @json($chartData),
-                borderColor: '#6366f1',
-                backgroundColor: 'rgba(99,102,241,0.1)',
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16,185,129,0.1)',
                 borderWidth: 3,
                 fill: true,
                 tension: 0.4,
                 pointRadius: 5,
-                pointBackgroundColor: '#6366f1',
+                pointBackgroundColor: '#10b981',
             }]
         },
         options: {
             responsive: true,
             plugins: { legend: { display: false } },
             scales: {
-                x: { grid: { display: false }, ticks: { color: '#64748b' } },
-                y: { grid: { color: 'rgba(99,102,241,0.06)' }, ticks: { color: '#64748b' } }
+                x: { grid: { display: false }, ticks: { color: tickColor } },
+                y: { grid: { color: isDark ? 'rgba(148,163,184,0.06)' : 'rgba(15,23,42,0.06)' }, ticks: { color: tickColor } }
             }
         }
     });

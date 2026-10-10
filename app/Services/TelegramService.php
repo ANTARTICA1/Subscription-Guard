@@ -44,15 +44,9 @@ class TelegramService
 
     public function sendReminderMessage(string $chatId, string $subName, string $amount, string $date, int $daysLeft, bool $autoRenew): bool
     {
-        $emoji = match (true) {
-            $daysLeft <= 1 => '🔴',
-            $daysLeft <= 3 => '🟡',
-            default => '🟢',
-        };
+        $renewStatus = $autoRenew ? 'Auto Renewal Aktif' : 'Auto Renewal Nonaktif';
 
-        $renewStatus = $autoRenew ? '✅ Auto Renewal Aktif' : '❌ Auto Renewal Nonaktif';
-
-        $message = "{$emoji} <b>Tatagih Reminder</b>\n\n"
+        $message = "<b>Tatagih Reminder</b>\n\n"
             . "<b>{$subName}</b> akan melakukan pembayaran <b>{$daysLeft} hari lagi</b>.\n\n"
             . "Nominal: <b>{$amount}</b>\n"
             . "Tanggal: <b>{$date}</b>\n"
@@ -63,6 +57,24 @@ class TelegramService
         }
 
         return $this->sendMessage($chatId, $message);
+    }
+
+    public function getUpdates(int $offset = 0): array
+    {
+        try {
+            $response = Http::withOptions(['verify' => false])->get("{$this->apiUrl}/getUpdates", [
+                'offset' => $offset,
+                'timeout' => 5,
+            ]);
+
+            if ($response->successful()) {
+                return $response->json('result', []);
+            }
+            return [];
+        } catch (\Exception $e) {
+            Log::error('Telegram getUpdates failed: ' . $e->getMessage());
+            return [];
+        }
     }
 
     public function setWebhook(string $url): bool

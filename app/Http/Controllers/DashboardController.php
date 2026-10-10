@@ -10,41 +10,6 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-    private function generateSparklinePath(array $data)
-    {
-        if (empty($data)) return 'M0,15 L100,15';
-        $min = min($data);
-        $max = max($data);
-        $range = $max - $min;
-        if ($range == 0) return 'M0,15 L100,15';
-
-        $count = count($data);
-        $step = 100 / max(1, $count - 1);
-
-        $path = '';
-        $prevX = 0;
-        $prevY = 0;
-
-        foreach (array_values($data) as $i => $value) {
-            $x = $i * $step;
-            $y = 28 - ((($value - $min) / $range) * 24);
-
-            if ($i === 0) {
-                $path .= 'M' . round($x, 1) . ',' . round($y, 1);
-            } else {
-                $cp1x = $prevX + ($step * 0.4);
-                $cp2x = $x - ($step * 0.4);
-                $path .= ' C' . round($cp1x, 1) . ',' . round($prevY, 1) . ' '
-                         . round($cp2x, 1) . ',' . round($y, 1) . ' '
-                         . round($x, 1) . ',' . round($y, 1);
-            }
-
-            $prevX = $x;
-            $prevY = $y;
-        }
-        return $path;
-    }
-
     public function index()
     {
         $user = Auth::user();
@@ -75,7 +40,6 @@ class DashboardController extends Controller
             return $items->sum(fn($s) => $s->monthly_amount);
         });
 
-        // Gunakan hasil analisis yang sudah dihasilkan oleh Tata Asisten AI
         $tataData = $user->tata_assistant_data;
         $hasData = !empty($tataData) && isset($tataData['health_score']);
 
@@ -163,11 +127,6 @@ class DashboardController extends Controller
             }
         }
 
-        $activeSparkline = $this->generateSparklinePath([$activeCount * 0.6, $activeCount * 0.8, $activeCount * 0.5, $activeCount * 0.9, $activeCount * 0.7, $activeCount]);
-        $monthlySparkline = $this->generateSparklinePath([$monthlyExpense * 0.5, $monthlyExpense * 0.7, $monthlyExpense * 0.4, $monthlyExpense * 0.8, $monthlyExpense * 0.6, $monthlyExpense]);
-        $yearlySparkline = $this->generateSparklinePath([$yearlyExpense * 0.4, $yearlyExpense * 0.8, $yearlyExpense * 0.6, $yearlyExpense * 0.9, $yearlyExpense * 0.7, $yearlyExpense]);
-        $categorySparkline = $this->generateSparklinePath([$categoryCount * 0.7, $categoryCount * 0.5, $categoryCount * 0.8, $categoryCount * 0.6, $categoryCount * 0.9, $categoryCount]);
-
         return view('dashboard.index', compact(
             'user',
             'activeCount',
@@ -180,11 +139,7 @@ class DashboardController extends Controller
             'categoryData',
             'healthScore',
             'recentNotifications',
-            'calendarEvents',
-            'activeSparkline',
-            'monthlySparkline',
-            'yearlySparkline',
-            'categorySparkline'
+            'calendarEvents'
         ));
     }
 }

@@ -14,64 +14,68 @@ class MoneyLeakDetectorService
         $totalPotentialSavings = 0;
         $monthlyExpense = $user->monthlyExpense();
 
-        $byCategory = $subs->groupBy('category_id');
-        foreach ($byCategory as $categoryId => $categorySubs) {
-            if ($categorySubs->count() > 1) {
-                $categoryName = $categorySubs->first()->category->name ?? 'Kategori Sama';
-                $names = $categorySubs->pluck('name')->join(' + ');
+        if ($subs->isEmpty()) {
+            return [
+                'leaks' => [],
+                'total_potential_savings' => 0,
+                'efficiency_score' => 100,
+            ];
+        }
 
-                $cheapest = $categorySubs->sortBy('monthly_amount')->first();
-                $savings = $categorySubs->sum(fn($s) => $s->monthly_amount) - $cheapest->monthly_amount;
+        $brandGroups = [];
+        foreach ($subs as $sub) {
+            $normalized = $this->normalizeServiceName($sub->name);
+            $brandGroups[$normalized][] = $sub;
+        }
 
-                $totalPotentialSavings += $savings;
+        $duplicateDetectedSubIds = [];
+        foreach ($brandGroups as $normalizedName => $group) {
+            if (count($group) > 1 && !empty($normalizedName)) {
+                $groupCollection = collect($group);
+                $names = $groupCollection->pluck('name')->join(' + ');
+
+                $sorted = $groupCollection->sortBy('monthly_amount');
+                $duplicates = $sorted->slice(0, count($group) - 1);
+                $dupSavings = $duplicates->sum('monthly_amount');
+
+                foreach ($groupCollection as $s) {
+                    $duplicateDetectedSubIds[] = $s->id;
+                }
+
+                $totalPotentialSavings += $dupSavings;
 
                 $leaks[] = [
-                    'type' => 'overlapping',
-                    'icon' => 'layers',
-                    'title' => 'Tumpang Tindih Kategori: ' . $categoryName,
-                    'description' => "Terdeteksi langganan ganda dengan utilitas serupa: <b>{$names}</b>.",
-                    'recommendation' => "Konsolidasi ke satu layanan (rekomendasi: <b>{$cheapest->name}</b>) untuk memotong pemborosan.",
-                    'potential_savings' => $savings,
-                    'severity' => $savings > 100000 ? 'high' : 'medium'
+                    'type' => 'duplicate',
+                    'icon' => 'copy',
+                    'title' => 'Duplikasi Layanan: ' . $group[0]->name,
+                    'description' => "Terdeteksi lebih dari satu langganan aktif untuk penyedia yang sama: <b>{$names}</b>.",
+                    'recommendation' => "Batalkan salah satu akun atau paket jika Anda tidak sengaja berlangganan ganda.",
+                    'potential_savings' => $dupSavings,
+                    'severity' => 'high'
                 ];
             }
         }
 
-        $vampireSubs = $subs->filter(fn($s) => $s->monthly_amount > 0 && $s->monthly_amount <= 35000);
-        if ($vampireSubs->count() > 0) {
-            $totalVampire = $vampireSubs->sum(fn($s) => $s->monthly_amount);
-            $fiveYearCost = $totalVampire * 12 * 5;
-            $names = $vampireSubs->pluck('name')->join(', ');
+        $byCategory = $subs->groupBy('category_id');
+        foreach ($byCategory as $categoryId => $categorySubs) {
+            if ($categorySubs->count() >= 2) {
+                $categoryName = $categorySubs->first()->category->name ?? 'Kategori Sama';
+                $names = $categorySubs->pluck('name')->join(' + ');
 
-            $leaks[] = [
-                'type' => 'vampire',
-                'icon' => 'droplet',
-                'title' => 'Vampire Spend Terdeteksi',
-                'description' => "Pengeluaran mikro (<b>{$names}</b>) tampak kecil (Total Rp" . number_format($totalVampire, 0, ',', '.') . "/bln), namun akan menguras <b>Rp" . number_format($fiveYearCost, 0, ',', '.') . "</b> dalam 5 tahun.",
-                'recommendation' => "Evaluasi ketat apakah layanan mikro ini memberikan ROI yang sepadan dengan biaya jangka panjangnya.",
-                'potential_savings' => $totalVampire,
-                'severity' => 'medium'
-            ];
-        }
-
-        $monthlyPremiumSubs = $subs->filter(fn($s) => $s->billing_cycle === 'monthly' && $s->amount >= 60000);
-        foreach ($monthlyPremiumSubs as $sub) {
-            $yearlySavings = ($sub->amount * 12) * 0.15;
-            $totalPotentialSavings += ($yearlySavings / 12);
-
-            $leaks[] = [
-                'type' => 'cycle',
-                'icon' => 'refresh-cw',
-                'title' => "Peluang Optimasi Tagihan: {$sub->name}",
-                'description' => "Anda membayar <b>{$sub->name}</b> secara bulanan (Rp" . number_format($sub->amount, 0, ',', '.') . "/bln). Beralih ke paket tahunan secara historis dapat menghemat 15-20%.",
-                'recommendation' => "Ubah siklus tagihan ke tahunan untuk menghemat sekitar <b>Rp" . number_format($yearlySavings, 0, ',', '.') . "</b> per tahun.",
-                'potential_savings' => round($yearlySavings / 12),
-                'severity' => 'low'
-            ];
+                $leaks[] = [
+                    'type' => 'overlapping',
+                    'icon' => 'layers',
+                    'title' => 'Banyak Layanan: Kategori ' . $categoryName,
+                    'description' => "Anda memiliki {$categorySubs->count()} langganan aktif dalam kategori ini: <b>{$names}</b>.",
+                    'recommendation' => "Tinjau apakah seluruh layanan ini masih aktif digunakan setiap bulan. Pertimbangkan berlangganan bergantian jika waktu luang terbatas.",
+                    'potential_savings' => 0,
+                    'severity' => $categorySubs->count() >= 3 ? 'medium' : 'low'
+                ];
+            }
         }
 
         $now = Carbon::now();
-        $suspiciousSubs = $subs->filter(function($s) use ($now) {
+        $suspiciousSubs = $subs->filter(function ($s) use ($now) {
             return $s->auto_renew && $s->created_at && $s->created_at->diffInDays($now) > 180;
         });
 
@@ -80,24 +84,48 @@ class MoneyLeakDetectorService
             $leaks[] = [
                 'type' => 'zombie',
                 'icon' => 'ghost',
-                'title' => 'Indikasi Langganan Pasif (Zombie)',
-                'description' => "Layanan <b>{$names}</b> berstatus auto-renew dan sudah aktif lebih dari 6 bulan.",
-                'recommendation' => "Verifikasi apakah Anda masih aktif menggunakan layanan ini. Jika tidak, batalkan untuk mencegah aliran dana pasif.",
+                'title' => 'Langganan Auto-Renew Lama (> 6 Bulan)',
+                'description' => "Layanan <b>{$names}</b> aktif dengan perpanjangan otomatis selama lebih dari 6 bulan.",
+                'recommendation' => "Pastikan Anda masih menggunakan fasilitas layanan ini secara berkala agar tidak menjadi pengeluaran pasif.",
                 'potential_savings' => 0,
-                'severity' => 'medium'
+                'severity' => 'low'
+            ];
+        }
+
+        $vampireSubs = $subs->filter(fn($s) => $s->monthly_amount > 0 && $s->monthly_amount <= 35000);
+        if ($vampireSubs->count() > 1) {
+            $totalVampire = $vampireSubs->sum(fn($s) => $s->monthly_amount);
+            $names = $vampireSubs->pluck('name')->join(', ');
+
+            $leaks[] = [
+                'type' => 'vampire',
+                'icon' => 'droplet',
+                'title' => 'Akumulasi Langganan Mikro',
+                'description' => "Anda memiliki beberapa langganan mikro (<b>{$names}</b>) dengan total Rp" . number_format($totalVampire, 0, ',', '.') . "/bln.",
+                'recommendation' => "Pastikan setiap langganan mikro ini tetap memberikan nilai nyata sebanding dengan pengeluaran rutin Anda.",
+                'potential_savings' => 0,
+                'severity' => 'low'
             ];
         }
 
         $efficiencyScore = 100;
-        if ($calculateScore && $monthlyExpense > 0) {
+        if ($calculateScore && $monthlyExpense > 0 && $totalPotentialSavings > 0) {
             $wasteRatio = $totalPotentialSavings / $monthlyExpense;
-            $efficiencyScore = max(10, min(100, 100 - ($wasteRatio * 100)));
+            $efficiencyScore = max(10, min(100, 100 - round($wasteRatio * 100)));
         }
 
         return [
-            'leaks' => collect($leaks)->sortByDesc('potential_savings')->values()->toArray(),
+            'leaks' => collect($leaks)->values()->toArray(),
             'total_potential_savings' => $totalPotentialSavings,
             'efficiency_score' => (int) $efficiencyScore
         ];
+    }
+
+    private function normalizeServiceName(string $name): string
+    {
+        $clean = strtolower($name);
+        $clean = preg_replace('/\b(mobile|basic|standard|premium|family|student|individual|vip|ultra|plus|starter|pro|paket|langganan|bulan|tahun|kelas \d+)\b/i', '', $clean);
+        $clean = preg_replace('/[^a-z0-9]/', '', $clean);
+        return trim($clean);
     }
 }

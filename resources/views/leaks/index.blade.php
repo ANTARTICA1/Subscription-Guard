@@ -3,6 +3,66 @@
 
 @section('content')
 
+<style>
+    .leak-badge-high {
+        background-color: rgba(239, 68, 68, 0.18) !important;
+        color: #fca5a5 !important;
+        border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    }
+    .leak-badge-medium {
+        background-color: rgba(245, 158, 11, 0.18) !important;
+        color: #fde047 !important;
+        border: 1px solid rgba(245, 158, 11, 0.4) !important;
+    }
+    .leak-badge-low {
+        background-color: rgba(148, 163, 184, 0.18) !important;
+        color: #e2e8f0 !important;
+        border: 1px solid rgba(148, 163, 184, 0.35) !important;
+    }
+
+    [data-theme="light"] .leak-badge-high {
+        background-color: #fee2e2 !important;
+        color: #991b1b !important;
+        border: 1px solid #fca5a5 !important;
+    }
+    [data-theme="light"] .leak-badge-medium {
+        background-color: #fef3c7 !important;
+        color: #92400e !important;
+        border: 1px solid #fcd34d !important;
+    }
+    [data-theme="light"] .leak-badge-low {
+        background-color: #e2e8f0 !important;
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1 !important;
+    }
+
+    .leak-icon-high {
+        background-color: rgba(239, 68, 68, 0.16) !important;
+        color: #f87171 !important;
+    }
+    .leak-icon-medium {
+        background-color: rgba(245, 158, 11, 0.16) !important;
+        color: #fbbf24 !important;
+    }
+    .leak-icon-low {
+        background-color: rgba(148, 163, 184, 0.16) !important;
+        color: #cbd5e1 !important;
+    }
+
+    [data-theme="light"] .leak-icon-high {
+        background-color: #fee2e2 !important;
+        color: #dc2626 !important;
+    }
+    [data-theme="light"] .leak-icon-medium {
+        background-color: #fef3c7 !important;
+        color: #d97706 !important;
+    }
+    [data-theme="light"] .leak-icon-low {
+        background-color: #f1f5f9 !important;
+        color: #334155 !important;
+    }
+</style>
+
 <div x-data="leaksPage()" x-cloak class="space-y-6 pb-12">
 
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
@@ -25,97 +85,117 @@
 
     <div class="card p-0 flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-[var(--border-color)] overflow-hidden">
 
-        <div class="flex-1 p-6 md:p-8 flex items-center gap-6">
-            <div class="relative w-20 h-20 flex items-center justify-center flex-shrink-0">
-                <div class="absolute inset-0 rounded-full border" :class="threatColorClass.border20"></div>
-                <div class="absolute inset-2 rounded-full border" :class="threatColorClass.border40"></div>
-                <div class="absolute inset-0 rounded-full animate-pulse" :class="threatColorClass.bg10"></div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 relative z-10" :class="threatColorClass.text" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+        <div class="flex-1 p-6 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+                 :class="threatLevel === 'TINGGI' ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400' : (threatLevel === 'SEDANG' ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400')">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
             </div>
 
             <div>
-                <p class="text-xs text-[var(--text-muted)] mb-1">Risiko Kebocoran</p>
-                <div class="flex items-center gap-2 mb-1">
-                    <h3 class="text-2xl font-black" :class="threatColorClass.text" x-text="threatLevel"></h3>
-                </div>
-                <p class="text-xs text-[var(--text-muted)]" x-text="`Terdeteksi ${leaks.length} potensi kebocoran langganan.`"></p>
+                <p class="text-xs text-[var(--text-muted)] mb-0.5">Tingkat Risiko</p>
+                <h3 class="text-xl font-bold tracking-tight"
+                    :class="threatLevel === 'TINGGI' ? 'text-rose-600 dark:text-rose-400' : (threatLevel === 'SEDANG' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400')"
+                    x-text="threatLevel"></h3>
+                <p class="text-[11px] text-[var(--text-muted)] mt-0.5" x-text="`${leaks.length} potensi kebocoran terdeteksi`"></p>
             </div>
         </div>
 
-        <div class="flex-1 p-6 md:p-8 flex flex-col justify-center">
-            <p class="text-xs text-[var(--text-muted)] mb-1">Estimasi Kebocoran / Bulan</p>
-            <h3 class="text-3xl font-black text-red-500 tracking-tight mb-1" x-text="'Rp' + formatMoney(totalSavings)"></h3>
-            <p class="text-[11px] text-[var(--text-muted)]" x-text="'≈ Rp' + formatMoney(totalSavings * 12) + ' / tahun'"></p>
+        <div class="flex-1 p-6 flex flex-col justify-center">
+            <p class="text-xs text-[var(--text-muted)] mb-0.5">Estimasi Kebocoran / Bulan</p>
+            <h3 class="text-2xl font-bold text-[var(--text-primary)] tracking-tight" x-text="'Rp' + formatMoney(totalSavings)"></h3>
+            <p class="text-[11px] text-[var(--text-muted)] mt-0.5" x-text="'≈ Rp' + formatMoney(totalSavings * 12) + ' / tahun'"></p>
         </div>
 
-        <div class="flex-1 p-6 md:p-8 flex flex-col justify-center">
-            <div>
-                <p class="text-xs text-[var(--text-muted)] mb-1">Uang yang Bisa Diselamatkan</p>
-                <h3 class="text-2xl font-black text-emerald-500 tracking-tight mb-1">
-                    <span x-text="'Rp' + formatMoney(totalSavings)"></span> <span class="text-sm font-normal text-[var(--text-muted)]">/ bln</span>
-                </h3>
-                <p class="text-[11px] text-[var(--text-muted)]" x-text="'Rp' + formatMoney(totalSavings * 12) + ' / tahun'"></p>
-            </div>
+        <div class="flex-1 p-6 flex flex-col justify-center">
+            <p class="text-xs text-[var(--text-muted)] mb-0.5">Potensi Efisiensi</p>
+            <h3 class="text-2xl font-bold text-[var(--text-primary)] tracking-tight">
+                <span x-text="totalSavings > 0 ? (totalSavings / {{ max(1, Auth::user()->monthlyExpense()) }} * 100).toFixed(0) + '%' : '0%'"></span>
+                <span class="text-xs font-normal text-[var(--text-muted)]">dari tagihan</span>
+            </h3>
+            <p class="text-[11px] text-[var(--text-muted)] mt-0.5">Dapat dihemat jika ditindaklanjuti</p>
         </div>
     </div>
 
-    <div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar">
-        <button @click="filter = 'all'" :class="filter === 'all' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/30' : 'text-[var(--text-muted)] border-[var(--border-color)] hover:bg-[var(--bg-elevated)]'" class="px-3.5 py-1.5 text-xs font-semibold rounded-full border transition-colors">
-            Semua
+    <div class="flex items-center gap-2 overflow-x-auto pb-1">
+        <button @click="filter = 'all'"
+                :class="filter === 'all' ? 'bg-[var(--text-primary)] text-[var(--bg-card)] font-bold' : 'bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] border border-[var(--border-color)]'"
+                class="px-3.5 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer">
+            <span>Semua</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded-full font-semibold"
+                  :class="filter === 'all' ? 'bg-[var(--bg-card)]/20 text-inherit' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'"
+                  x-text="leaks.length"></span>
         </button>
-        <button @click="filter = 'high'" :class="filter === 'high' ? 'bg-red-500/10 text-red-500 border-red-500/30' : 'text-[var(--text-muted)] border-[var(--border-color)] hover:bg-[var(--bg-elevated)]'" class="px-3.5 py-1.5 text-xs font-semibold rounded-full border transition-colors flex items-center gap-1.5">
-            Risiko Tinggi <span class="bg-red-500 text-white text-[9px] px-1.5 py-0.2 rounded-full" x-text="highLeaksCount"></span>
+        <button @click="filter = 'high'"
+                :class="filter === 'high' ? 'bg-[var(--text-primary)] text-[var(--bg-card)] font-bold' : 'bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] border border-[var(--border-color)]'"
+                class="px-3.5 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer">
+            <span>Risiko Tinggi</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded-full font-semibold"
+                  :class="filter === 'high' ? 'bg-[var(--bg-card)]/20 text-inherit' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'"
+                  x-text="highLeaksCount"></span>
         </button>
-        <button @click="filter = 'medium'" :class="filter === 'medium' ? 'bg-amber-500/10 text-amber-500 border-amber-500/30' : 'text-[var(--text-muted)] border-[var(--border-color)] hover:bg-[var(--bg-elevated)]'" class="px-3.5 py-1.5 text-xs font-semibold rounded-full border transition-colors flex items-center gap-1.5">
-            Risiko Sedang <span class="bg-amber-500 text-white text-[9px] px-1.5 py-0.2 rounded-full" x-text="medLeaksCount"></span>
+        <button @click="filter = 'medium'"
+                :class="filter === 'medium' ? 'bg-[var(--text-primary)] text-[var(--bg-card)] font-bold' : 'bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] border border-[var(--border-color)]'"
+                class="px-3.5 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer">
+            <span>Risiko Sedang</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded-full font-semibold"
+                  :class="filter === 'medium' ? 'bg-[var(--bg-card)]/20 text-inherit' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'"
+                  x-text="medLeaksCount"></span>
         </button>
-        <button @click="filter = 'low'" :class="filter === 'low' ? 'bg-blue-500/10 text-blue-500 border-blue-500/30' : 'text-[var(--text-muted)] border-[var(--border-color)] hover:bg-[var(--bg-elevated)]'" class="px-3.5 py-1.5 text-xs font-semibold rounded-full border transition-colors flex items-center gap-1.5">
-            Risiko Rendah <span class="bg-blue-500 text-white text-[9px] px-1.5 py-0.2 rounded-full" x-text="lowLeaksCount"></span>
+        <button @click="filter = 'low'"
+                :class="filter === 'low' ? 'bg-[var(--text-primary)] text-[var(--bg-card)] font-bold' : 'bg-[var(--bg-card)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] border border-[var(--border-color)]'"
+                class="px-3.5 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer">
+            <span>Risiko Rendah</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded-full font-semibold"
+                  :class="filter === 'low' ? 'bg-[var(--bg-card)]/20 text-inherit' : 'bg-[var(--bg-elevated)] text-[var(--text-muted)]'"
+                  x-text="lowLeaksCount"></span>
         </button>
     </div>
 
-    <div class="space-y-4">
+    <div class="space-y-3.5">
         <template x-for="leak in sortedAndFilteredLeaks" :key="leak.id">
-            <div class="card p-5 relative overflow-hidden group hover:border-emerald-500/40 transition-colors">
+            <div class="card p-5 transition-all">
 
-                <div class="flex flex-col lg:flex-row gap-6 relative z-10">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
 
-                    <div class="flex items-start gap-3.5 lg:w-1/3">
-                        <div class="flex items-center justify-center flex-shrink-0 mt-0.5" :class="leak.severity === 'high' ? 'text-red-500' : (leak.severity === 'medium' ? 'text-amber-500' : 'text-blue-500')">
+                    <div class="flex items-start gap-3.5 flex-1 min-w-0">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+                             :class="leak.severity === 'high' ? 'leak-icon-high' : (leak.severity === 'medium' ? 'leak-icon-medium' : 'leak-icon-low')">
                             <template x-if="leak.severity === 'high'">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                             </template>
                             <template x-if="leak.severity !== 'high'">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             </template>
                         </div>
+
                         <div class="flex-1 min-w-0">
-                            <div class="flex items-center gap-2 mb-1">
-                                <h4 class="font-bold text-[var(--text-primary)] text-base truncate" x-text="leak.title"></h4>
-                                <span class="text-[9px] font-bold px-1.5 py-0.5 rounded border border-current/25 uppercase tracking-wider whitespace-nowrap bg-transparent" :class="leak.severity === 'high' ? 'text-red-500' : (leak.severity === 'medium' ? 'text-amber-500' : 'text-blue-500')" x-text="leak.severity === 'high' ? 'TINGGI' : (leak.severity === 'medium' ? 'SEDANG' : 'RENDAH')"></span>
+                            <div class="flex items-center gap-2 flex-wrap mb-1">
+                                <h3 class="font-bold text-[var(--text-primary)] text-sm sm:text-base leading-snug" x-text="leak.title"></h3>
+                                <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-md tracking-wider uppercase"
+                                      :class="leak.severity === 'high' ? 'leak-badge-high' : (leak.severity === 'medium' ? 'leak-badge-medium' : 'leak-badge-low')"
+                                      x-text="leak.severity === 'high' ? 'TINGGI' : (leak.severity === 'medium' ? 'SEDANG' : 'RENDAH')"></span>
                             </div>
-                            <p class="text-xs text-[var(--text-muted)]">Rp<span x-text="formatMoney(leak.potential_savings)"></span> / Bulan</p>
+
+                            <p class="text-xs text-[var(--text-secondary)] leading-relaxed mt-1" x-html="leak.description"></p>
                         </div>
                     </div>
 
-                    <div class="lg:w-2/3 flex flex-col justify-between">
-                        <div class="mb-3">
-                            <h5 class="text-sm font-bold text-[var(--text-primary)] mb-1" x-text="leak.title"></h5>
-                            <p class="text-xs text-[var(--text-secondary)] leading-relaxed" x-html="leak.description"></p>
-                        </div>
-
-                        <div class="bg-[var(--bg-elevated)] border border-[var(--border-color)] rounded-xl p-3 flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-                                <p class="text-xs text-[var(--text-secondary)]" x-html="leak.recommendation"></p>
-                            </div>
-                            <template x-if="leak.potential_savings > 0">
-                                <span class="text-xs font-bold tracking-wide whitespace-nowrap text-emerald-500">Hemat Rp<span x-text="formatMoney(leak.potential_savings)"></span>/bln</span>
-                            </template>
-                        </div>
+                    <div class="sm:text-right shrink-0 pl-12 sm:pl-0">
+                        <p class="text-[10px] text-[var(--text-muted)] font-medium">Potensi Hemat</p>
+                        <p class="text-sm sm:text-base font-bold text-[var(--text-primary)] mt-0.5">
+                            Rp<span x-text="formatMoney(leak.potential_savings)"></span>
+                            <span class="text-[10px] text-[var(--text-muted)] font-normal">/bln</span>
+                        </p>
                     </div>
-
                 </div>
+
+                <div class="mt-3.5 pt-3 border-t border-[var(--border-color)] flex items-start gap-2 text-xs">
+                    <span class="text-[var(--text-muted)] font-semibold shrink-0">Saran:</span>
+                    <p class="text-[var(--text-secondary)] leading-relaxed flex-1" x-html="leak.recommendation"></p>
+                </div>
+
             </div>
         </template>
 
@@ -126,33 +206,10 @@
         </template>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+    <p class="text-center text-xs text-[var(--text-muted)] pt-4 pb-2">
+        Analisis kebocoran otomatis didasarkan pada perbandingan fitur antar-layanan, siklus penagihan, dan konsistensi penggunaan.
+    </p>
 
-        <div class="card p-6 flex flex-col justify-between items-start gap-2">
-            <div>
-                <h4 class="text-sm font-bold text-[var(--text-primary)] mb-1">Cara Kerja Deteksi Kebocoran</h4>
-                <p class="text-xs text-[var(--text-muted)] leading-relaxed">Kami menganalisis pola pembayaran, auto-renewal, dan aktivitas untuk menemukan potensi kebocoran.</p>
-            </div>
-        </div>
-
-        <div class="card p-6 flex flex-col justify-between items-start gap-2">
-            <div>
-                <p class="text-xs text-[var(--text-muted)] mb-1">Total Pengeluaran Bulan Ini</p>
-                <h4 class="text-2xl font-black text-[var(--text-primary)] mb-1">Rp{{ number_format(Auth::user()->monthlyExpense(), 0, ',', '.') }}</h4>
-                <p class="text-xs text-[var(--text-muted)]">{{ Auth::user()->activeSubscriptions()->count() }} Layanan Aktif</p>
-            </div>
-        </div>
-
-        <div class="card p-6 flex flex-col justify-between items-start gap-2">
-            <div class="w-full">
-                <p class="text-xs text-[var(--text-muted)] mb-1">Rata-rata Kebocoran / Bulan</p>
-                <h4 class="text-2xl font-black text-[var(--text-primary)] mb-1" x-text="'Rp' + formatMoney(totalSavings)"></h4>
-                <p class="text-xs text-[var(--text-muted)]"><span x-text="totalSavings > 0 ? (totalSavings / {{ max(1, Auth::user()->monthlyExpense()) }} * 100).toFixed(1) : 0"></span>% dari total pengeluaran</p>
-            </div>
-        </div>
-    </div>
-
-</div>
 </div>
 
 @section('scripts')

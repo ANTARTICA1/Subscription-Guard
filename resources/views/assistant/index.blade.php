@@ -103,7 +103,7 @@
         <div class="p-5 flex flex-col justify-between">
             <div>
                 <p class="text-xs text-[var(--text-muted)] mb-1">Potensi Hemat</p>
-                <h3 class="text-2xl sm:text-3xl font-black text-emerald-500 tracking-tight mb-1">
+                <h3 class="text-2xl sm:text-3xl font-black text-[var(--text-primary)] tracking-tight mb-1">
                     <span x-text="'Rp' + formatMoney(analysisData.potential_savings || 0)"></span>
                     <span class="text-sm font-normal text-[var(--text-muted)]">/ bln</span>
                 </h3>
@@ -115,7 +115,7 @@
 
     <div class="card p-5 sm:p-6" x-show="analysisData.summary">
         <div class="flex items-start gap-3 sm:gap-4">
-            <svg class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="w-5 h-5 text-[var(--text-muted)] shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div class="flex-1 min-w-0">
@@ -151,7 +151,7 @@
 
         <div class="space-y-4">
             <h3 class="text-sm sm:text-base font-bold text-[var(--text-primary)] flex items-center gap-2 mb-1">
-                <svg class="w-5 h-5 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="w-5 h-5 text-[var(--text-muted)] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
                 Intelligence Insights
@@ -160,7 +160,7 @@
             <div class="space-y-3">
                 <template x-for="(insight, idx) in analysisData.insights || []" :key="idx">
                     <div class="card p-5 flex gap-3.5 sm:gap-4 items-start transition-colors">
-                        <div class="shrink-0 mt-0.5 text-emerald-500">
+                        <div class="shrink-0 mt-0.5 text-[var(--text-muted)]">
                             <template x-if="insight.icon === 'trending-up'">
                                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -195,7 +195,7 @@
 
         <div class="space-y-4">
             <h3 class="text-sm sm:text-base font-bold text-[var(--text-primary)] flex items-center gap-2 mb-1">
-                <svg class="w-5 h-5 text-emerald-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="w-5 h-5 text-[var(--text-muted)] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Actionable Recommendations
@@ -204,7 +204,7 @@
             <div class="space-y-3">
                 <template x-for="(rec, idx) in analysisData.recommendations || []" :key="idx">
                     <div class="card p-5 flex gap-4 sm:gap-5 items-start transition-colors">
-                        <span class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5" x-text="idx + 1"></span>
+                        <span class="w-7 h-7 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-color)] text-[var(--text-secondary)] flex items-center justify-center text-xs font-semibold shrink-0 mt-0.5" x-text="idx + 1"></span>
                         <p class="text-xs sm:text-sm text-[var(--text-primary)] leading-relaxed flex-1 min-w-0" x-html="rec"></p>
                     </div>
                 </template>
