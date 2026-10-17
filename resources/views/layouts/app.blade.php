@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="Tatagih - Kelola subscription dan recurring expense Anda dengan mudah">
-    <title>@yield('title', 'Tatagih') - Subscription Manager</title>
+    <meta name="description" content="Tatagih - Membantu mengatur agar duit tak kabur. Kelola subscription dan recurring expense Anda dengan mudah">
+    <title>@yield('title', 'Tatagih') - Membantu Mengatur Agar Duit Tak Kabur</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <link rel="stylesheet" href="/css/tailwind-compiled.css?v={{ time() }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -370,7 +370,7 @@
             opacity: 1;
             transition: opacity 0.2s ease, max-width 0.3s ease;
             overflow: hidden;
-            max-width: 150px;
+            max-width: 200px;
         }
 
         .sidebar-collapse-btn {
@@ -594,6 +594,14 @@
 
         [data-theme="light"] .admin-header h2 {
             color: #0f172a !important;
+        }
+
+        [data-theme="light"] .admin-header p {
+            color: #64748b !important;
+        }
+
+        [data-theme="light"] .sidebar-logo-text .motto-text {
+            color: #059669 !important;
         }
 
         [data-theme="light"] .admin-main {
@@ -874,7 +882,7 @@
                 <img src="{{ asset('images/logo.png') }}" alt="Tatagih Logo" class="h-9 w-auto flex-shrink-0">
                 <div class="sidebar-logo-text">
                     <span class="text-base font-bold text-white tracking-tight leading-none">Tatagih</span>
-                    <span class="text-[10px] text-[var(--text-muted)] font-medium mt-0.5">Subscription Manager</span>
+                    <span class="text-[9.5px] text-emerald-400 font-medium mt-0.5 tracking-tight motto-text truncate" title="Membantu mengatur agar duit tak kabur">Membantu mengatur agar duit tak kabur</span>
                 </div>
             </a>
 
@@ -1041,7 +1049,7 @@
                 </button>
                 <div class="min-w-0 flex-1">
                     <h2 class="font-bold text-[#f1f5f9] tracking-tight text-lg truncate">Halo, {{ explode(' ', auth()->user()->name)[0] }}!</h2>
-                    <p class="text-xs text-[#4b5e78] hidden md:block font-medium">@yield('header_desc', 'Kelola detail subscription Anda dengan mudah.')</p>
+                    <p class="text-xs text-[#4b5e78] hidden md:block font-medium">@yield('header_desc', 'Membantu mengatur agar duit tak kabur.')</p>
                 </div>
             </div>
 
@@ -1102,8 +1110,10 @@
                 @yield('content')
             </div>
 
-            <div class="mt-auto pt-3 pb-2 border-t border-[rgba(255,255,255,0.04)] text-center text-[10px] text-[#4b5e78]">
-                © 2026 Tatagih. All rights reserved.
+            <div class="mt-auto pt-3 pb-2 border-t border-[rgba(255,255,255,0.04)] text-center text-[10px] text-[#4b5e78] flex flex-wrap items-center justify-center gap-1.5">
+                <span>© {{ date('Y') }} Tatagih. All rights reserved.</span>
+                <span class="opacity-40">•</span>
+                <span class="text-emerald-500/80 font-medium italic">"Membantu mengatur agar duit tak kabur"</span>
             </div>
         </div>
     </main>
