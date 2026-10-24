@@ -5,7 +5,6 @@
 <div class="auth-card">
     <div class="logo-section">
         <img src="{{ asset('images/logo.png') }}" alt="Tatagih Logo">
-        <p class="text-[11px] text-emerald-400 font-medium mt-1 mb-2">“Membantu mengatur agar duit tak kabur”</p>
         <h1>Lupa Password?</h1>
         <p>Masukkan email Anda dan kami akan mengirimkan link reset</p>
     </div>

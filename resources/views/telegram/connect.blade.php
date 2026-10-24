@@ -22,44 +22,46 @@
         setTimeout(() => { this.copyFeedback[key] = false; }, 1800);
     }
 }">
+    <!-- Status Koneksi -->
     <div class="card shadow-sm">
-        <div class="flex items-center gap-3.5 pb-6 border-b border-[var(--border-color)]">
-            <div class="text-[#229ED9] flex-shrink-0">
-                <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"/>
-                </svg>
-            </div>
-            <div>
-                <h3 class="section-title text-[var(--text-primary)] mb-0.5">Status Koneksi</h3>
-                <p class="text-xs text-[var(--text-muted)]">Integrasi notifikasi real-time via Telegram Bot</p>
-            </div>
-        </div>
-
-        @if($connection && $connection->isVerified())
-        <div class="pt-6">
-            <div class="item-row mb-6 border-emerald-500/30 bg-emerald-500/10 p-4 rounded-xl flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-500 flex items-center justify-center flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
-                    </span>
-                    <div>
-                        <p class="font-bold text-sm text-emerald-600 dark:text-emerald-400">Terhubung ke Telegram!</p>
-                        <p class="text-xs text-[var(--text-muted)]">Chat ID: <span class="font-mono font-semibold">{{ $connection->chat_id }}</span></p>
-                        <p class="text-[11px] text-[var(--text-muted)] opacity-80">Terverifikasi: {{ $connection->verified_at->translatedFormat('d M Y H:i') }}</p>
-                    </div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[var(--border-color)]">
+            <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-xl bg-sky-500/10 text-sky-500 flex items-center justify-center flex-shrink-0">
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"/>
+                    </svg>
                 </div>
-                <span class="badge badge-active font-bold">TERKONEKSI</span>
+                <div>
+                    <h3 class="section-title text-[var(--text-primary)] mb-0">Telegram Bot</h3>
+                    <p class="text-xs text-[var(--text-muted)] mt-1">Integrasi notifikasi pengingat otomatis via Telegram</p>
+                </div>
             </div>
-            <div class="flex flex-wrap gap-3">
+
+            @if($connection && $connection->isVerified())
+            <div class="flex items-center gap-2.5 self-start sm:self-auto">
                 <form method="POST" action="{{ route('telegram.test-notification') }}">@csrf
-                    <button type="submit" class="btn-primary text-xs flex items-center gap-2 cursor-pointer shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    <button type="submit" class="btn-primary text-xs cursor-pointer shadow-sm">
                         Uji Coba Notifikasi
                     </button>
                 </form>
                 <form method="POST" action="{{ route('telegram.disconnect') }}">@csrf @method('DELETE')
                     <button type="submit" class="btn-danger text-xs hover:bg-red-500 hover:text-white cursor-pointer" onclick="return confirm('Putuskan koneksi bot Telegram?')">Putuskan</button>
                 </form>
+            </div>
+            @endif
+        </div>
+
+        @if($connection && $connection->isVerified())
+        <div class="pt-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                    <span class="text-xs font-medium text-[var(--text-muted)] block">Telegram Chat ID</span>
+                    <span class="text-sm font-bold font-mono text-[var(--text-primary)] mt-1 block">{{ $connection->chat_id }}</span>
+                </div>
+                <div>
+                    <span class="text-xs font-medium text-[var(--text-muted)] block">Terverifikasi Sejak</span>
+                    <span class="text-sm font-semibold text-[var(--text-primary)] mt-1 block">{{ $connection->verified_at->translatedFormat('d F Y, H:i') }} WIB</span>
+                </div>
             </div>
         </div>
         @else
@@ -85,7 +87,7 @@
             <div class="py-6 border-y border-[var(--border-color)] flex flex-col items-center justify-center text-center">
                 <p class="text-[11px] mb-3 font-bold text-[var(--text-muted)] uppercase tracking-wider">Kode Verifikasi Anda</p>
                 
-                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-card)] transition-all">
+                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-2xl border border-[var(--border-color)] bg-[var(--bg-elevated)] transition-all">
                     <span class="text-2xl sm:text-3xl font-mono font-extrabold tracking-widest text-[var(--text-primary)] select-all">
                         {{ $connection->verification_code ?? 'TATAGIH-XXXXXX' }}
                     </span>
@@ -114,33 +116,23 @@
             </div>
 
             <div class="pt-6 border-t border-[var(--border-color)]">
-                <div class="rounded-xl border border-[var(--border-color)] bg-[var(--bg-elevated)]/40 p-4 sm:p-5">
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-lg bg-sky-500/10 text-sky-500 flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                            </span>
-                            <h4 class="text-xs font-bold text-[var(--text-primary)]">Hubungkan Langsung dengan Chat ID (Praktis di Localhost)</h4>
-                        </div>
-                        <span class="text-[10px] px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-500 font-semibold">Instan</span>
+                <h4 class="text-xs font-bold text-[var(--text-primary)] mb-1">Hubungkan Langsung dengan Chat ID</h4>
+                <p class="text-[11px] text-[var(--text-muted)] mb-3 leading-relaxed">
+                    Anda bisa langsung memasukkan <strong>Telegram Chat ID</strong> Anda:
+                </p>
+                <form method="POST" action="{{ route('telegram.manual-connect') }}" class="flex flex-col sm:flex-row gap-2.5">
+                    @csrf
+                    <div class="relative flex-1">
+                        <input type="text" name="chat_id" placeholder="Contoh: 123456789" value="{{ old('chat_id', Auth::user()->telegram_chat_id) }}" class="w-full bg-[var(--bg-elevated)] border border-[var(--border-color)] rounded-xl px-3.5 py-2 text-xs text-[var(--text-primary)] font-mono focus:outline-none focus:border-sky-500 transition-colors" required>
                     </div>
-                    <p class="text-[11px] text-[var(--text-muted)] mb-3 leading-relaxed">
-                        Jika Anda menjalankan aplikasi di <code>localhost</code> (tanpa Ngrok), Anda bisa langsung memasukkan <strong>Telegram Chat ID</strong> Anda di sini:
-                    </p>
-                    <form method="POST" action="{{ route('telegram.manual-connect') }}" class="flex flex-col sm:flex-row gap-2.5">
-                        @csrf
-                        <div class="relative flex-1">
-                            <input type="text" name="chat_id" placeholder="Contoh: 123456789" value="{{ old('chat_id', Auth::user()->telegram_chat_id) }}" class="w-full bg-[var(--bg-card)] border border-[var(--border-color)] rounded-xl px-3.5 py-2 text-xs text-[var(--text-primary)] font-mono focus:outline-none focus:border-sky-500 transition-colors" required>
-                        </div>
-                        <button type="submit" class="btn-primary text-xs flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                            Hubungkan Sekarang
-                        </button>
-                    </form>
-                    <div class="mt-2.5 flex items-center gap-1.5 text-[10px] text-[var(--text-muted)]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 opacity-70 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                        <span>Belum tahu Chat ID Anda? Cari bot <a href="https://t.me/userinfobot" target="_blank" rel="noopener noreferrer" class="font-bold text-sky-500 hover:underline">@userinfobot</a> di Telegram lalu ketik <code>/start</code>.</span>
-                    </div>
+                    <button type="submit" class="btn-primary text-xs flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        Hubungkan Sekarang
+                    </button>
+                </form>
+                <div class="mt-2.5 flex items-center gap-1.5 text-[10px] text-[var(--text-muted)]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 opacity-70 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>Belum tahu Chat ID Anda? Cari bot <a href="https://t.me/userinfobot" target="_blank" rel="noopener noreferrer" class="font-bold text-sky-500 hover:underline">@userinfobot</a> di Telegram lalu ketik <code>/start</code>.</span>
                 </div>
             </div>
 
@@ -156,10 +148,11 @@
         @endif
     </div>
 
+    <!-- History Notifikasi -->
     <div class="card shadow-sm">
-        <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center justify-between pb-4 border-b border-[var(--border-color)]">
             <h3 class="section-title text-[var(--text-primary)] flex items-center gap-2 mb-0">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[var(--text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                 History Notifikasi
             </h3>
             <div class="md:hidden flex items-center gap-1 text-[10px] text-[var(--text-muted)] italic">
@@ -167,26 +160,26 @@
                 <span>Geser tabel</span>
             </div>
         </div>
-        <div class="overflow-x-auto w-full rounded-xl border border-[var(--border-color)]">
-            <table class="modern-table w-full min-w-[500px] whitespace-nowrap">
+        <div class="overflow-x-auto w-full">
+            <table class="w-full min-w-[500px] whitespace-nowrap text-left border-collapse">
                 <thead>
-                    <tr>
-                        <th>Subscription</th>
-                        <th>Tipe</th>
-                        <th>Status</th>
-                        <th>Waktu</th>
+                    <tr class="border-b border-[var(--border-color)]">
+                        <th class="py-3 px-2 text-[10px] font-extrabold text-[var(--text-muted)] uppercase tracking-wider">Subscription</th>
+                        <th class="py-3 px-2 text-[10px] font-extrabold text-[var(--text-muted)] uppercase tracking-wider">Tipe</th>
+                        <th class="py-3 px-2 text-[10px] font-extrabold text-[var(--text-muted)] uppercase tracking-wider">Status</th>
+                        <th class="py-3 px-2 text-[10px] font-extrabold text-[var(--text-muted)] uppercase tracking-wider">Waktu</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-[var(--border-color)]">
                     @forelse($notifications as $notif)
-                    <tr class="hover:bg-[var(--bg-elevated)] transition-colors">
-                        <td class="font-semibold text-[var(--text-primary)]">{{ $notif->subscription->name ?? 'System' }}</td>
-                        <td><span class="badge badge-accent">{{ $notif->type }}</span></td>
-                        <td><span class="badge badge-{{ $notif->status === 'sent' ? 'active' : ($notif->status === 'pending' ? 'pending' : 'danger') }}">{{ strtoupper($notif->status) }}</span></td>
-                        <td class="text-[var(--text-muted)] text-xs">{{ $notif->created_at->translatedFormat('d M Y H:i') }}</td>
+                    <tr class="hover:bg-[var(--bg-elevated)]/50 transition-colors">
+                        <td class="py-3.5 px-2 font-semibold text-xs text-[var(--text-primary)]">{{ $notif->subscription->name ?? 'System' }}</td>
+                        <td class="py-3.5 px-2 text-xs text-[var(--text-secondary)] font-medium">{{ $notif->type }}</td>
+                        <td class="py-3.5 px-2 text-xs font-medium {{ $notif->status === 'sent' ? 'text-emerald-500' : ($notif->status === 'pending' ? 'text-amber-500' : 'text-red-500') }}">{{ strtoupper($notif->status) }}</td>
+                        <td class="py-3.5 px-2 text-[var(--text-muted)] text-xs">{{ $notif->created_at->translatedFormat('d M Y H:i') }}</td>
                     </tr>
                     @empty
-                    <tr><td colspan="4" class="text-center py-6 text-xs text-[var(--text-muted)]">Belum ada riwayat notifikasi.</td></tr>
+                    <tr><td colspan="4" class="text-center py-8 text-xs text-[var(--text-muted)]">Belum ada riwayat notifikasi.</td></tr>
                     @endforelse
                 </tbody>
             </table>

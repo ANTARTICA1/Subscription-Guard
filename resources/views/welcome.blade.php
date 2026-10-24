@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tatagih - Membantu Mengatur Agar Duit Tak Kabur | Subscription Manager</title>
-    <meta name="description" content="Tatagih - Membantu mengatur agar duit tak kabur. Kelola subscription dan recurring expense dengan mudah. Pantau tagihan, terima reminder otomatis via Telegram, dan cegah pemotongan saldo tanpa sadar.">
+    <title>Tatagih - Subscription Manager</title>
+    <meta name="description" content="Tatagih. Kelola subscription dan recurring expense dengan mudah. Pantau tagihan, terima reminder otomatis via Telegram, dan cegah pemotongan saldo tanpa sadar.">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1657,10 +1657,6 @@
 
     <section class="lp-hero">
         <div class="lp-reveal" x-intersect.once="$el.classList.add('lp-reveal--active')">
-            <div class="lp-hero__eyebrow">
-                <span class="lp-hero__eyebrow-dot"></span>
-                <span>Membantu mengatur agar duit tak kabur</span>
-            </div>
 
             <h1 class="lp-hero__title">
                 Jangan Biarkan<br>
@@ -2086,7 +2082,7 @@
     </div>
 
     <footer class="lp-footer">
-        <p class="lp-footer__text">&copy; {{ date('Y') }} Tatagih &mdash; <em>Membantu mengatur agar duit tak kabur</em>. All rights reserved.</p>
+        <p class="lp-footer__text">&copy; {{ date('Y') }} Tatagih. All rights reserved.</p>
     </footer>
 
 </body>

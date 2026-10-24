@@ -87,7 +87,7 @@
 
         <div class="flex-1 p-6 flex items-center gap-4">
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-                 :class="threatLevel === 'TINGGI' ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400' : (threatLevel === 'SEDANG' ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400')">
+                 :class="threatLevel === 'TINGGI' ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400' : (threatLevel === 'SEDANG' || threatLevel === 'PERHATIAN' ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400')">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
@@ -96,25 +96,47 @@
             <div>
                 <p class="text-xs text-[var(--text-muted)] mb-0.5">Tingkat Risiko</p>
                 <h3 class="text-xl font-bold tracking-tight"
-                    :class="threatLevel === 'TINGGI' ? 'text-rose-600 dark:text-rose-400' : (threatLevel === 'SEDANG' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400')"
+                    :class="threatLevel === 'TINGGI' ? 'text-rose-600 dark:text-rose-400' : (threatLevel === 'SEDANG' || threatLevel === 'PERHATIAN' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400')"
                     x-text="threatLevel"></h3>
-                <p class="text-[11px] text-[var(--text-muted)] mt-0.5" x-text="`${leaks.length} potensi kebocoran terdeteksi`"></p>
+                <p class="text-[11px] text-[var(--text-muted)] mt-0.5" x-text="leaks.length > 0 ? `${leaks.length} potensi kebocoran terdeteksi` : 'Semua langganan optimal'"></p>
             </div>
         </div>
 
         <div class="flex-1 p-6 flex flex-col justify-center">
-            <p class="text-xs text-[var(--text-muted)] mb-0.5">Estimasi Kebocoran / Bulan</p>
-            <h3 class="text-2xl font-bold text-[var(--text-primary)] tracking-tight" x-text="'Rp' + formatMoney(totalSavings)"></h3>
-            <p class="text-[11px] text-[var(--text-muted)] mt-0.5" x-text="'≈ Rp' + formatMoney(totalSavings * 12) + ' / tahun'"></p>
+            <template x-if="totalSavings > 0">
+                <div>
+                    <p class="text-xs text-[var(--text-muted)] mb-0.5">Estimasi Kebocoran / Bulan</p>
+                    <h3 class="text-2xl font-bold text-[var(--text-primary)] tracking-tight" x-text="'Rp' + formatMoney(totalSavings)"></h3>
+                    <p class="text-[11px] text-[var(--text-muted)] mt-0.5" x-text="'≈ Rp' + formatMoney(totalSavings * 12) + ' / tahun'"></p>
+                </div>
+            </template>
+            <template x-if="totalSavings === 0">
+                <div>
+                    <p class="text-xs text-[var(--text-muted)] mb-0.5">Status Langganan</p>
+                    <h3 class="text-xl font-bold text-[var(--text-primary)] tracking-tight" x-text="leaks.length > 0 ? `${leaks.length} Kategori Perlu Evaluasi` : 'Portofolio Optimal'"></h3>
+                    <p class="text-[11px] text-[var(--text-muted)] mt-0.5" x-text="leaks.length > 0 ? 'Terdapat multi-layanan fungsi serupa' : 'Tidak terdeteksi langganan tumpang tindih'"></p>
+                </div>
+            </template>
         </div>
 
         <div class="flex-1 p-6 flex flex-col justify-center">
-            <p class="text-xs text-[var(--text-muted)] mb-0.5">Potensi Efisiensi</p>
-            <h3 class="text-2xl font-bold text-[var(--text-primary)] tracking-tight">
-                <span x-text="totalSavings > 0 ? (totalSavings / {{ max(1, Auth::user()->monthlyExpense()) }} * 100).toFixed(0) + '%' : '0%'"></span>
-                <span class="text-xs font-normal text-[var(--text-muted)]">dari tagihan</span>
-            </h3>
-            <p class="text-[11px] text-[var(--text-muted)] mt-0.5">Dapat dihemat jika ditindaklanjuti</p>
+            <template x-if="totalSavings > 0">
+                <div>
+                    <p class="text-xs text-[var(--text-muted)] mb-0.5">Potensi Efisiensi</p>
+                    <h3 class="text-2xl font-bold text-[var(--text-primary)] tracking-tight">
+                        <span x-text="(totalSavings / {{ max(1, Auth::user()->monthlyExpense()) }} * 100).toFixed(0) + '%'"></span>
+                        <span class="text-xs font-normal text-[var(--text-muted)]">dari tagihan</span>
+                    </h3>
+                    <p class="text-[11px] text-[var(--text-muted)] mt-0.5">Dapat dihemat jika ditindaklanjuti</p>
+                </div>
+            </template>
+            <template x-if="totalSavings === 0">
+                <div>
+                    <p class="text-xs text-[var(--text-muted)] mb-0.5">Rekomendasi</p>
+                    <h3 class="text-xl font-bold text-[var(--text-primary)] tracking-tight" x-text="leaks.length > 0 ? 'Tinjau & Rotasi' : 'Pertahankan'"></h3>
+                    <p class="text-[11px] text-[var(--text-muted)] mt-0.5" x-text="leaks.length > 0 ? 'Pertimbangkan langganan bergantian' : 'Pengeluaran rutin sudah efisien'"></p>
+                </div>
+            </template>
         </div>
     </div>
 
@@ -183,11 +205,20 @@
                     </div>
 
                     <div class="sm:text-right shrink-0 pl-12 sm:pl-0">
-                        <p class="text-[10px] text-[var(--text-muted)] font-medium">Potensi Hemat</p>
-                        <p class="text-sm sm:text-base font-bold text-[var(--text-primary)] mt-0.5">
-                            Rp<span x-text="formatMoney(leak.potential_savings)"></span>
-                            <span class="text-[10px] text-[var(--text-muted)] font-normal">/bln</span>
-                        </p>
+                        <template x-if="leak.potential_savings > 0">
+                            <div>
+                                <p class="text-[10px] text-[var(--text-muted)] font-medium">Potensi Hemat</p>
+                                <p class="text-sm sm:text-base font-bold text-[var(--text-primary)] mt-0.5">
+                                    Rp<span x-text="formatMoney(leak.potential_savings)"></span>
+                                    <span class="text-[10px] text-[var(--text-muted)] font-normal">/bln</span>
+                                </p>
+                            </div>
+                        </template>
+                        <template x-if="!leak.potential_savings || leak.potential_savings <= 0">
+                            <span class="inline-flex items-center text-[11px] font-semibold text-[var(--text-secondary)] bg-[var(--bg-elevated)] border border-[var(--border-color)] px-2.5 py-1 rounded-md">
+                                Perlu Evaluasi
+                            </span>
+                        </template>
                     </div>
                 </div>
 
@@ -220,7 +251,7 @@ document.addEventListener('alpine:init', () => {
         filter: 'all',
         sortMethod: 'newest',
         isScanning: false,
-        scanStatusText: 'Terakhir dipindai: 1 jam lalu',
+        scanStatusText: 'Terakhir dipindai: Baru saja',
 
         init() {
             this.leaks = this.leaks.map((l, i) => ({ ...l, id: i }));
@@ -231,14 +262,15 @@ document.addEventListener('alpine:init', () => {
         },
 
         get threatLevel() {
-            if (this.totalSavings >= 100000) return 'TINGGI';
-            if (this.totalSavings > 0) return 'SEDANG';
+            if (this.totalSavings >= 100000 || this.highLeaksCount > 0) return 'TINGGI';
+            if (this.totalSavings > 0 || this.medLeaksCount > 0) return 'SEDANG';
+            if (this.lowLeaksCount > 0) return 'PERHATIAN';
             return 'AMAN';
         },
 
         get threatColorClass() {
             if (this.threatLevel === 'TINGGI') return { bg: 'bg-[#ef4444]', text: 'text-[#ef4444]', border: 'border-[#ef4444]', border20: 'border-[#ef4444]/20', border40: 'border-[#ef4444]/40', border60: 'border-[#ef4444]/60', shadow: 'shadow-[0_0_20px_rgba(239,68,68,0.3)]', bg10: 'bg-[#ef4444]/10', gradient: 'from-[#ef4444]' };
-            if (this.threatLevel === 'SEDANG') return { bg: 'bg-[#f59e0b]', text: 'text-[#f59e0b]', border: 'border-[#f59e0b]', border20: 'border-[#f59e0b]/20', border40: 'border-[#f59e0b]/40', border60: 'border-[#f59e0b]/60', shadow: 'shadow-[0_0_20px_rgba(245,158,11,0.3)]', bg10: 'bg-[#f59e0b]/10', gradient: 'from-[#f59e0b]' };
+            if (this.threatLevel === 'SEDANG' || this.threatLevel === 'PERHATIAN') return { bg: 'bg-[#f59e0b]', text: 'text-[#f59e0b]', border: 'border-[#f59e0b]', border20: 'border-[#f59e0b]/20', border40: 'border-[#f59e0b]/40', border60: 'border-[#f59e0b]/60', shadow: 'shadow-[0_0_20px_rgba(245,158,11,0.3)]', bg10: 'bg-[#f59e0b]/10', gradient: 'from-[#f59e0b]' };
             return { bg: 'bg-[#10b981]', text: 'text-[#10b981]', border: 'border-[#10b981]', border20: 'border-[#10b981]/20', border40: 'border-[#10b981]/40', border60: 'border-[#10b981]/60', shadow: 'shadow-[0_0_20px_rgba(16,185,129,0.3)]', bg10: 'bg-[#10b981]/10', gradient: 'from-[#10b981]' };
         },
 

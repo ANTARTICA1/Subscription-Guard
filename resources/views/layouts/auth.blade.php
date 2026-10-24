@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="Tatagih - Membantu mengatur agar duit tak kabur. Kelola subscription dan recurring expense Anda dengan mudah">
-    <title>@yield('title', 'Login') - Tatagih | Membantu Mengatur Agar Duit Tak Kabur</title>
+    <meta name="description" content="Tatagih - Kelola subscription dan recurring expense Anda dengan mudah">
+    <title>@yield('title', 'Login') - Tatagih</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>

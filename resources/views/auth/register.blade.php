@@ -32,7 +32,6 @@
                 <img src="{{ asset('images/logo.png') }}" alt="Tatagih Logo" class="w-18 h-18 object-contain">
             </div>
             <h1 class="text-4xl font-extrabold tracking-tight text-[var(--text-primary)] mt-1.5">Tatagih</h1>
-            <p class="text-xs text-emerald-400 font-medium mt-2">“Membantu mengatur agar duit tak kabur”</p>
         </div>
 
         <div class="relative w-full max-w-[460px] mx-auto flex items-center justify-center">
@@ -132,7 +131,7 @@
 </div>
 
 <div class="w-full text-center text-[10px] text-[var(--text-muted)] mt-2">
-    © {{ date('Y') }} Tatagih · Membantu mengatur agar duit tak kabur
+    © {{ date('Y') }} Tatagih
 </div>
 
 @endsection
