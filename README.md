@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Tatagih</h1>
-  <p><strong>Subscription Manager</strong></p>
+  <p><strong>Smart Subscription Manager & AI Financial Assistant</strong></p>
   
   [![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
   [![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://www.php.net/)
@@ -10,97 +10,90 @@
 
 <hr>
 
-## Tentang Proyek
-**Tatagih** adalah *Smart Subscription Manager* yang dilengkapi dengan Tata Asisten. Tatagih melacak tagihan langganan dan menganalisis kesehatan keuangan Anda kemudian mendeteksi pemborosan. Terdapat fitur sharing untuk manajemen patungan tagihan dengan teman dan mengirim notifikasi cerdas langsung ke Telegram Anda.
+## About the Project
 
+**Tatagih** is an intelligent subscription management platform equipped with the Tata AI Assistant (powered by Google Gemini). Tatagih tracks recurring digital billing cycles, evaluates personal financial health scores, detects hidden wasteful expenses (vampire spending and overlapping subscriptions), manages shared group subscriptions (Family Plans) with fair cost splitting, and dispatches proactive reminder notifications directly to your Telegram messenger.
 
-## Preview Aplikasi
-Berikut adalah beberapa tangkapan layar dari antarmuka Tatagih:
+## Interface Previews
 
-<div align="center">
-  <img src="./docs/dashboard.png" alt="Dashboard Utama" width="48%">
-  <img src="./docs/tambah.png" alt="Tambah Langganan" width="48%">
-</div>
-<div align="center">
-  <img src="./docs/patungan.png" alt="Cari Teman Patungan" width="48%">
-</div>
+### Financial Dashboard & Due Date Calendar
+![Financial Dashboard & Due Date Calendar](docs/screenshots/tatagih_dashboard.png)
 
-## Fitur Unggulan
+### Landing Page & Value Proposition
+![Tatagih Landing Page](docs/screenshots/tatagih_landing.png)
 
-- **Patungan Tagihan**
-  Berlangganan paket *Family* bersama teman? Fitur *Subscription Sharing* memungkinkan Anda untuk membagi tagihan dan melacak porsi bayaran masing-masing anggota.
+### Tata AI Financial Assistant (Google Gemini)
+![Tata AI Assistant](docs/screenshots/tatagih_chatbot.png)
 
-- **Notifikasi Terintegrasi Telegram**
-  Hubungkan akun Anda dengan bot Telegram. Dapatkan peringatan cerdas dan pengingat otomatis sebelum tenggat waktu pembayaran tiba, langsung ke aplikasi pesan Anda.
+### Group Subscription Sharing & Split Billing Verification
+![Family Plan Split Bill & Receipt Verification](docs/screenshots/tatagih_splitbill.png)
 
-- **Pendeteksi Kebocoran Dana**
-  Sistem yang otomatis mendeteksi:
-  - *Overlapping Subscriptions*: Peringatan jika Anda berlangganan beberapa layanan dengan fungsi serupa (misal: memiliki Netflix, Disney+, dan HBO sekaligus).
-  - *Vampire Spends*: Mendeteksi pengeluaran mikro bulanan yang tampak kecil, namun dikalkulasikan akan menguras dompet Anda secara masif dalam proyeksi 5 tahun ke depan.
+## Core Capabilities
 
-- **Smart Templates & Plan Comparison**
-  Tambah data langganan dalam hitungan detik menggunakan *Template* dari berbagai layanan populer. Gunakan juga fitur perbandingan (*Subscription Comparison*) untuk memilih varian paket berlangganan yang paling ekonomis sesuai kebutuhan Anda.
+- Group Subscription Sharing & Split Billing: Manage shared digital services (such as Family Plans) with friends or family. Fairly divide costs, upload payment receipts, and verify transaction statuses.
+- Telegram Bot Proactive Notifications: Connect your profile with the official Telegram Bot. Receive automated schedule alerts before renewal deadlines (H-3 and H-1) via Laravel Scheduler and Queue workers.
+- Financial Leakage & Overlap Detection:
+  - Overlapping Subscriptions: Identifies redundant digital services that share identical functionalities (e.g., active subscriptions across Netflix, Disney+, and HBO Max concurrently).
+  - Vampire Spending: Detects minor recurring micro-transactions that appear negligible on a monthly basis but represent significant cumulative financial leakage across multi-year horizons.
+- Smart Service Templates & Plan Comparison: Register recurring expenses within seconds using pre-built templates for popular services. Compare tier pricing to identify the most cost-effective tier.
+- Tata AI Assistant (Google Gemini): Evaluates spending habits, computes a comprehensive Financial Health Score (0 to 100), and generates contextual savings recommendations.
+- Interactive Analytics & Secure Authentication: Data visualization powered by Chart.js (6-month expenditure curves and category distributions), backed by secure session authentication, role access control, and password reset flows.
 
-- **Tata Asisten**
-  Dapatkan analisis mengenai profil pengeluaran Anda. Tata Asisten akan menghitung *Financial Health Score* Anda dan memberikan rekomendasi serta wawasan (*insights*) berbasis data mengenai kebiasaan berlangganan Anda.
+## Technology Stack
 
-- **Dashboard Analitik & Autentikasi Keamanan**
-  Visualisasi data pengeluaran yang interaktif menggunakan Chart.js, dilengkapi dengan sistem registrasi, login, dan lupa kata sandi (*Reset Password*).
+- Backend Engine: Laravel 13.x, PHP 8.3+
+- Frontend Architecture: Tailwind CSS, Vite, Laravel Blade Templates, Chart.js
+- Database: MySQL / MariaDB (Relational schema with normalized relations)
+- External Integrations: Telegram Bot API, Google Gemini API
 
-## Teknologi yang Digunakan
-- **Backend:** Laravel (v13.x), PHP (v8.3+)
-- **Frontend:** Tailwind CSS (v4.0), Vite, Blade Templates, Chart.js
-- **Database:** MySQL
-- **Integrasi API:** Telegram Bot API
+## Database Architecture (Entity Relationship Diagram)
 
-## Struktur Database (ERD)
-Berikut adalah visualisasi *Entity Relationship Diagram* dari aplikasi Tatagih. 
-*Klik gambar di bawah untuk melihat*
+Click the diagram preview below to inspect the complete schema architecture:
 
-[![ERD Tatagih](./docs/ERD.jpg)](./docs/ERD.jpg)
+[![Tatagih ERD](./docs/ERD.jpg)](./docs/ERD.jpg)
 
+## System Requirements
 
-## Persyaratan Sistem
-Sebelum menjalankan aplikasi ini, pastikan sistem Anda telah menginstal perangkat lunak berikut:
-- **PHP** >= 8.3
-- **Composer**
-- **Node.js** & **NPM**
-- **MySQL** atau MariaDB
+- PHP >= 8.3 with extensions: `pdo_mysql`, `curl`, `mbstring`, `openssl`
+- Composer (PHP Dependency Manager)
+- Node.js (>= 18.x) & npm
+- MySQL 5.7+ or MariaDB 10.4+
 
-## Panduan Instalasi
-Ikuti langkah-langkah di bawah ini untuk menjalankan aplikasi di lingkungan pengembangan lokal:
+## Installation Guide
 
-### 1. Clone Repository
+Follow the steps below to configure and run Tatagih in your local development environment:
+
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/ANTARTICA1/Subscription-Guard.git
 cd Subscription-Guard
 ```
 
-### 2. Install Dependensi PHP
+### 2. Install PHP Dependencies
 ```bash
 composer install
 ```
 
-### 3. Install Dependensi Frontend
+### 3. Install Frontend Dependencies & Compile Assets
 ```bash
 npm install
 npm run build
 ```
 
-### 4. Konfigurasi Environment
-Duplikat file `.env.example` menjadi `.env`:
+### 4. Configure Environment Variables
+Duplicate `.env.example` into `.env`:
 ```bash
 cp .env.example .env
 ```
-*(Di Windows, Anda bisa menggunakan `copy .env.example .env` pada Command Prompt)*
+*(On Windows Command Prompt, execute: `copy .env.example .env`)*
 
-### 5. Generate Application Key
+### 5. Generate Application Encryption Key
 ```bash
 php artisan key:generate
 ```
 
-### 6. Konfigurasi Database & Layanan Pihak Ketiga
-Buat database baru di MySQL (misal: `tatagih_db`). Buka file `.env` dan sesuaikan kredensial database Anda:
+### 6. Configure Database and Services
+Create a new database in MySQL (e.g., `tatagih_db`). Open `.env` and specify your credentials:
 ```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -109,45 +102,43 @@ DB_DATABASE=tatagih_db
 DB_USERNAME=root
 DB_PASSWORD=
 ```
-*(Catatan: Anda juga dapat mengatur kredensial layanan Telegram Bot API pada file `.env` jika ingin menguji fitur bot notifikasi).*
+*(Optional: Configure `TELEGRAM_BOT_TOKEN` and `GEMINI_API_KEY` inside `.env` to enable bot notifications and AI features).*
 
-### 7. Migrasi Database
-Jalankan perintah berikut untuk membuat struktur tabel dan relasi kompleks (seperti *friendships* dan *shares*):
+### 7. Run Database Migrations and Seeders
+Execute database migrations and sample seeds:
 ```bash
 php artisan migrate --seed
 ```
-*(Perintah `--seed` akan otomatis membuat akun default dan data contoh agar aplikasi tidak kosong saat pertama kali dijalankan).*
+*The `--seed` flag automatically populates default administrative and regular user credentials along with sample data.*
 
-**Akun Default untuk Login (Hasil Seeding):**
-- **User Biasa** *(Rekomendasi Utama)*: `user@tatagih.app` | Password: `password`
-- **Admin** *(Hanya fitur pendukung)*: `admin@tatagih.app` | Password: `password`
+**Default Credentials:**
+- Standard User (Recommended for full feature evaluation): `user@tatagih.app` | Password: `password`
+- Administrator: `admin@tatagih.app` | Password: `password`
 
-### 8. Jalankan Aplikasi
-Jalankan server lokal pengembangan Laravel:
+### 8. Start the Local Server
+Launch the local Laravel HTTP server:
 ```bash
 php artisan serve
 ```
 
-*Penting: Aplikasi ini menggunakan Job Scheduler dan Queue untuk fitur notifikasi otomatis ke Telegram dan pengiriman Email. Jika Anda ingin menguji fitur otomatis tersebut di lingkungan lokal, Anda **wajib** membuka 2 tab terminal baru dan menjalankan:*
-1. `php artisan schedule:work` *(Untuk menghidupkan mesin pengingat otomatis)*
-2. `php artisan queue:work` *(Untuk memproses antrean pesan yang akan dikirim)*
+For scheduled reminder dispatches and asynchronous queue handling, launch workers in dedicated terminal tabs:
+```bash
+# Terminal Tab 1: Queue Worker
+php artisan queue:work
 
-> [!NOTE]
-> **Catatan Telegram di Localhost:**
-> Fitur **pengiriman notifikasi** ke telegram tetap berjalan normal di komputer lokal selama komputer terkoneksi ke internet. Namun jika ingin menguji fitur **Webhook** secara dua arah (menerima perintah balasan dari user ke Bot Telegram), Anda perlu menggunakan bantuan tunneling seperti [Ngrok](https://ngrok.com/) agar `localhost:8000` Anda mendapatkan URL publik yang bisa diakses oleh server Telegram.
-
----
-
-## Catatan Khusus untuk Penilai
-
-> [!NOTE]  
-> **Fokus Pengujian Aplikasi**  
-> Fitur-fitur utama dari aplikasi ini (seperti Tata Asisten, Pendeteksi Kebocoran Dana, dan Patungan) berada pada **sisi Pengguna (User)**. Halaman Admin hanyalah fitur pendukung/dashboard ringkasan. **sangat disarankan untuk login menggunakan akun "User Biasa"** untuk melihat fungsionalitas utama aplikasi ini.
-
-File `.env.example` disiapkan menggunakan pengaturan **Gmail SMTP**.
-Jika Anda tidak ingin repot mengatur *App Password* Google untuk menguji aplikasi ini secara lokal, Anda dapat mengubah mode pengiriman email di file `.env` menjadi mode **log**:
-```env
-MAIL_MAILER=log
+# Terminal Tab 2: Scheduler Worker
+php artisan schedule:work
 ```
-Sehingga link untuk simulasi *reset password* akan langsung dicetak dan dapat disalin dari file log lokal di:
-`storage/logs/laravel.log`
+
+## Evaluator Notes
+
+- Primary Feature Scope: Core features (Tata AI Assistant, Financial Leakage Detector, and Subscription Sharing) are situated within the **Standard User** perspective. The Administrator interface serves as a management overview. It is recommended to authenticate using `user@tatagih.app` to evaluate end-user workflows.
+- Email Testing: If Google SMTP app passwords are not configured, set `MAIL_MAILER=log` inside `.env`. Password reset tokens will be safely logged to `storage/logs/laravel.log`.
+
+## Author
+
+Anak Agung Ngurah Krisna Artha Wibawa ([ANTARTICA1](https://github.com/ANTARTICA1))
+
+## License
+
+This project is licensed under the MIT License.
